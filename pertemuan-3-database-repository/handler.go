@@ -2,33 +2,24 @@ package main
 
 import (
 	"encoding/json"
-	"sort"
+	"errors"
 	"strconv"
 	"strings"
 
-	"tugas1-go/pertemuan-3-database-repository/app/model"
-
 	"github.com/gofiber/fiber/v2"
+
+	"tugas1-go/pertemuan-3-database-repository/app/model"
+	"tugas1-go/pertemuan-3-database-repository/app/repository"
 )
 
-var students []model.Student
-var nextID = 1
-
-// Mencari index mahasiswa berdasarkan ID
-func findStudentIndex(id int) int {
-	for i := range students {
-		if students[i].ID == id {
-			return i
-		}
-	}
-
-	return -1
+type StudentHandler struct {
+	repo repository.StudentRepository
 }
 
-// Pencarian nama tanpa membedakan huruf besar dan kecil
-func cocokPencarian(s model.Student, kata string) bool {
-	kata = strings.ToLower(kata)
-	return strings.Contains(strings.ToLower(s.Name), kata)
+func NewStudentHandler(repo repository.StudentRepository) *StudentHandler {
+	return &StudentHandler{
+		repo: repo,
+	}
 }
 
 // Membaca ID dari URL
@@ -41,78 +32,38 @@ func paramID(c *fiber.Ctx) (int, bool) {
 	return id, true
 }
 
+// Mengubah error repository menjadi respons HTTP
+func handleRepositoryError(c *fiber.Ctx, err error) error {
+	switch {
+	case errors.Is(err, repository.ErrNotFound):
+		return fail(c, fiber.StatusNotFound, "mahasiswa tidak ditemukan")
+
+	case errors.Is(err, repository.ErrDuplicate):
+		return fail(c, fiber.StatusConflict, "NIM sudah digunakan")
+
+	default:
+		return fail(c, fiber.StatusInternalServerError, "terjadi kesalahan pada database")
+	}
+}
+
 // Mengambil daftar mahasiswa
-func listStudents(c *fiber.Ctx) error {
+func (h *StudentHandler) List(c *fiber.Ctx) error {
 	q := parseListQuery(c)
 
-	hasil := []model.Student{}
+	ctx, cancel := requestContext(c)
+	defer cancel()
 
-	// Filter dan pencarian
-	for _, s := range students {
-		if q.IsActive != nil && s.IsActive != *q.IsActive {
-			continue
-		}
-
-		if q.Search != "" && !cocokPencarian(s, q.Search) {
-			continue
-		}
-
-		hasil = append(hasil, s)
+	students, total, err := h.repo.FindAll(ctx, q)
+	if err != nil {
+		return handleRepositoryError(c, err)
 	}
 
-	// Sorting
-	sort.SliceStable(hasil, func(i, j int) bool {
-		switch q.Sort {
-		case "nim":
-			if q.Order == "desc" {
-				return hasil[i].NIM > hasil[j].NIM
-			}
-			return hasil[i].NIM < hasil[j].NIM
-
-		case "name":
-			if q.Order == "desc" {
-				return hasil[i].Name > hasil[j].Name
-			}
-			return hasil[i].Name < hasil[j].Name
-
-		case "grade":
-			if q.Order == "desc" {
-				return hasil[i].Grade > hasil[j].Grade
-			}
-			return hasil[i].Grade < hasil[j].Grade
-
-		case "is_active":
-			if q.Order == "desc" {
-				return hasil[i].IsActive && !hasil[j].IsActive
-			}
-			return !hasil[i].IsActive && hasil[j].IsActive
-
-		default:
-			if q.Order == "desc" {
-				return hasil[i].ID > hasil[j].ID
-			}
-			return hasil[i].ID < hasil[j].ID
-		}
-	})
-
-	// Pagination
-	total := len(hasil)
 	totalPages := (total + q.Limit - 1) / q.Limit
-
-	mulai := (q.Page - 1) * q.Limit
-	if mulai > total {
-		mulai = total
-	}
-
-	akhir := mulai + q.Limit
-	if akhir > total {
-		akhir = total
-	}
 
 	return okList(
 		c,
 		"daftar mahasiswa berhasil diambil",
-		hasil[mulai:akhir],
+		students,
 		&model.Meta{
 			Page:       q.Page,
 			Limit:      q.Limit,
@@ -123,24 +74,25 @@ func listStudents(c *fiber.Ctx) error {
 }
 
 // Mengambil satu mahasiswa berdasarkan ID
-func getStudent(c *fiber.Ctx) error {
+func (h *StudentHandler) Get(c *fiber.Ctx) error {
 	id, valid := paramID(c)
-
 	if !valid {
 		return fail(c, fiber.StatusBadRequest, "id harus berupa angka positif")
 	}
 
-	i := findStudentIndex(id)
+	ctx, cancel := requestContext(c)
+	defer cancel()
 
-	if i == -1 {
-		return fail(c, fiber.StatusNotFound, "mahasiswa tidak ditemukan")
+	student, err := h.repo.FindByID(ctx, id)
+	if err != nil {
+		return handleRepositoryError(c, err)
 	}
 
-	return ok(c, "mahasiswa ditemukan", students[i])
+	return ok(c, "mahasiswa ditemukan", student)
 }
 
 // Menambahkan mahasiswa baru
-func createStudent(c *fiber.Ctx) error {
+func (h *StudentHandler) Create(c *fiber.Ctx) error {
 	var req model.CreateStudentRequest
 
 	if err := c.BodyParser(&req); err != nil {
@@ -179,23 +131,20 @@ func createStudent(c *fiber.Ctx) error {
 		return failValidation(c, errs)
 	}
 
-	// NIM tidak boleh sama
-	for _, s := range students {
-		if s.NIM == req.NIM {
-			return fail(c, fiber.StatusConflict, "NIM sudah digunakan")
-		}
-	}
-
 	student := model.Student{
-		ID:       nextID,
 		NIM:      req.NIM,
 		Name:     req.Name,
 		Grade:    req.Grade,
 		IsActive: true,
 	}
 
-	students = append(students, student)
-	nextID++
+	ctx, cancel := requestContext(c)
+	defer cancel()
+
+	student, err := h.repo.Create(ctx, student)
+	if err != nil {
+		return handleRepositoryError(c, err)
+	}
 
 	return created(
 		c,
@@ -206,16 +155,18 @@ func createStudent(c *fiber.Ctx) error {
 }
 
 // Mengganti seluruh data mahasiswa
-func replaceStudent(c *fiber.Ctx) error {
+func (h *StudentHandler) Replace(c *fiber.Ctx) error {
 	id, valid := paramID(c)
-
 	if !valid {
 		return fail(c, fiber.StatusBadRequest, "id harus berupa angka positif")
 	}
 
-	i := findStudentIndex(id)
-	if i == -1 {
-		return fail(c, fiber.StatusNotFound, "mahasiswa tidak ditemukan")
+	ctx, cancel := requestContext(c)
+	defer cancel()
+
+	student, err := h.repo.FindByID(ctx, id)
+	if err != nil {
+		return handleRepositoryError(c, err)
 	}
 
 	var req model.ReplaceStudentRequest
@@ -260,32 +211,32 @@ func replaceStudent(c *fiber.Ctx) error {
 		return failValidation(c, errs)
 	}
 
-	// NIM tidak boleh dipakai mahasiswa lain
-	for index, s := range students {
-		if index != i && s.NIM == req.NIM {
-			return fail(c, fiber.StatusConflict, "NIM sudah digunakan")
-		}
+	student.NIM = req.NIM
+	student.Name = req.Name
+	student.Grade = req.Grade
+	student.IsActive = req.IsActive
+
+	student, err = h.repo.Update(ctx, student)
+	if err != nil {
+		return handleRepositoryError(c, err)
 	}
 
-	students[i].NIM = req.NIM
-	students[i].Name = req.Name
-	students[i].Grade = req.Grade
-	students[i].IsActive = req.IsActive
-
-	return ok(c, "data mahasiswa berhasil diganti", students[i])
+	return ok(c, "data mahasiswa berhasil diganti", student)
 }
 
 // Mengubah sebagian data mahasiswa
-func patchStudent(c *fiber.Ctx) error {
+func (h *StudentHandler) Patch(c *fiber.Ctx) error {
 	id, valid := paramID(c)
-
 	if !valid {
 		return fail(c, fiber.StatusBadRequest, "id harus berupa angka positif")
 	}
 
-	i := findStudentIndex(id)
-	if i == -1 {
-		return fail(c, fiber.StatusNotFound, "mahasiswa tidak ditemukan")
+	ctx, cancel := requestContext(c)
+	defer cancel()
+
+	student, err := h.repo.FindByID(ctx, id)
+	if err != nil {
+		return handleRepositoryError(c, err)
 	}
 
 	var req model.PatchStudentRequest
@@ -303,7 +254,6 @@ func patchStudent(c *fiber.Ctx) error {
 
 	errs := map[string]string{}
 
-	// Validasi dulu
 	if req.NIM != nil && *req.NIM <= 0 {
 		errs["nim"] = "harus berupa angka positif"
 	}
@@ -328,49 +278,43 @@ func patchStudent(c *fiber.Ctx) error {
 		return failValidation(c, errs)
 	}
 
-	// Cek NIM duplikat
 	if req.NIM != nil {
-		for index, s := range students {
-			if index != i && s.NIM == *req.NIM {
-				return fail(c, fiber.StatusConflict, "NIM sudah digunakan")
-			}
-		}
-	}
-
-	// Baru ubah data setelah semua valid
-	if req.NIM != nil {
-		students[i].NIM = *req.NIM
+		student.NIM = *req.NIM
 	}
 
 	if req.Name != nil {
-		students[i].Name = *req.Name
+		student.Name = *req.Name
 	}
 
 	if req.Grade != nil {
-		students[i].Grade = *req.Grade
+		student.Grade = *req.Grade
 	}
 
 	if req.IsActive != nil {
-		students[i].IsActive = *req.IsActive
+		student.IsActive = *req.IsActive
 	}
 
-	return ok(c, "data mahasiswa berhasil diperbarui", students[i])
+	student, err = h.repo.Update(ctx, student)
+	if err != nil {
+		return handleRepositoryError(c, err)
+	}
+
+	return ok(c, "data mahasiswa berhasil diperbarui", student)
 }
 
 // Menghapus mahasiswa
-func deleteStudent(c *fiber.Ctx) error {
+func (h *StudentHandler) Delete(c *fiber.Ctx) error {
 	id, valid := paramID(c)
-
 	if !valid {
 		return fail(c, fiber.StatusBadRequest, "id harus berupa angka positif")
 	}
 
-	i := findStudentIndex(id)
-	if i == -1 {
-		return fail(c, fiber.StatusNotFound, "mahasiswa tidak ditemukan")
-	}
+	ctx, cancel := requestContext(c)
+	defer cancel()
 
-	students = append(students[:i], students[i+1:]...)
+	if err := h.repo.Delete(ctx, id); err != nil {
+		return handleRepositoryError(c, err)
+	}
 
 	return noContent(c)
 }

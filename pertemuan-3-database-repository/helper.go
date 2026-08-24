@@ -1,13 +1,19 @@
 package main
 
 import (
+	"context"
 	"strconv"
 	"strings"
-
-	"tugas1-go/pertemuan-3-database-repository/app/model"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
+
+	"tugas1-go/pertemuan-3-database-repository/app/model"
 )
+
+func requestContext(c *fiber.Ctx) (context.Context, context.CancelFunc) {
+	return context.WithTimeout(c.UserContext(), 5*time.Second)
+}
 
 // Respons sukses biasa
 func ok(c *fiber.Ctx, message string, data any) error {

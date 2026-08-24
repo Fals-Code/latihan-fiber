@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"strings"
 	"time"
@@ -9,6 +10,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/requestid"
+
+	"tugas1-go/pertemuan-3-database-repository/app/repository"
+	"tugas1-go/pertemuan-3-database-repository/config"
+	"tugas1-go/pertemuan-3-database-repository/database"
 )
 
 var metodeBerbody = map[string]bool{
@@ -35,6 +40,17 @@ func requireJSON(c *fiber.Ctx) error {
 }
 
 func main() {
+	config.LoadEnv()
+
+	pool, err := database.NewPool(context.Background())
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer pool.Close()
+
+	studentRepo := repository.NewStudentRepository(pool)
+	studentHandler := NewStudentHandler(studentRepo)
+
 	app := fiber.New(fiber.Config{
 		AppName: "Student REST API",
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
@@ -62,6 +78,17 @@ func main() {
 	api := app.Group("/api/v1")
 
 	api.Get("/health", func(c *fiber.Ctx) error {
+		pingCtx, cancel := context.WithTimeout(c.UserContext(), 2*time.Second)
+		defer cancel()
+
+		if err := pool.Ping(pingCtx); err != nil {
+			return fail(
+				c,
+				fiber.StatusServiceUnavailable,
+				"database tidak tersedia",
+			)
+		}
+
 		return ok(c, "server berjalan", fiber.Map{
 			"timestamp": time.Now(),
 		})
@@ -69,18 +96,20 @@ func main() {
 
 	studentsAPI := api.Group("/students", requireJSON)
 
-	studentsAPI.Get("/", listStudents)
-	studentsAPI.Get("/:id", getStudent)
-	studentsAPI.Post("/", createStudent)
-	studentsAPI.Put("/:id", replaceStudent)
-	studentsAPI.Patch("/:id", patchStudent)
-	studentsAPI.Delete("/:id", deleteStudent)
+	studentsAPI.Get("/", studentHandler.List)
+	studentsAPI.Get("/:id", studentHandler.Get)
+	studentsAPI.Post("/", studentHandler.Create)
+	studentsAPI.Put("/:id", studentHandler.Replace)
+	studentsAPI.Patch("/:id", studentHandler.Patch)
+	studentsAPI.Delete("/:id", studentHandler.Delete)
 
 	// Endpoint yang tidak tersedia
 	app.Use(func(c *fiber.Ctx) error {
 		return fail(c, fiber.StatusNotFound, "endpoint tidak ditemukan")
 	})
 
-	log.Println("Server berjalan di http://localhost:3000")
-	log.Fatal(app.Listen(":3000"))
+	port := config.GetEnv("APP_PORT", "3000")
+
+	log.Printf("Server berjalan di http://localhost:%s", port)
+	log.Fatal(app.Listen(":" + port))
 }
