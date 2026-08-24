@@ -1,22 +1,22 @@
-package main
+package model
 
-// entitas
+import "time"
+
 type Student struct {
-	ID       int     `json:"id"`
-	NIM      int     `json:"nim"`
-	Name     string  `json:"name"`
-	Grade    float64 `json:"grade"`
-	IsActive bool    `json:"is_active"`
+	ID        int       `json:"id"`
+	NIM       int       `json:"nim"`
+	Name      string    `json:"name"`
+	Grade     float64   `json:"grade"`
+	IsActive  bool      `json:"is_active"`
+	CreatedAt time.Time `json:"-"`
 }
 
-// POST
 type CreateStudentRequest struct {
 	NIM   int     `json:"nim"`
 	Name  string  `json:"name"`
 	Grade float64 `json:"grade"`
 }
 
-// PUT
 type ReplaceStudentRequest struct {
 	NIM      int     `json:"nim"`
 	Name     string  `json:"name"`
@@ -24,7 +24,6 @@ type ReplaceStudentRequest struct {
 	IsActive bool    `json:"is_active"`
 }
 
-// PATCH
 type PatchStudentRequest struct {
 	NIM      *int     `json:"nim,omitempty"`
 	Name     *string  `json:"name,omitempty"`
@@ -32,7 +31,6 @@ type PatchStudentRequest struct {
 	IsActive *bool    `json:"is_active,omitempty"`
 }
 
-// response API.
 type WebResponse struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
@@ -41,7 +39,6 @@ type WebResponse struct {
 	Errors  any    `json:"errors,omitempty"`
 }
 
-// pagination.
 type Meta struct {
 	Page       int `json:"page"`
 	Limit      int `json:"limit"`
@@ -49,7 +46,6 @@ type Meta struct {
 	TotalPages int `json:"total_pages"`
 }
 
-// Query daftar mahasiswa.
 type ListQuery struct {
 	Page     int
 	Limit    int
@@ -57,4 +53,8 @@ type ListQuery struct {
 	Sort     string
 	Order    string
 	IsActive *bool
+}
+
+func (q ListQuery) Offset() int {
+	return (q.Page - 1) * q.Limit
 }
