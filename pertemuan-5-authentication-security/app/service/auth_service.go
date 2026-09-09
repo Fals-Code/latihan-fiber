@@ -149,7 +149,7 @@ func (s *AuthService) Logout(c *fiber.Ctx) error {
 }
 
 func (s *AuthService) Me(c *fiber.Ctx) error {
-	identity, ok := c.Locals("auth_user").(model.AuthUser)
+	identity, ok := helper.CurrentUser(c)
 	if !ok {
 		return helper.Fail(c, fiber.StatusUnauthorized, "pengguna belum terautentikasi")
 	}
