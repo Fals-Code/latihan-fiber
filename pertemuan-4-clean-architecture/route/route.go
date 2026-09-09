@@ -17,6 +17,7 @@ func Register(
 	app *fiber.App,
 	pool *pgxpool.Pool,
 	studentService *service.StudentService,
+	achievementService *service.AchievementService,
 ) {
 	api := app.Group("/api/v1")
 
@@ -30,6 +31,14 @@ func Register(
 	students.Put("/:id", studentService.Replace)
 	students.Patch("/:id", studentService.Patch)
 	students.Delete("/:id", studentService.Delete)
+
+	achievements := api.Group("/achievements", middleware.RequireJSON)
+	achievements.Get("/", achievementService.List)
+	achievements.Get("/:id", achievementService.Get)
+	achievements.Post("/", achievementService.Create)
+	achievements.Put("/:id", achievementService.Replace)
+	achievements.Patch("/:id", achievementService.Patch)
+	achievements.Delete("/:id", achievementService.Delete)
 }
 
 // healthCheck memeriksa apakah server dapat berkomunikasi

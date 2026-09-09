@@ -33,9 +33,11 @@ func main() {
 	// 3. Rakit dependency dari repository ke service.
 	studentRepository := repository.NewStudentRepository(pool)
 	studentService := service.NewStudentService(studentRepository)
+	achievementRepository := repository.NewAchievementRepository(pool)
+	achievementService := service.NewAchievementService(achievementRepository)
 
 	// 4. Rakit aplikasi Fiber.
-	app := config.NewApp(logger, pool, studentService)
+	app := config.NewApp(logger, pool, studentService, achievementService)
 
 	port := config.GetEnv("APP_PORT", "3000")
 

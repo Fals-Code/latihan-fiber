@@ -35,6 +35,29 @@ var allowedSort = map[string]bool{
 }
 
 // ParseListQuery membaca query parameter daftar mahasiswa.
+func ParseAchievementListQuery(c *fiber.Ctx) model.ListQueryAchievement {
+	q := model.ListQueryAchievement{
+		Page: c.QueryInt("page", 1), Limit: c.QueryInt("limit", 10), Search: strings.TrimSpace(c.Query("search")), Sort: strings.ToLower(c.Query("sort", "id")), Order: strings.ToLower(c.Query("order", "asc")),
+	}
+	if q.Page < 1 {
+		q.Page = 1
+	}
+	if q.Limit < 1 {
+		q.Limit = 10
+	}
+	if q.Limit > 100 {
+		q.Limit = 100
+	}
+	allowed := map[string]bool{"id": true, "name": true, "student_id": true, "rank": true, "created_at": true}
+	if !allowed[q.Sort] {
+		q.Sort = "id"
+	}
+	if q.Order != "desc" {
+		q.Order = "asc"
+	}
+	return q
+}
+
 func ParseListQuery(c *fiber.Ctx) model.ListQuery {
 	q := model.ListQuery{
 		Page:   c.QueryInt("page", 1),
