@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -25,6 +26,18 @@ func GetEnv(key, fallback string) string {
 }
 
 // GetEnvInt mengambil environment dalam bentuk integer.
+func GetEnvList(key, fallback string) []string {
+	value := GetEnv(key, fallback)
+	parts := strings.Split(value, ",")
+	result := make([]string, 0, len(parts))
+	for _, part := range parts {
+		if trimmed := strings.TrimSpace(part); trimmed != "" {
+			result = append(result, trimmed)
+		}
+	}
+	return result
+}
+
 func GetEnvInt(key string, fallback int) int {
 	value, ok := os.LookupEnv(key)
 	if !ok || value == "" {

@@ -8,16 +8,24 @@ import (
 	"syscall"
 	"time"
 
+	"tugas1-go/pertemuan-5-authentication-security/helper"
+
 	"tugas1-go/pertemuan-5-authentication-security/app/repository"
 	"tugas1-go/pertemuan-5-authentication-security/app/service"
 	"tugas1-go/pertemuan-5-authentication-security/config"
 	"tugas1-go/pertemuan-5-authentication-security/database"
+	"tugas1-go/pertemuan-5-authentication-security/route"
 )
 
 func main() {
 	// 1. Muat konfigurasi dan logger.
 	config.LoadEnv()
 	logger := config.NewLogger()
+	jwtSecret := os.Getenv("JWT_SECRET")
+	if len(jwtSecret) < 32 {
+		logger.Error("konfigurasi JWT_SECRET tidak valid")
+		os.Exit(1)
+	}
 
 	// 2. Hubungkan aplikasi ke PostgreSQL.
 	pool, err := database.NewPool(context.Background())
@@ -35,9 +43,25 @@ func main() {
 	studentService := service.NewStudentService(studentRepository)
 	achievementRepository := repository.NewAchievementRepository(pool)
 	achievementService := service.NewAchievementService(achievementRepository)
+	userRepository := repository.NewUserRepository(pool)
+	tokenRepository := repository.NewTokenRepository(pool)
+	jwtManager := helper.NewJWTManager(
+		jwtSecret,
+		config.GetEnv("JWT_ISSUER", "praktikum-backend"),
+		time.Duration(config.GetEnvInt("JWT_ACCESS_TTL_MINUTES", 15))*time.Minute,
+	)
+	authService := service.NewAuthService(
+		userRepository,
+		tokenRepository,
+		jwtManager,
+		time.Duration(config.GetEnvInt("JWT_REFRESH_TTL_DAYS", 7))*24*time.Hour,
+	)
 
 	// 4. Rakit aplikasi Fiber.
-	app := config.NewApp(logger, pool, studentService, achievementService)
+	app := config.NewApp(logger, route.Dependencies{
+		Pool: pool, JWT: jwtManager, StudentService: studentService,
+		AchievementService: achievementService, AuthService: authService,
+	})
 
 	port := config.GetEnv("APP_PORT", "3000")
 

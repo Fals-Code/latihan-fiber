@@ -4,28 +4,21 @@ import (
 	"log/slog"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/jackc/pgx/v5/pgxpool"
-
-	"tugas1-go/pertemuan-5-authentication-security/app/service"
 	"tugas1-go/pertemuan-5-authentication-security/helper"
 	"tugas1-go/pertemuan-5-authentication-security/middleware"
 	"tugas1-go/pertemuan-5-authentication-security/route"
 )
 
 // NewApp merakit aplikasi Fiber, middleware, dan route.
-func NewApp(
-	logger *slog.Logger,
-	pool *pgxpool.Pool,
-	studentService *service.StudentService,
-	achievementService *service.AchievementService,
-) *fiber.App {
+func NewApp(logger *slog.Logger, deps route.Dependencies) *fiber.App {
 	app := fiber.New(fiber.Config{
 		AppName:      GetEnv("APP_NAME", "Praktikum Backend Lanjut"),
+		BodyLimit:    1 * 1024 * 1024,
 		ErrorHandler: newErrorHandler(logger),
 	})
 
-	middleware.Register(app, logger)
-	route.Register(app, pool, studentService, achievementService)
+	middleware.Register(app, logger, GetEnvList("ALLOWED_ORIGINS", "http://localhost:5173"))
+	route.Register(app, deps)
 
 	// Menangani endpoint yang tidak dikenal.
 	app.Use(func(c *fiber.Ctx) error {
