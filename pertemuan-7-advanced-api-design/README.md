@@ -1,60 +1,82 @@
-# Pertemuan 6 - Authorization dan RBAC
+# Pertemuan 7 — Advanced API Design
 
-Authentication menjawab pertanyaan “siapa yang login?”, sedangkan authorization menentukan tindakan apa yang boleh dilakukan user tersebut. Pada pertemuan ini authentication dari tahap sebelumnya dilanjutkan dengan RBAC (Role-Based Access Control).
+Modul ini mengembangkan API dari Pertemuan 6 dengan fokus pada konsistensi error, validasi deklaratif, pagination yang stabil, dan dukungan beberapa format response.
 
-## RBAC dan permission
+## Materi dan fitur
 
-Role yang dipakai adalah `admin`, `staff`, dan `user`. Hak akses tidak ditulis sebagai pengecekan role yang tersebar di setiap handler. Role dipetakan ke permission melalui tabel `role_permissions`, lalu dibaca oleh `RoleRepository` dan dibentuk menjadi `PermissionSet`.
+### Centralized AppError dan ErrorHandler
 
-`PermissionSet` bekerja secara fail closed: permission yang tidak dikenal atau permission yang tidak dimiliki akan ditolak. Middleware `RequirePermission` dipasang di route setelah `RequireAuth`. Request tanpa login menghasilkan `401`, sedangkan user yang sudah login tetapi tidak memiliki permission menghasilkan `403`.
+`helper/errors.go` mendefinisikan `AppError` untuk membawa status HTTP, pesan aman, detail error, dan penyebab asli. Middleware, handler, service, dan repository mengembalikan error; `config/app.go` menggunakan Fiber `ErrorHandler` terpusat untuk mengubah error menjadi `WebResponse` yang konsisten.
 
-## Authorization pada user dan student
+`RequestLogger` mencatat status akhir request, termasuk status `4xx` atau `5xx` yang berasal dari error sebelum diproses oleh error handler.
 
-Authorization juga dicek di service, bukan hanya di route. Ini membuat aturan tetap berlaku walaupun service dipanggil dari tempat lain.
+### Declarative Validation dengan validator v10
 
-- Akses user memakai permission seperti `user:read:any`, `user:update:any`, dan permission terkait pengelolaan user.
-- Akses student memakai permission untuk membaca, membuat, mengubah, dan menghapus data.
-- Student memiliki `owner_id`. User biasa hanya boleh mengubah data yang dimilikinya, sedangkan role tertentu dapat mengakses data milik user lain sesuai permission `:any`.
-- `owner_id` tidak boleh diubah lewat request update biasa.
-- Data lama dengan owner kosong tidak otomatis dianggap milik user yang sedang login.
+DTO request menggunakan tag `validate` dan divalidasi melalui `github.com/go-playground/validator/v10`. Error validasi dipetakan kembali ke nama field JSON melalui `helper/validator.go`, sehingga response validasi tetap terstruktur dan konsisten.
 
-JWT masih dipakai sebagai identitas awal. Role pada JWT yang sudah lama tidak dianggap sebagai sumber izin terakhir; permission aktif dibaca kembali saat authorization dilakukan. Karena itu perubahan role bisa menghentikan akses dari token lama sesuai data role yang berlaku.
+### Keyset / Cursor-based Pagination
 
-## Database dan file penting
+Pagination offset digantikan oleh cursor opaque untuk daftar student dan achievement. Cursor dibuat dan dibaca melalui:
 
-Migration authorization ada di:
+- `helper.EncodeCursor`
+- `helper.DecodeCursor`
+- `StudentRepository.FindAfterCursor`
+- `AchievementRepository.FindAfterCursor`
 
-- `migrations/003_rbac.sql` untuk role, permission, dan relasinya.
-- `migrations/004_student_permissions.sql` untuk permission student.
+Query menggunakan urutan stabil `created_at DESC, id DESC`. Index pendukung tersedia pada:
 
-Beberapa file utama:
+- `migrations/001_create_students.sql`
+- `migrations/002_create_achievements.sql`
 
-- `helper/authz.go` berisi helper permission dan pengecekan akses.
-- `middleware/authz.go` berisi `RequirePermission`.
-- `app/repository/role_repository.go` membaca role dan permission.
-- `app/service/authz_rules.go` mengatur akses user.
-- `app/service/student_authz_rules.go` mengatur akses berdasarkan ownership dan permission.
-- `app/service/user_service.go` dan `student_service.go` menerapkan aturan tersebut.
-- `route/route.go` memasang authentication dan authorization pada endpoint.
+Response daftar menyertakan metadata `next_cursor` jika masih tersedia data berikutnya. Cursor tidak valid menghasilkan error `400 Bad Request`.
 
-## Endpoint yang dilindungi
+### Content Negotiation
 
-Route tetap mencakup authentication, user, student, dan achievement. Endpoint user memakai permission untuk operasi seperti membaca, membuat, memperbarui, dan menghapus user. Endpoint student dan achievement juga dibatasi sesuai permission yang diberikan pada role.
+Endpoint daftar mendukung dua format berdasarkan header `Accept`:
 
-Detail daftar route ada di `route/route.go`; aturan sebenarnya tetap diperiksa ulang di service.
+- `application/json` untuk response JSON standar.
+- `text/csv` untuk response daftar dalam format CSV.
+
+Format selain JSON dan CSV ditolak dengan status `406 Not Acceptable`. Implementasinya tersedia di `helper/negotiation.go`.
+
+## Struktur folder
+
+```text
+pertemuan-7-advanced-api-design/
+├── app/
+│   ├── model/
+│   ├── repository/
+│   └── service/
+├── config/
+├── database/
+├── helper/
+│   ├── errors.go
+│   ├── negotiation.go
+│   └── validator.go
+├── middleware/
+├── migrations/
+├── route/
+├── BUG_REPORT.md
+├── .env.example
+└── main.go
+```
+
+## Laporan bug
+
+Sembilan planted bug pada Bagian B Modul 7, termasuk lokasi, gejala, akar masalah, perbaikan, dan bukti verifikasi, didokumentasikan dalam [`BUG_REPORT.md`](BUG_REPORT.md).
 
 ## Menjalankan dan menguji
 
-Buat `.env` berdasarkan `.env.example`, siapkan PostgreSQL, lalu jalankan migration dari folder `migrations`. Dari folder ini:
+Siapkan `.env` berdasarkan `.env.example`, PostgreSQL, dan jalankan migration dari folder `migrations`. Dari root repositori, gunakan:
+
+```bash
+go build ./pertemuan-7-advanced-api-design/...
+go test ./pertemuan-7-advanced-api-design/...
+go vet ./pertemuan-7-advanced-api-design/...
+```
+
+Untuk menjalankan server dari folder ini:
 
 ```bash
 go run .
 ```
-
-Test unit dijalankan dengan:
-
-```bash
-go test ./...
-```
-
-Test authorization mencakup permission yang dikenal dan tidak dikenal, role admin/staff/user, akses berdasarkan owner, larangan mengubah owner, serta middleware `401` dan `403`.
