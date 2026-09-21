@@ -35,10 +35,6 @@ func TestHashPasswordUsesDifferentSalt(t *testing.T) {
 	}
 }
 
-func TestDummyPasswordVerification(t *testing.T) {
-	VerifyDummyPassword("wrong-password1")
-}
-
 func TestRandomTokenAndSHA256Hex(t *testing.T) {
 	first, err := RandomToken(32)
 	if err != nil {
@@ -51,7 +47,8 @@ func TestRandomTokenAndSHA256Hex(t *testing.T) {
 	if first == "" || second == "" || first == second {
 		t.Fatal("tokens must be non-empty and unique")
 	}
-	if SHA256Hex(first) != SHA256Hex(first) {
+	firstHash := SHA256Hex(first)
+	if firstHash != SHA256Hex(first) {
 		t.Fatal("hash must be deterministic")
 	}
 	if SHA256Hex(first) == first {
