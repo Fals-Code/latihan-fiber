@@ -80,3 +80,11 @@ Untuk menjalankan server dari folder ini:
 ```bash
 go run .
 ```
+
+## Rekonsiliasi database bukti
+
+Aplikasi tidak mengharuskan `hl_test`. Koneksi database dibaca dari `.env` melalui `DB_NAME`, dengan fallback `praktikum_backend` pada `database/postgres.go`. Bukti historis pada D.2–D.4 yang menyebut `hl_test` adalah hasil pengujian terdahulu dan tidak diubah menjadi klaim pengujian `praktikum_backend`.
+
+Audit read-only terdahulu memverifikasi `current_database() = praktikum_backend` tanpa operasi tulis atau migration. Status **NOT VERIFIED** pada audit tersebut telah digantikan oleh pengujian HTTP aktual berikutnya pada `praktikum_backend`: D.2 PATCH dan D.3 cursor pagination **PASS** berdasarkan ringkasan self-contained pada dokumen evidence masing-masing.
+
+D.4 content negotiation/error handling **PASS berdasarkan bukti manual terbaru dari pengguna**: JSON HTTP 200 dengan IDs `[34,33]`, CSV HTTP 200 dengan IDs `[34,33]` dan OwnerID numerik `36`/`37`, XML HTTP 406 `NOT_ACCEPTABLE`, serta wildcard `*/*` HTTP 200 JSON. Screenshot asli ada dalam laporan yang telah dikumpulkan tetapi tidak tersedia di workspace; hasil ini bukan pengujian ulang Codex. Endpoint `/auth/me` tetap **NOT VERIFIED**.

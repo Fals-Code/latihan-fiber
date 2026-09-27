@@ -175,6 +175,69 @@ Kedua endpoint mengembalikan HTTP 200, `has_more` dan `next_cursor` sesuai, ID t
 
 Pengujian penyisipan record baru dilakukan secara terisolasi pada database `hl_test`, bukan `praktikum_backend`. Enam record sintetis awal menghasilkan halaman `[6, 5]`; setelah record baru ID `7` disisipkan di posisi paling atas, cursor lama menghasilkan `[4, 3]` lalu `[2, 1]` tanpa menampilkan ID `7`. Pagination baru tanpa cursor menghasilkan `[7, 6]`. Database utama tidak digunakan untuk operasi INSERT tersebut.
 
+## Rekonsiliasi terhadap praktikum_backend
+
+Skenario INSERT dan ID sintetis pada bagian sebelumnya adalah bukti historis `hl_test`; tidak boleh dibaca sebagai pengujian pada `praktikum_backend`. Riwayat tersebut dipertahankan apa adanya.
+
+Audit read-only terbaru pada `praktikum_backend` menghasilkan:
+
+```text
+current_database() = praktikum_backend
+students = 6
+users = 5
+students_created_at_id_desc_idx tersedia
+users_created_at_id_desc_idx tersedia
+```
+
+`EXPLAIN (ANALYZE, BUFFERS)` untuk SELECT halaman pertama students berhasil dan memilih `Seq Scan` dengan `Sort Key: created_at DESC, id DESC`; ini konsisten dengan tabel kecil dan bukan indikasi index tidak valid. Tidak ada operasi tulis atau migration.
+
+Pada audit read-only terdahulu, pagination HTTP halaman pertama, halaman lanjutan, pemeriksaan ID duplikat, `has_more`, dan cursor invalid pada `praktikum_backend` berstatus **NOT VERIFIED** karena kredensial akun pengujian belum tersedia secara tervalidasi. Skenario INSERT belum dilakukan pada tahap tersebut; status ini digantikan oleh eksekusi HTTP aktual di bawah.
+
 ## Kesimpulan D.3
 
-Pembuktian penyisipan record di antara pengambilan halaman telah **PASS** pada database pengujian terpisah. Cursor lama tidak mengulang atau memasukkan record baru, sedangkan pagination baru menampilkan record baru pada halaman pertama.
+Implementasi cursor dan query dapat dibuktikan melalui source, unit test, koneksi read-only, catalog index, dan EXPLAIN. Bukti `hl_test` sebelumnya tetap historis; hasil HTTP aktual pada `praktikum_backend`, termasuk skenario INSERT, didokumentasikan pada bagian berikut.
+
+## Eksekusi HTTP aktual pada `praktikum_backend` — 27 September 2026
+
+Pengujian memakai aplikasi Fiber asli dan limit `2`. Ringkasan berikut dibuat self-contained agar bukti D.3 tetap dapat dibaca tanpa raw terminal log lokal yang tidak dipush ke repository.
+
+Preflight menghasilkan `current_database=praktikum_backend`, users `[12,13,35,36,37]`, students `[1,3,6,32,33,34]`, dan `p7_test=0`. Akun sementara ID `45` dibuat melalui register, diberi role `staff` melalui UPDATE yang dibatasi ID/email lalu diverifikasi dengan SELECT, dan login melalui endpoint resmi berhasil.
+
+### Fixture aktual
+
+| Fixture | Student ID | NIM | `created_at` UTC |
+|---|---:|---:|---|
+| Batch 1 | 49 | 943096225 | 2026-09-27T09:58:19.187137Z |
+| Batch 2 | 50 | 943096226 | 2026-09-27T09:58:19.362495Z |
+| Batch 3 | 51 | 943096227 | 2026-09-27T09:58:19.537805Z |
+| Batch 4 | 52 | 943096228 | 2026-09-27T09:58:19.740606Z |
+| Batch 5 | 53 | 943096229 | 2026-09-27T09:58:20.019896Z |
+| Batch 6 | 54 | 943096230 | 2026-09-27T09:58:20.184158Z |
+| INSERT setelah cursor lama | 55 | 943096231 | 2026-09-27T09:58:20.534214Z |
+
+### Snapshot sebelum INSERT
+
+Halaman pertama sebelum INSERT adalah `[54,53]`, `has_more=true`, dan memberikan cursor lama. Snapshot lengkap melalui pagination menghasilkan `[54,53]`, `[52,51]`, `[50,49]`, `[34,33]`, `[32,6]`, `[3,1]`; hanya halaman terakhir memiliki `has_more=false` dan tidak memiliki `next_cursor`.
+
+Snapshot ini tidak memiliki ID duplikat dan sama dengan urutan SELECT `created_at DESC, id DESC` pada database.
+
+### Lanjutan cursor lama setelah INSERT
+
+Setelah INSERT ID `55`, posisi aktualnya `new_index=0`, sedangkan batas cursor lama berada di `cursor_index=2`. Jadi record baru berada **sebelum** batas cursor lama.
+
+Lanjutan dari cursor lama menghasilkan `[52,51]`, `[50,49]`, `[34,33]`, `[32,6]`, `[3,1]`. Seluruh halaman HTTP 200; halaman terakhir berakhir normal pada `has_more=false` tanpa `next_cursor`.
+
+- Tidak ada ID duplikat.
+- Urutan sama dengan proyeksi SELECT setelah batas cursor lama.
+- Semua record snapshot lama yang berada setelah batas muncul tepat satu kali.
+- ID `55` tidak muncul pada lanjutan cursor lama: **PASS**.
+
+### Pagination baru setelah INSERT
+
+Pagination baru menghasilkan `[55,54]`, `[53,52]`, `[51,50]`, `[49,34]`, `[33,32]`, `[6,3]`, `[1]`. Urutan seluruhnya sama dengan SELECT aktual `created_at DESC, id DESC`; ID `55` terlihat pada posisi pertama sesuai timestamp aktualnya. Tidak ada ID duplikat dan halaman ketujuh berakhir dengan `has_more=false` tanpa `next_cursor`.
+
+### Cleanup
+
+`finally` memeriksa `achievements=0` untuk setiap ID `49–55`, menghapus setiap student dengan predicate ID/owner, memeriksa dan membersihkan satu refresh token user ID `45`, kemudian menghapus user tersebut. SELECT akhir mengembalikan users `[12,13,35,36,37]`, students `[1,3,6,32,33,34]`, dan `p7_test=0`.
+
+Status terbaru D.3 pada `praktikum_backend`: **PASS** berdasarkan ringkasan eksekusi yang sudah dicatat di dokumen ini. Bukti `hl_test` sebelumnya di dokumen ini tetap historis.

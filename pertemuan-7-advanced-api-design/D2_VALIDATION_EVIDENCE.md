@@ -142,6 +142,33 @@ Nilai record sintetis dipulihkan setelah seluruh skenario.
 - `app/service/student_rules_test.go:25-31` membuktikan field nil tidak mengubah field lain.
 - `helper/remediation_test.go:39-46` membuktikan pesan custom `studentnim` tidak kosong.
 
-## Kesimpulan
+## Rekonsiliasi terhadap praktikum_backend
 
-D.2 untuk validasi deklaratif students, custom validator, pointer/`omitnil`, dan perilaku PATCH telah **PASS** berdasarkan source dan HTTP integration test pada `hl_test`. Bukti historis source students sebelum perbaikan manual tidak tersedia sebagai snapshot terpisah; contoh “sebelum” yang dapat dikutip langsung berasal dari PDF Modul 7.
+Bagian HTTP di atas adalah bukti historis dari `hl_test` dan tetap dipertahankan sebagai riwayat; nama database dan ID sintetisnya tidak direlabel menjadi `praktikum_backend`.
+
+Audit read-only terdahulu memverifikasi konfigurasi dan koneksi `current_database() = praktikum_backend`. Tidak ada INSERT, UPDATE, DELETE, TRUNCATE, DDL, atau migration pada tahap audit tersebut. Status PATCH berikut merupakan status pada tahap sebelum pengujian HTTP aktual yang didokumentasikan setelah bagian ini.
+
+Status bukti terbaru:
+
+- Validasi deklaratif, custom validator, pointer/`omitnil`: **PASS melalui source dan unit test**.
+- PATCH HTTP pada `praktikum_backend`: **NOT VERIFIED pada audit read-only terdahulu; digantikan oleh hasil HTTP aktual PASS di bawah**.
+- Bukti PATCH HTTP `hl_test` di atas: **historis**, bukan hasil `praktikum_backend`.
+
+## Eksekusi HTTP aktual pada `praktikum_backend` — 27 September 2026
+
+Eksekusi berikutnya memakai aplikasi Fiber asli, PostgreSQL `praktikum_backend`, dan akun sementara yang dibuat melalui endpoint registrasi. Ringkasan di bawah dibuat self-contained agar dokumen ini tidak bergantung pada raw terminal log lokal yang tidak dipush ke repository.
+
+- Preflight: `current_database=praktikum_backend`; baseline users `[12,13,35,36,37]`, students `[1,3,6,32,33,34]`.
+- Akun sementara: user ID `43`, username `p7_test`; role diubah hanya untuk user ini menjadi `staff` dan diverifikasi melalui `SELECT` terpisah.
+- Student D.2: ID `35`, NIM `942220108`, owner ID `43`.
+
+| Skenario | HTTP aktual | Verifikasi | Status |
+|---|---:|---|---|
+| `PATCH {"name":""}` | 422 | `VALIDATION_ERROR`; `fields.name=minimal 3 karakter` | PASS |
+| `PATCH {"grade":90}` | 200 | Grade menjadi 90; name, NIM, `is_active`, dan `owner_id` tetap | PASS |
+| `PATCH {}` | 400 | `BAD_REQUEST` | PASS |
+| `PATCH {"name":"P7 Test Updated"}` | 200 | Name tersimpan sebagai `P7 Test Updated` | PASS |
+
+Cleanup pada `finally` memeriksa `achievements=0`, menghapus student ID `35` dengan predicate ID/owner, membersihkan satu refresh token user ID `43`, lalu menghapus user tersebut. SELECT akhir mengembalikan baseline users dan students yang sama serta `p7_test=0`.
+
+Status terbaru: PATCH HTTP D.2 pada `praktikum_backend` **PASS** berdasarkan ringkasan eksekusi yang sudah dicatat di dokumen ini. Bagian `hl_test` di atas tetap merupakan bukti historis dan tidak direlabel.

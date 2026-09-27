@@ -212,6 +212,14 @@ Status HTTP OwnerID regression: **PASS**.
 - `go build ./pertemuan-7-advanced-api-design/...` — PASS.
 - `go vet ./pertemuan-7-advanced-api-design/...` — PASS.
 
+## Rekonsiliasi terhadap praktikum_backend
+
+Bukti HTTP pada bagian awal dan blok regresi historis yang menyebut `hl_test`, ID `[7, 6]`, serta data sintetis tetap dipertahankan sebagai bukti sebelum/periode pengujian terdahulu. Bukti tersebut tidak direlabel menjadi `praktikum_backend`.
+
+Audit read-only terdahulu memverifikasi `current_database() = praktikum_backend` tanpa operasi tulis, migration, atau perubahan data. Pada tahap tersebut, HTTP JSON/CSV terautentikasi dan verifikasi CSV OwnerID berstatus **NOT VERIFIED** karena kredensial akun pengujian belum tersedia secara tervalidasi. Status tahap tersebut dilengkapi oleh ringkasan eksekusi HTTP aktual pada `praktikum_backend` di bagian akhir dokumen.
+
+Unit test CSV OwnerID dan verifikasi source tetap PASS; keduanya tidak menggantikan bukti HTTP.
+
 ## Regresi Serialisasi CSV OwnerID
 
 Bagian ini adalah pembaruan dokumentasi regresi serialisasi. Bukti HTTP historis pada bagian sebelumnya tetap dipertahankan sebagai bukti sebelum perbaikan; bagian ini tidak menggantikan atau mengklasifikasikan ulang bukti historis tersebut.
@@ -248,8 +256,21 @@ go vet ./pertemuan-7-advanced-api-design/...
 PASS
 ```
 
-### Status HTTP setelah perbaikan
+### Status percobaan otomatis setelah perbaikan
 
-**NOT VERIFIED.** Pengujian HTTP setelah perbaikan tidak berhasil dijalankan. Percobaan terakhir berhenti pada kegagalan parsing skrip PowerShell sebelum koneksi database dibuat; tidak ada status HTTP, Content-Type, atau output CSV baru yang dapat dijadikan bukti pascaperbaikan. Skrip tersebut tidak diulang.
+**NOT VERIFIED untuk percobaan otomatis tersebut saja.** Percobaan terakhir berhenti pada kegagalan parsing skrip PowerShell sebelum koneksi database dibuat; tidak ada status HTTP, Content-Type, atau output CSV dari percobaan itu. Status ini tidak membatalkan ringkasan eksekusi HTTP aktual `praktikum_backend` yang diberikan pengguna pada bagian berikut.
 
-Bukti HTTP yang tersedia pada bagian sebelumnya tetap berstatus historis/sebelum perbaikan dan tidak boleh dianggap sebagai verifikasi HTTP setelah perbaikan.
+Bukti HTTP `hl_test` pada bagian sebelumnya tetap historis dan tidak direlabel menjadi bukti `praktikum_backend`.
+
+## Bukti manual terbaru pada `praktikum_backend` dari pengguna
+
+Screenshot asli untuk pengujian manual D.4 ada dalam laporan yang telah dikumpulkan, tetapi screenshot tersebut tidak tersedia di workspace. Karena itu, bagian ini dicatat sebagai **bukti manual dari pengguna**, bukan hasil pengujian ulang Codex dan bukan log terminal yang direkonstruksi.
+
+Hasil manual terbaru pada `praktikum_backend`:
+
+- `Accept: application/json`: HTTP 200, JSON, IDs `[34,33]`, `has_more=true`, dan `next_cursor` tersedia.
+- `Accept: text/csv`: HTTP 200, CSV, IDs `[34,33]`, OwnerID numerik `36` dan `37`, tujuh kolom.
+- `Accept: application/xml`: HTTP 406, kode `NOT_ACCEPTABLE`, response error JSON.
+- `Accept: */*`: HTTP 200, JSON, IDs `[34,33]`.
+
+Status D.4 pada `praktikum_backend`: **PASS berdasarkan bukti manual pengguna** untuk skenario content negotiation di atas. Kegagalan skrip otomatis lama tetap dicatat sebagai riwayat percobaan otomatis, tetapi tidak berarti seluruh D.4 masih `NOT VERIFIED`.
