@@ -1,3 +1,47 @@
 *.exe
 .env
 logs/
+
+# Local environment files
+.env.*
+!.env.example
+!**/.env.example
+
+# Local tool state
+.serena/
+docs/superpowers/
+
+# Logs and raw terminal evidence
+*.log
+*.terminal.log
+pertemuan-7-advanced-api-design/evidence/*.log
+
+# Database dumps and local database files
+*.dump
+*.backup
+*.dump.sql
+*_dump.sql
+*-dump.sql
+*.backup.sql
+*_backup.sql
+*-backup.sql
+*.sql.gz
+*.sql.zip
+*.sql.tar
+*.db
+*.sqlite
+*.sqlite3
+
+# Temporary artifacts
+tmp/
+temp/
+.tmp/
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+coverage.out
