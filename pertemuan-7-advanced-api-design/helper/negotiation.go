@@ -13,14 +13,25 @@ import (
 func Negotiate(c *fiber.Ctx, status int, message string, data any, meta *model.Meta) error {
 	response := model.WebResponse{Success: true, Message: message, Data: data, Meta: meta}
 	accept := strings.ToLower(strings.TrimSpace(c.Get("Accept")))
-	if accept == "" || strings.Contains(accept, "application/json") {
+	if accept == "" || accept == "*/*" || strings.Contains(accept, "application/json") {
 		return c.Status(status).JSON(response)
 	}
 	if strings.Contains(accept, "text/csv") {
-		c.Type("csv")
+		c.Set("Content-Type", "text/csv; charset=utf-8")
+		c.Set("Content-Disposition", "attachment; filename=\"students.csv\"")
 		return c.Status(status).SendString(toCSV(data))
 	}
 	return NewAppError(fiber.StatusNotAcceptable, "format response tidak didukung", map[string]string{"accept": "hanya application/json atau text/csv yang didukung"})
+}
+
+func csvValue(value reflect.Value) string {
+	if value.Kind() == reflect.Pointer {
+		if value.IsNil() {
+			return ""
+		}
+		value = value.Elem()
+	}
+	return fmt.Sprint(value.Interface())
 }
 
 func toCSV(data any) string {
@@ -51,10 +62,11 @@ func toCSV(data any) string {
 		}
 		row := make([]string, item.NumField())
 		for j := range row {
-			row[j] = fmt.Sprint(item.Field(j).Interface())
+			row[j] = csvValue(item.Field(j))
 		}
 		_ = w.Write(row)
 	}
 	w.Flush()
+	_ = w.Error()
 	return b.String()
 }

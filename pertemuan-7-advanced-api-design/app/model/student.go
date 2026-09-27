@@ -13,7 +13,7 @@ type Student struct {
 }
 
 type CreateStudentRequest struct {
-	NIM   int     `json:"nim" validate:"required,gt=0"`
+	NIM   int     `json:"nim" validate:"required,studentnim"`
 	Name  string  `json:"name" validate:"required,min=1"`
 	Grade float64 `json:"grade" validate:"gte=0,lte=100"`
 }
@@ -24,10 +24,10 @@ type ReplaceStudentRequest struct {
 	IsActive bool    `json:"is_active"`
 }
 type PatchStudentRequest struct {
-	NIM      *int     `json:"nim,omitempty" validate:"omitempty,gt=0"`
-	Name     *string  `json:"name,omitempty" validate:"omitempty,min=1"`
-	Grade    *float64 `json:"grade,omitempty" validate:"omitempty,gte=0,lte=100"`
-	IsActive *bool    `json:"is_active,omitempty"`
+	NIM      *int     `json:"nim" validate:"omitnil,gt=0"`
+	Name     *string  `json:"name" validate:"omitnil,min=3"`
+	Grade    *float64 `json:"grade" validate:"omitnil,gte=0,lte=100"`
+	IsActive *bool    `json:"is_active" validate:"omitnil"`
 }
 
 type WebResponse struct {
@@ -35,14 +35,18 @@ type WebResponse struct {
 	Message string `json:"message"`
 	Data    any    `json:"data,omitempty"`
 	Meta    *Meta  `json:"meta,omitempty"`
-	Errors  any    `json:"errors,omitempty"`
+}
+type FailureResponse struct {
+	Success   bool              `json:"success"`
+	Code      string            `json:"code"`
+	Message   string            `json:"message"`
+	Fields    map[string]string `json:"fields,omitempty"`
+	RequestID string            `json:"request_id,omitempty"`
 }
 type Meta struct {
-	Page       int    `json:"page,omitempty"`
 	Limit      int    `json:"limit,omitempty"`
-	Total      int    `json:"total,omitempty"`
-	TotalPages int    `json:"total_pages,omitempty"`
 	NextCursor string `json:"next_cursor,omitempty"`
+	HasMore    bool   `json:"has_more"`
 }
 type ListQuery struct {
 	Page     int

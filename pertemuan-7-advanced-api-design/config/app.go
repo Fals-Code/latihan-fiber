@@ -36,27 +36,26 @@ func newErrorHandler(logger *slog.Logger) fiber.ErrorHandler {
 	return func(c *fiber.Ctx, err error) error {
 		status := fiber.StatusInternalServerError
 		message := "terjadi error pada server"
-
+		code := helper.CodeInternal
+		var fields map[string]string
 		var appErr *helper.AppError
 		if errors.As(err, &appErr) {
-			status = appErr.Status
-			message = appErr.Message
+			status, message, code, fields = appErr.Status, appErr.Message, appErr.Code, appErr.Fields
 		} else if fiberErr, ok := err.(*fiber.Error); ok {
-			status = fiberErr.Code
-			message = fiberErr.Message
+			status, message, code = fiberErr.Code, fiberErr.Message, helper.CodeBadRequest
 		}
-
-		logger.Error(
-			"unhandled_error",
-			slog.String("path", c.Path()),
-			slog.Int("status", status),
-			slog.String("error", err.Error()),
-		)
-
-		response := model.WebResponse{Success: false, Message: message}
-		if appErr != nil {
-			response.Errors = appErr.Errors
+		requestID, _ := c.Locals("requestid").(string)
+		attrs := []any{slog.String("request_id", requestID), slog.String("path", c.Path()), slog.Int("status", status)}
+		if status >= 400 && status < 500 {
+			logger.Warn("request_rejected", attrs...)
+		} else {
+			if appErr != nil && appErr.Cause() != nil {
+				attrs = append(attrs, slog.String("error", appErr.Cause().Error()))
+			} else {
+				attrs = append(attrs, slog.String("error", err.Error()))
+			}
+			logger.Error("request_failed", attrs...)
 		}
-		return c.Status(status).JSON(response)
+		return c.Status(status).JSON(model.FailureResponse{Success: false, Code: code, Message: message, Fields: fields, RequestID: requestID})
 	}
 }

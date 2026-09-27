@@ -24,7 +24,12 @@ type CreateUserRequest struct {
 }
 
 type UpdateUserRequest struct {
-	Username *string `json:"username,omitempty"`
-	Email    *string `json:"email,omitempty"`
-	IsActive *bool   `json:"is_active,omitempty"`
+	Username *string `json:"username,omitempty" validate:"omitnil,min=3"`
+	Email    *string `json:"email,omitempty" validate:"omitnil,email"`
+	IsActive *bool   `json:"is_active,omitempty" validate:"omitnil"`
+}
+
+type UserListQuery struct {
+	Limit  int
+	Cursor string
 }

@@ -27,7 +27,7 @@ func translateAchievementError(c *fiber.Ctx, err error) error {
 	case errors.Is(err, repository.ErrStudentNotFound):
 		return helper.NewAppError(fiber.StatusUnprocessableEntity, "student tidak ditemukan")
 	default:
-		return helper.NewAppError(fiber.StatusInternalServerError, "terjadi kesalahan pada database")
+		return helper.Internal(err)
 	}
 }
 
@@ -38,7 +38,7 @@ func (s *AchievementService) List(c *fiber.Ctx) error {
 	var items []model.Achievement
 	var total int
 	var err error
-	meta := &model.Meta{Page: q.Page, Limit: q.Limit}
+	meta := &model.Meta{Limit: q.Limit}
 	if q.Cursor != "" {
 		createdAt, id, decodeErr := helper.DecodeCursor(q.Cursor)
 		if decodeErr != nil {
@@ -47,16 +47,18 @@ func (s *AchievementService) List(c *fiber.Ctx) error {
 		items, err = s.repo.FindAfterCursor(ctx, q, createdAt, id)
 	} else {
 		items, total, err = s.repo.FindAll(ctx, q)
-		meta.Total, meta.TotalPages = total, CountTotalPages(total, q.Limit)
+		_ = total
 	}
 	if err != nil {
 		return translateAchievementError(c, err)
 	}
-	if len(items) == q.Limit {
+	meta.HasMore = len(items) > q.Limit
+	if meta.HasMore {
+		items = items[:q.Limit]
 		last := items[len(items)-1]
 		cursor, encodeErr := helper.EncodeCursor(last.CreatedAt, last.ID)
 		if encodeErr != nil {
-			return helper.NewAppError(fiber.StatusInternalServerError, "gagal membuat cursor")
+			return helper.Internal(encodeErr)
 		}
 		meta.NextCursor = cursor
 	}

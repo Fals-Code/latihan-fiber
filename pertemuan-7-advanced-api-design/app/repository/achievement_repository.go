@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/jackc/pgx/v5"
@@ -57,14 +56,8 @@ func (r *achievementRepository) FindAll(ctx context.Context, q model.ListQueryAc
 		return nil, 0, err
 	}
 
-	sortColumn := allowedAchievementSortColumns[q.Sort]
-	if sortColumn == "" {
-		sortColumn = "id"
-	}
-	order := "ASC"
-	if q.Order == "desc" {
-		order = "DESC"
-	}
+	sortColumn := "created_at DESC, id"
+	order := "DESC"
 
 	limitPosition := len(args) + 1
 	offsetPosition := len(args) + 2
@@ -98,19 +91,22 @@ func (r *achievementRepository) FindAll(ctx context.Context, q model.ListQueryAc
 	return achievements, total, nil
 }
 
+func buildAchievementCursorQuery(q model.ListQueryAchievement, createdAt time.Time, id int) (string, []any) {
+	filter, filterArgs := buildAchievementFilter(q)
+	cursorPosition := len(filterArgs) + 1
+	limitPosition := cursorPosition + 2
+	whereClause := fmt.Sprintf(" WHERE (created_at, id) < ($%d, $%d)", cursorPosition, cursorPosition+1)
+	if filter != "" {
+		whereClause = filter + " AND" + whereClause[7:]
+	}
+	args := append([]any{}, filterArgs...)
+	args = append(args, createdAt, id, q.Limit+1)
+	query := fmt.Sprintf("SELECT id, name, student_id, rank, created_at FROM achievements%s ORDER BY created_at DESC, id DESC LIMIT $%d", whereClause, limitPosition)
+	return query, args
+}
+
 func (r *achievementRepository) FindAfterCursor(ctx context.Context, q model.ListQueryAchievement, createdAt time.Time, id int) ([]model.Achievement, error) {
-	whereClause, args := buildAchievementFilter(q)
-	if whereClause == "" {
-		whereClause = " WHERE (created_at, id) < ($1, $2)"
-	} else {
-		whereClause += " AND (created_at, id) < ($3, $4)"
-	}
-	args = append([]any{createdAt, id}, args...)
-	if len(args) > 2 {
-		whereClause = strings.Replace(whereClause, "$1", "$3", 1)
-	}
-	query := fmt.Sprintf("SELECT id, name, student_id, rank, created_at FROM achievements %s ORDER BY created_at DESC, id DESC LIMIT $%d", whereClause, len(args)+1)
-	args = append(args, q.Limit)
+	query, args := buildAchievementCursorQuery(q, createdAt, id)
 	rows, err := r.db.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err

@@ -30,13 +30,34 @@ func userID(c *fiber.Ctx) (int, bool) {
 }
 
 func (s *UserService) List(c *fiber.Ctx) error {
+	q := helper.ParseUserListQuery(c)
 	ctx, cancel := helper.RequestContext(c)
 	defer cancel()
-	users, err := s.repo.FindAll(ctx)
+	var users []model.User
+	var err error
+	meta := &model.Meta{Limit: q.Limit}
+	if q.Cursor != "" {
+		createdAt, id, decodeErr := helper.DecodeCursor(q.Cursor)
+		if decodeErr != nil {
+			return helper.NewAppError(fiber.StatusBadRequest, "cursor tidak valid")
+		}
+		users, err = s.repo.FindAfterCursor(ctx, q, createdAt, id)
+	} else {
+		users, err = s.repo.FindFirstPage(ctx, q)
+	}
 	if err != nil {
 		return translateUserRepositoryError(c, err)
 	}
-	return helper.Success(c, fiber.StatusOK, "daftar pengguna berhasil diambil", users)
+	meta.HasMore = len(users) > q.Limit
+	if meta.HasMore {
+		users = users[:q.Limit]
+		last := users[len(users)-1]
+		meta.NextCursor, err = helper.EncodeCursor(last.CreatedAt, last.ID)
+		if err != nil {
+			return helper.Internal(err)
+		}
+	}
+	return helper.Negotiate(c, fiber.StatusOK, "daftar pengguna berhasil diambil", users, meta)
 }
 
 func (s *UserService) Get(c *fiber.Ctx) error {
@@ -105,6 +126,12 @@ func (s *UserService) update(c *fiber.Ctx) error {
 	var req model.UpdateUserRequest
 	if err := c.BodyParser(&req); err != nil {
 		return helper.NewAppError(fiber.StatusBadRequest, "body harus berupa JSON yang valid")
+	}
+	if errs := helper.ValidateRequest(req); len(errs) > 0 {
+		return helper.NewValidationError(errs)
+	}
+	if req.Username == nil && req.Email == nil && req.IsActive == nil {
+		return helper.NewAppError(fiber.StatusBadRequest, "setidaknya satu field harus diisi")
 	}
 	ctx, cancel := helper.RequestContext(c)
 	defer cancel()
@@ -183,5 +210,5 @@ func translateUserRepositoryError(c *fiber.Ctx, err error) error {
 	if errors.Is(err, repository.ErrDuplicate) {
 		return helper.NewAppError(fiber.StatusConflict, "username atau email sudah digunakan")
 	}
-	return helper.NewAppError(fiber.StatusInternalServerError, "terjadi kesalahan pada database")
+	return helper.Internal(err)
 }

@@ -36,9 +36,7 @@ func translateRepositoryError(_ *fiber.Ctx, err error) error {
 		)
 
 	default:
-		return helper.NewAppError(fiber.StatusInternalServerError,
-			"terjadi kesalahan pada database",
-		)
+		return helper.Internal(err)
 	}
 }
 
@@ -50,9 +48,8 @@ func (s *StudentService) List(c *fiber.Ctx) error {
 	defer cancel()
 
 	var students []model.Student
-	var total int
 	var err error
-	meta := &model.Meta{Page: q.Page, Limit: q.Limit}
+	meta := &model.Meta{Limit: q.Limit}
 	if q.Cursor != "" {
 		createdAt, id, decodeErr := helper.DecodeCursor(q.Cursor)
 		if decodeErr != nil {
@@ -60,17 +57,18 @@ func (s *StudentService) List(c *fiber.Ctx) error {
 		}
 		students, err = s.repo.FindAfterCursor(ctx, q, createdAt, id)
 	} else {
-		students, total, err = s.repo.FindAll(ctx, q)
-		meta.Total, meta.TotalPages = total, CountTotalPages(total, q.Limit)
+		students, err = s.repo.FindFirstPage(ctx, q)
 	}
 	if err != nil {
 		return translateRepositoryError(c, err)
 	}
-	if len(students) == q.Limit {
+	meta.HasMore = len(students) > q.Limit
+	if meta.HasMore {
+		students = students[:q.Limit]
 		last := students[len(students)-1]
 		cursor, encodeErr := helper.EncodeCursor(last.CreatedAt, last.ID)
 		if encodeErr != nil {
-			return helper.NewAppError(fiber.StatusInternalServerError, "gagal membuat cursor")
+			return helper.Internal(encodeErr)
 		}
 		meta.NextCursor = cursor
 	}
@@ -127,24 +125,6 @@ func (s *StudentService) Create(c *fiber.Ctx) error {
 		)
 	}
 	if errs := helper.ValidateRequest(req); len(errs) > 0 {
-		return helper.NewValidationError(errs)
-	}
-
-	var body map[string]json.RawMessage
-	if err := json.Unmarshal(c.Body(), &body); err != nil {
-		return helper.NewAppError(fiber.StatusBadRequest,
-			"body harus berupa JSON yang valid",
-		)
-	}
-
-	fields := map[string]bool{
-		"nim":   body["nim"] != nil,
-		"name":  body["name"] != nil,
-		"grade": body["grade"] != nil,
-	}
-
-	req, errs := ValidateCreate(req, fields)
-	if len(errs) > 0 {
 		return helper.NewValidationError(errs)
 	}
 
@@ -218,16 +198,15 @@ func (s *StudentService) Replace(c *fiber.Ctx) error {
 		)
 	}
 
-	fields := map[string]bool{
-		"nim":       body["nim"] != nil,
-		"name":      body["name"] != nil,
-		"grade":     body["grade"] != nil,
-		"is_active": body["is_active"] != nil,
+	fields := map[string]bool{"nim": body["nim"] != nil, "name": body["name"] != nil, "grade": body["grade"] != nil, "is_active": body["is_active"] != nil}
+	missing := map[string]string{}
+	for name, present := range fields {
+		if !present {
+			missing[name] = "wajib diisi pada PUT"
+		}
 	}
-
-	req, errs := ValidateReplace(req, fields)
-	if len(errs) > 0 {
-		return helper.NewValidationError(errs)
+	if len(missing) > 0 {
+		return helper.NewValidationError(missing)
 	}
 
 	student.NIM = req.NIM

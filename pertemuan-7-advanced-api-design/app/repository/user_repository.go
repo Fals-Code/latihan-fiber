@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"time"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
@@ -17,6 +18,8 @@ type UserRepository interface {
 	FindByUsername(ctx context.Context, username string) (model.User, error)
 	FindByID(ctx context.Context, id int) (model.User, error)
 	FindAll(ctx context.Context) ([]model.User, error)
+	FindFirstPage(ctx context.Context, q model.UserListQuery) ([]model.User, error)
+	FindAfterCursor(ctx context.Context, q model.UserListQuery, createdAt time.Time, id int) ([]model.User, error)
 	Update(ctx context.Context, user model.User) (model.User, error)
 	UpdateRole(ctx context.Context, id int, role string) (model.User, error)
 	Delete(ctx context.Context, id int) error
@@ -70,6 +73,44 @@ func (r *userRepository) FindAll(ctx context.Context) ([]model.User, error) {
 	}
 	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("iterate users: %w", err)
+	}
+	return users, nil
+}
+
+func buildUserFirstPageQuery(q model.UserListQuery) (string, []any) {
+	return fmt.Sprintf("SELECT %s FROM users ORDER BY created_at DESC, id DESC LIMIT $1", userColumns), []any{q.Limit + 1}
+}
+
+func buildUserCursorQuery(q model.UserListQuery, createdAt time.Time, id int) (string, []any) {
+	return fmt.Sprintf("SELECT %s FROM users WHERE (created_at, id) < ($1, $2) ORDER BY created_at DESC, id DESC LIMIT $3", userColumns), []any{createdAt, id, q.Limit + 1}
+}
+
+func (r *userRepository) FindFirstPage(ctx context.Context, q model.UserListQuery) ([]model.User, error) {
+	query, args := buildUserFirstPageQuery(q)
+	return r.findPage(ctx, query, args...)
+}
+
+func (r *userRepository) FindAfterCursor(ctx context.Context, q model.UserListQuery, createdAt time.Time, id int) ([]model.User, error) {
+	query, args := buildUserCursorQuery(q, createdAt, id)
+	return r.findPage(ctx, query, args...)
+}
+
+func (r *userRepository) findPage(ctx context.Context, query string, args ...any) ([]model.User, error) {
+	rows, err := r.db.Query(ctx, query, args...)
+	if err != nil {
+		return nil, fmt.Errorf("list users page: %w", err)
+	}
+	defer rows.Close()
+	users := make([]model.User, 0)
+	for rows.Next() {
+		var user model.User
+		if err := rows.Scan(&user.ID, &user.Username, &user.Email, &user.PasswordHash, &user.Role, &user.IsActive, &user.CreatedAt); err != nil {
+			return nil, fmt.Errorf("scan user page: %w", err)
+		}
+		users = append(users, user)
+	}
+	if err := rows.Err(); err != nil {
+		return nil, fmt.Errorf("iterate user page: %w", err)
 	}
 	return users, nil
 }

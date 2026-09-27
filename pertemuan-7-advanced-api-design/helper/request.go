@@ -59,6 +59,17 @@ func ParseAchievementListQuery(c *fiber.Ctx) model.ListQueryAchievement {
 	return q
 }
 
+func ParseUserListQuery(c *fiber.Ctx) model.UserListQuery {
+	limit := c.QueryInt("limit", 10)
+	if limit < 1 {
+		limit = 10
+	}
+	if limit > 100 {
+		limit = 100
+	}
+	return model.UserListQuery{Limit: limit, Cursor: c.Query("cursor")}
+}
+
 func ParseListQuery(c *fiber.Ctx) model.ListQuery {
 	q := model.ListQuery{
 		Page:   c.QueryInt("page", 1),

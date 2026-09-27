@@ -21,6 +21,7 @@ var (
 
 type StudentRepository interface {
 	FindAll(ctx context.Context, q model.ListQuery) ([]model.Student, int, error)
+	FindFirstPage(ctx context.Context, q model.ListQuery) ([]model.Student, error)
 	FindAfterCursor(ctx context.Context, q model.ListQuery, createdAt time.Time, id int) ([]model.Student, error)
 	FindByID(ctx context.Context, id int) (model.Student, error)
 	FindOwnerIDByID(ctx context.Context, id int) (*int, error)
@@ -91,16 +92,6 @@ func (r *studentRepository) FindAll(
 		return nil, 0, err
 	}
 
-	sortColumn, ok := allowedSortColumns[q.Sort]
-	if !ok {
-		sortColumn = "id"
-	}
-
-	order := "ASC"
-	if q.Order == "desc" {
-		order = "DESC"
-	}
-
 	limitPosition := len(args) + 1
 	offsetPosition := len(args) + 2
 
@@ -108,19 +99,13 @@ func (r *studentRepository) FindAll(
 		SELECT id, nim, name, grade, is_active, owner_id, created_at
 		FROM students
 		%s
-		ORDER BY %s %s
+		ORDER BY created_at DESC, id DESC
 		LIMIT $%d OFFSET $%d
-	`,
-		whereClause,
-		sortColumn,
-		order,
-		limitPosition,
-		offsetPosition,
-	)
+	`, whereClause, limitPosition, offsetPosition)
 
 	queryArgs := append(
 		append([]any{}, args...),
-		q.Limit,
+		q.Limit+1,
 		q.Offset(),
 	)
 
@@ -157,15 +142,50 @@ func (r *studentRepository) FindAll(
 	return students, total, nil
 }
 
-func (r *studentRepository) FindAfterCursor(ctx context.Context, q model.ListQuery, createdAt time.Time, id int) ([]model.Student, error) {
-	whereClause, args := buildStudentFilter(q)
-	if whereClause == "" {
-		whereClause = " WHERE (created_at, id) < ($1, $2)"
-	} else {
-		whereClause += " AND (created_at, id) < ($1, $2)"
+func buildStudentFirstPageQuery(q model.ListQuery) (string, []any) {
+	whereClause, filterArgs := buildStudentFilter(q)
+	limitPosition := len(filterArgs) + 1
+	query := fmt.Sprintf("SELECT id, nim, name, grade, is_active, owner_id, created_at FROM students%s ORDER BY created_at DESC, id DESC LIMIT $%d", whereClause, limitPosition)
+	args := append([]any{}, filterArgs...)
+	args = append(args, q.Limit+1)
+	return query, args
+}
+
+func (r *studentRepository) FindFirstPage(ctx context.Context, q model.ListQuery) ([]model.Student, error) {
+	query, args := buildStudentFirstPageQuery(q)
+	rows, err := r.db.Query(ctx, query, args...)
+	if err != nil {
+		return nil, err
 	}
-	args = append([]any{createdAt, id}, args...)
-	rows, err := r.db.Query(ctx, "SELECT id, nim, name, grade, is_active, owner_id, created_at FROM students"+whereClause+" ORDER BY created_at DESC, id DESC LIMIT $"+fmt.Sprint(len(args)+1), append(args, q.Limit)...)
+	defer rows.Close()
+	students := make([]model.Student, 0)
+	for rows.Next() {
+		var student model.Student
+		if err := rows.Scan(&student.ID, &student.NIM, &student.Name, &student.Grade, &student.IsActive, &student.OwnerID, &student.CreatedAt); err != nil {
+			return nil, err
+		}
+		students = append(students, student)
+	}
+	return students, rows.Err()
+}
+
+func buildStudentCursorQuery(q model.ListQuery, createdAt time.Time, id int) (string, []any) {
+	filter, filterArgs := buildStudentFilter(q)
+	cursorPosition := len(filterArgs) + 1
+	limitPosition := cursorPosition + 2
+	whereClause := fmt.Sprintf(" WHERE (created_at, id) < ($%d, $%d)", cursorPosition, cursorPosition+1)
+	if filter != "" {
+		whereClause = filter + " AND" + whereClause[7:]
+	}
+	args := append([]any{}, filterArgs...)
+	args = append(args, createdAt, id, q.Limit+1)
+	query := fmt.Sprintf("SELECT id, nim, name, grade, is_active, owner_id, created_at FROM students%s ORDER BY created_at DESC, id DESC LIMIT $%d", whereClause, limitPosition)
+	return query, args
+}
+
+func (r *studentRepository) FindAfterCursor(ctx context.Context, q model.ListQuery, createdAt time.Time, id int) ([]model.Student, error) {
+	query, args := buildStudentCursorQuery(q, createdAt, id)
+	rows, err := r.db.Query(ctx, query, args...)
 	if err != nil {
 		return nil, err
 	}

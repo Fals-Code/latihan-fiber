@@ -8,24 +8,53 @@ import (
 	"time"
 )
 
+const (
+	CodeValidation           = "VALIDATION_ERROR"
+	CodeBadRequest           = "BAD_REQUEST"
+	CodeUnauthorized         = "UNAUTHORIZED"
+	CodeForbidden            = "FORBIDDEN"
+	CodeNotFound             = "NOT_FOUND"
+	CodeConflict             = "CONFLICT"
+	CodeUnsupportedMediaType = "UNSUPPORTED_MEDIA_TYPE"
+	CodeNotAcceptable        = "NOT_ACCEPTABLE"
+	CodeTooManyRequests      = "TOO_MANY_REQUESTS"
+	CodeInternal             = "INTERNAL_ERROR"
+)
+
 type AppError struct {
 	Status  int
+	Code    string
 	Message string
-	Errors  any
-	Err     error
+	Fields  map[string]string
+	cause   error
 }
 
 func (e *AppError) Error() string { return e.Message }
-func (e *AppError) Unwrap() error { return e.Err }
-func NewAppError(status int, message string, details ...any) error {
-	var errs any
-	if len(details) > 0 {
-		errs = details[0]
+func (e *AppError) Unwrap() error { return e.cause }
+func (e *AppError) Cause() error  { return e.cause }
+
+func codeForStatus(status int) string {
+	codes := map[int]string{400: CodeBadRequest, 401: CodeUnauthorized, 403: CodeForbidden, 404: CodeNotFound, 409: CodeConflict, 406: CodeNotAcceptable, 415: CodeUnsupportedMediaType, 422: CodeValidation, 429: CodeTooManyRequests}
+	if code, ok := codes[status]; ok {
+		return code
 	}
-	return &AppError{Status: status, Message: message, Errors: errs}
+	return CodeInternal
 }
-func NewValidationError(errs map[string]string) error {
-	return &AppError{Status: 422, Message: "validasi gagal", Errors: errs}
+
+func NewAppError(status int, message string, details ...any) error {
+	var fields map[string]string
+	if len(details) > 0 {
+		fields, _ = details[0].(map[string]string)
+	}
+	return &AppError{Status: status, Code: codeForStatus(status), Message: message, Fields: fields}
+}
+
+func Internal(err error) error {
+	return &AppError{Status: 500, Code: CodeInternal, Message: "terjadi error pada server", cause: err}
+}
+
+func NewValidationError(fields map[string]string) error {
+	return &AppError{Status: 422, Code: CodeValidation, Message: "validasi gagal", Fields: fields}
 }
 
 func EncodeCursor(createdAt time.Time, id int) (string, error) {
