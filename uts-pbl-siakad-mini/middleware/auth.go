@@ -46,6 +46,19 @@ func RequireAuth(secret []byte, accounts AccountLookup) fiber.Handler {
 	}
 }
 
+func RequireStudent() fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		user, ok := c.Locals(AuthUserLocal).(model.CurrentUser)
+		if !ok {
+			return authFailure(c)
+		}
+		if user.Role != "mahasiswa" {
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"success": false, "message": "Akses hanya untuk mahasiswa"})
+		}
+		return c.Next()
+	}
+}
+
 func RequireAdmin() fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		user, ok := c.Locals(AuthUserLocal).(model.CurrentUser)

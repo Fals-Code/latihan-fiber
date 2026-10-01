@@ -42,6 +42,13 @@ func (routeStudentStore) Update(context.Context, int64, model.StudentUpdate) (mo
 }
 func (routeStudentStore) SoftDelete(context.Context, int64) error { return nil }
 
+type routeEnrollmentStore struct{}
+
+func (routeEnrollmentStore) Create(context.Context, int64, model.NewEnrollment) (model.Enrollment, error) {
+	return model.Enrollment{}, nil
+}
+func (routeEnrollmentStore) Delete(context.Context, int64, int64) error { return nil }
+
 type routeCourseStore struct{}
 
 func (routeCourseStore) List(context.Context, model.CourseFilters) ([]model.Course, error) {
@@ -59,8 +66,9 @@ func TestRegisterOnlyCurrentEndpoints(t *testing.T) {
 	studentService := service.NewStudentService(routeStudentStore{})
 	studentHandler := handler.NewStudentHandler(studentService)
 	courseHandler := handler.NewCourseHandler(service.NewCourseService(routeCourseStore{}))
+	enrollmentHandler := handler.NewEnrollmentHandler(service.NewEnrollmentService(routeEnrollmentStore{}))
 	app := fiber.New()
-	Register(app, authHandler, studentHandler, courseHandler, []byte("route-test-secret-long-enough"), store)
+	Register(app, authHandler, studentHandler, courseHandler, enrollmentHandler, []byte("route-test-secret-long-enough"), store)
 	for _, endpoint := range []struct{ method, path string }{
 		{"POST", "/api/v1/auth/login"}, {"GET", "/api/v1/auth/me"}, {"GET", "/api/v1/students"}, {"POST", "/api/v1/students"}, {"GET", "/api/v1/students/5"}, {"PUT", "/api/v1/students/5"}, {"DELETE", "/api/v1/students/5"},
 	} {
@@ -97,11 +105,64 @@ func TestRegisterOnlyCurrentEndpoints(t *testing.T) {
 			t.Fatal(err)
 		}
 		response.Body.Close()
-		if path == "/api/v1/enrollments" && response.StatusCode != 404 {
+		if path == "/api/v1/enrollments" && response.StatusCode != fiber.StatusForbidden {
 			t.Fatalf("unexpected route %s status: %d", path, response.StatusCode)
 		}
 		if path == "/api/v1/courses" && response.StatusCode != fiber.StatusOK {
 			t.Fatalf("unexpected route %s status: %d", path, response.StatusCode)
+		}
+	}
+}
+
+func TestEnrollmentRoutesRequireStudentRoleAndAuthentication(t *testing.T) {
+	secret := []byte("route-test-secret-long-enough")
+	mkApp := func(role string) (*fiber.App, routeAuthStore) {
+		hash, _ := bcrypt.GenerateFromPassword([]byte("password-123"), bcrypt.MinCost)
+		store := routeAuthStore{user: model.User{ID: 9, Email: "person@example.com", Password: string(hash), Role: role}}
+		authHandler := handler.NewAuthHandler(service.NewAuthService(store, string(secret), time.Hour), store)
+		students := handler.NewStudentHandler(service.NewStudentService(routeStudentStore{}))
+		courses := handler.NewCourseHandler(service.NewCourseService(routeCourseStore{}))
+		enrollments := handler.NewEnrollmentHandler(service.NewEnrollmentService(routeEnrollmentStore{}))
+		app := fiber.New()
+		Register(app, authHandler, students, courses, enrollments, secret, store)
+		return app, store
+	}
+	for _, endpoint := range []struct{ method, path string }{{"POST", "/api/v1/enrollments"}, {"DELETE", "/api/v1/enrollments/1"}} {
+		adminApp, adminStore := mkApp("admin")
+		adminAuth := service.NewAuthService(adminStore, string(secret), time.Hour)
+		adminToken, _ := adminAuth.Login(context.Background(), "person@example.com", "password-123")
+		request := httptest.NewRequest(endpoint.method, endpoint.path, strings.NewReader(`{"course_id":1,"tahun_akademik":"2026/2027-Ganjil"}`))
+		request.Header.Set("Authorization", "Bearer "+adminToken.Token)
+		response, err := adminApp.Test(request, -1)
+		if err != nil {
+			t.Fatal(err)
+		}
+		response.Body.Close()
+		if response.StatusCode != fiber.StatusForbidden {
+			t.Errorf("admin %s %s status=%d", endpoint.method, endpoint.path, response.StatusCode)
+		}
+
+		studentApp, studentStore := mkApp("mahasiswa")
+		studentAuth := service.NewAuthService(studentStore, string(secret), time.Hour)
+		studentToken, _ := studentAuth.Login(context.Background(), "person@example.com", "password-123")
+		studentRequest := httptest.NewRequest(endpoint.method, endpoint.path, strings.NewReader(`{"course_id":1,"tahun_akademik":"2026/2027-Ganjil"}`))
+		studentRequest.Header.Set("Authorization", "Bearer "+studentToken.Token)
+		studentResponse, err := studentApp.Test(studentRequest, -1)
+		if err != nil {
+			t.Fatal(err)
+		}
+		studentResponse.Body.Close()
+		if studentResponse.StatusCode == fiber.StatusForbidden || studentResponse.StatusCode == fiber.StatusUnauthorized {
+			t.Errorf("student %s %s status=%d", endpoint.method, endpoint.path, studentResponse.StatusCode)
+		}
+
+		unauthenticated, err := adminApp.Test(httptest.NewRequest(endpoint.method, endpoint.path, strings.NewReader(`{}`)), -1)
+		if err != nil {
+			t.Fatal(err)
+		}
+		unauthenticated.Body.Close()
+		if unauthenticated.StatusCode != fiber.StatusUnauthorized {
+			t.Errorf("unauthenticated %s %s status=%d", endpoint.method, endpoint.path, unauthenticated.StatusCode)
 		}
 	}
 }
