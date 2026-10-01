@@ -42,6 +42,12 @@ func (routeStudentStore) Update(context.Context, int64, model.StudentUpdate) (mo
 }
 func (routeStudentStore) SoftDelete(context.Context, int64) error { return nil }
 
+type routeCourseStore struct{}
+
+func (routeCourseStore) List(context.Context, model.CourseFilters) ([]model.Course, error) {
+	return []model.Course{}, nil
+}
+
 func TestRegisterOnlyCurrentEndpoints(t *testing.T) {
 	hash, err := bcrypt.GenerateFromPassword([]byte("password-123"), bcrypt.MinCost)
 	if err != nil {
@@ -52,8 +58,9 @@ func TestRegisterOnlyCurrentEndpoints(t *testing.T) {
 	authHandler := handler.NewAuthHandler(authService, store)
 	studentService := service.NewStudentService(routeStudentStore{})
 	studentHandler := handler.NewStudentHandler(studentService)
+	courseHandler := handler.NewCourseHandler(service.NewCourseService(routeCourseStore{}))
 	app := fiber.New()
-	Register(app, authHandler, studentHandler, []byte("route-test-secret-long-enough"), store)
+	Register(app, authHandler, studentHandler, courseHandler, []byte("route-test-secret-long-enough"), store)
 	for _, endpoint := range []struct{ method, path string }{
 		{"POST", "/api/v1/auth/login"}, {"GET", "/api/v1/auth/me"}, {"GET", "/api/v1/students"}, {"POST", "/api/v1/students"}, {"GET", "/api/v1/students/5"}, {"PUT", "/api/v1/students/5"}, {"DELETE", "/api/v1/students/5"},
 	} {
@@ -90,7 +97,10 @@ func TestRegisterOnlyCurrentEndpoints(t *testing.T) {
 			t.Fatal(err)
 		}
 		response.Body.Close()
-		if response.StatusCode != 404 {
+		if path == "/api/v1/enrollments" && response.StatusCode != 404 {
+			t.Fatalf("unexpected route %s status: %d", path, response.StatusCode)
+		}
+		if path == "/api/v1/courses" && response.StatusCode != fiber.StatusOK {
 			t.Fatalf("unexpected route %s status: %d", path, response.StatusCode)
 		}
 	}

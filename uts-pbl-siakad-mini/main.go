@@ -37,9 +37,12 @@ func main() {
 	studentRepository := repository.NewStudentRepository(pool)
 	studentService := service.NewStudentService(studentRepository)
 	studentHandler := handler.NewStudentHandler(studentService)
+	courseRepository := repository.NewCourseRepository(pool)
+	courseService := service.NewCourseService(courseRepository)
+	courseHandler := handler.NewCourseHandler(courseService)
 
 	app := fiber.New(fiber.Config{AppName: "SIAKAD Mini"})
-	route.Register(app, authHandler, studentHandler, []byte(secret), authRepository)
+	route.Register(app, authHandler, studentHandler, courseHandler, []byte(secret), authRepository)
 	if err := app.Listen(":" + config.GetEnv("APP_PORT", "3000")); err != nil {
 		log.Printf("server stopped: %v", err)
 		os.Exit(1)
