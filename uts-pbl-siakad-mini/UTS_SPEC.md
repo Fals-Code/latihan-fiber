@@ -667,16 +667,3 @@ main.go hanya bertanggung jawab untuk:
 - menjalankan server
 
 ---
-
-# 10. Git
-
-Jangan melakukan:
-
-- git commit
-- git push
-
-secara otomatis melalui coding agent.
-
-Commit dilakukan manual setelah tiap phase selesai dan diverifikasi.
-
-Riwayat commit harus bertahap dan natural.
