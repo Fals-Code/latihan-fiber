@@ -1,4 +1,6 @@
-# SIAKAD Mini — Phase 1
+# SIAKAD Mini
+
+REST API akademik untuk autentikasi, pengelolaan mahasiswa, daftar mata kuliah, dan KRS.
 
 ## Persiapan lokal
 
@@ -22,10 +24,27 @@ Password disimpan menggunakan bcrypt. Ganti password seed lokal setelah pengguna
 
 ## Jalankan API
 
-Dari root repository setelah database tersedia:
+Persyaratan: Go dan PostgreSQL. Dari root repository setelah database tersedia dan `.env` dikonfigurasi:
 
 ```powershell
 go run ./uts-pbl-siakad-mini
 ```
 
-Endpoint belum diimplementasikan pada Phase 1.
+Base URL lokal: `http://localhost:3000` (atau port dari `APP_PORT`). Migrasi dan seeder tidak dijalankan otomatis saat aplikasi start.
+
+## Endpoint
+
+Semua endpoint selain login memerlukan bearer token.
+
+| Method | Path | Akses |
+| --- | --- | --- |
+| POST | `/api/v1/auth/login` | Publik |
+| GET | `/api/v1/auth/me` | Pengguna terautentikasi |
+| GET | `/api/v1/students` | Admin |
+| POST | `/api/v1/students` | Admin |
+| GET | `/api/v1/students/:id` | Admin / mahasiswa pemilik |
+| PUT | `/api/v1/students/:id` | Admin |
+| DELETE | `/api/v1/students/:id` | Admin |
+| GET | `/api/v1/courses` | Pengguna terautentikasi |
+| POST | `/api/v1/enrollments` | Mahasiswa |
+| DELETE | `/api/v1/enrollments/:id` | Mahasiswa pemilik |
