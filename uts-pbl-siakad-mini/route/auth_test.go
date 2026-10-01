@@ -33,6 +33,14 @@ func (routeStudentStore) List(context.Context, model.StudentFilters) ([]model.St
 func (routeStudentStore) Create(context.Context, model.NewStudent, func() (string, error)) (model.Student, error) {
 	return model.Student{}, nil
 }
+func (routeStudentStore) GetDetail(context.Context, int64) (model.StudentDetail, error) {
+	return model.StudentDetail{}, nil
+}
+func (routeStudentStore) StudentIDByUserID(context.Context, int64) (int64, error) { return 0, nil }
+func (routeStudentStore) Update(context.Context, int64, model.StudentUpdate) (model.Student, error) {
+	return model.Student{}, nil
+}
+func (routeStudentStore) SoftDelete(context.Context, int64) error { return nil }
 
 func TestRegisterOnlyCurrentEndpoints(t *testing.T) {
 	hash, err := bcrypt.GenerateFromPassword([]byte("password-123"), bcrypt.MinCost)
@@ -47,7 +55,7 @@ func TestRegisterOnlyCurrentEndpoints(t *testing.T) {
 	app := fiber.New()
 	Register(app, authHandler, studentHandler, []byte("route-test-secret-long-enough"), store)
 	for _, endpoint := range []struct{ method, path string }{
-		{"POST", "/api/v1/auth/login"}, {"GET", "/api/v1/auth/me"}, {"GET", "/api/v1/students"}, {"POST", "/api/v1/students"},
+		{"POST", "/api/v1/auth/login"}, {"GET", "/api/v1/auth/me"}, {"GET", "/api/v1/students"}, {"POST", "/api/v1/students"}, {"GET", "/api/v1/students/5"}, {"PUT", "/api/v1/students/5"}, {"DELETE", "/api/v1/students/5"},
 	} {
 		request := httptest.NewRequest(endpoint.method, endpoint.path, nil)
 		response, err := app.Test(request, -1)
@@ -74,7 +82,7 @@ func TestRegisterOnlyCurrentEndpoints(t *testing.T) {
 		t.Fatal(err)
 	}
 	loginResponse.Body.Close()
-	for _, path := range []string{"/api/v1/students/1", "/api/v1/courses", "/api/v1/enrollments"} {
+	for _, path := range []string{"/api/v1/courses", "/api/v1/enrollments"} {
 		request := httptest.NewRequest("GET", path, nil)
 		request.Header.Set("Authorization", "Bearer "+loginBody.Data.AccessToken)
 		response, err := app.Test(request, -1)

@@ -131,6 +131,85 @@ func createStudentTx(ctx context.Context, starter studentTxStarter, student mode
 	return created, nil
 }
 
+func (r *StudentRepository) GetDetail(ctx context.Context, id int64) (model.StudentDetail, error) {
+	var detail model.StudentDetail
+	err := r.pool.QueryRow(ctx, "SELECT id, user_id, nim, nama, prodi, angkatan, ipk_terakhir FROM students WHERE id = $1 AND deleted_at IS NULL", id).Scan(&detail.ID, &detail.UserID, &detail.NIM, &detail.Nama, &detail.Prodi, &detail.Angkatan, &detail.IPKTerakhir)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return model.StudentDetail{}, ErrNotFound
+	}
+	if err != nil {
+		return model.StudentDetail{}, err
+	}
+	rows, err := r.pool.Query(ctx, "SELECT e.id, c.id, c.kode_mk, c.nama_mk, c.sks, c.semester, e.tahun_akademik FROM enrollments e JOIN courses c ON c.id = e.course_id WHERE e.student_id = $1 ORDER BY e.id", id)
+	if err != nil {
+		return model.StudentDetail{}, err
+	}
+	defer rows.Close()
+	detail.Courses = make([]model.StudentCourse, 0)
+	for rows.Next() {
+		var course model.StudentCourse
+		if err := rows.Scan(&course.EnrollmentID, &course.CourseID, &course.KodeMK, &course.NamaMK, &course.SKS, &course.Semester, &course.TahunAkademik); err != nil {
+			return model.StudentDetail{}, err
+		}
+		detail.Courses = append(detail.Courses, course)
+		detail.TotalSKS += course.SKS
+	}
+	if err := rows.Err(); err != nil {
+		return model.StudentDetail{}, err
+	}
+	return detail, nil
+}
+
+func (r *StudentRepository) StudentIDByUserID(ctx context.Context, userID int64) (int64, error) {
+	var studentID int64
+	err := r.pool.QueryRow(ctx, "SELECT id FROM students WHERE user_id = $1 AND deleted_at IS NULL", userID).Scan(&studentID)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return 0, ErrNotFound
+	}
+	return studentID, err
+}
+
+func (r *StudentRepository) Update(ctx context.Context, id int64, update model.StudentUpdate) (model.Student, error) {
+	sets := make([]string, 0, 4)
+	args := make([]any, 0, 5)
+	add := func(column string, value any) {
+		args = append(args, value)
+		sets = append(sets, fmt.Sprintf("%s = $%d", column, len(args)))
+	}
+	if update.Nama != nil {
+		add("nama", *update.Nama)
+	}
+	if update.Prodi != nil {
+		add("prodi", *update.Prodi)
+	}
+	if update.Angkatan != nil {
+		add("angkatan", *update.Angkatan)
+	}
+	if update.IPKTerakhir != nil {
+		add("ipk_terakhir", *update.IPKTerakhir)
+	}
+	if len(sets) == 0 {
+		return model.Student{}, errors.New("empty student update")
+	}
+	args = append(args, id)
+	query := "UPDATE students SET " + strings.Join(sets, ", ") + fmt.Sprintf(", updated_at = CURRENT_TIMESTAMP WHERE id = $%d AND deleted_at IS NULL RETURNING id, nim, nama, prodi, angkatan, ipk_terakhir", len(args))
+	var student model.Student
+	err := r.pool.QueryRow(ctx, query, args...).Scan(&student.ID, &student.NIM, &student.Nama, &student.Prodi, &student.Angkatan, &student.IPKTerakhir)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return model.Student{}, ErrNotFound
+	}
+	return student, err
+}
+
+func (r *StudentRepository) SoftDelete(ctx context.Context, id int64) error {
+	var deletedID int64
+	err := r.pool.QueryRow(ctx, "UPDATE students SET deleted_at = CURRENT_TIMESTAMP, updated_at = CURRENT_TIMESTAMP WHERE id = $1 AND deleted_at IS NULL RETURNING id", id).Scan(&deletedID)
+	if errors.Is(err, pgx.ErrNoRows) {
+		return ErrNotFound
+	}
+	return err
+}
+
 func duplicateError(err error) error {
 	var pgErr *pgconn.PgError
 	if !errors.As(err, &pgErr) || pgErr.Code != "23505" {
