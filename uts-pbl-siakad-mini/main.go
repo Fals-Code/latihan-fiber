@@ -7,12 +7,22 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
+	"tugas1-go/uts-pbl-siakad-mini/app/handler"
+	"tugas1-go/uts-pbl-siakad-mini/app/repository"
+	"tugas1-go/uts-pbl-siakad-mini/app/service"
 	"tugas1-go/uts-pbl-siakad-mini/config"
 	"tugas1-go/uts-pbl-siakad-mini/database"
+	"tugas1-go/uts-pbl-siakad-mini/route"
 )
 
 func main() {
 	config.LoadEnv()
+
+	secret, ttl, err := config.JWTConfig()
+	if err != nil {
+		log.Printf("authentication configuration failed: %v", err)
+		os.Exit(1)
+	}
 
 	pool, err := database.NewPool(context.Background())
 	if err != nil {
@@ -21,7 +31,12 @@ func main() {
 	}
 	defer pool.Close()
 
+	authRepository := repository.NewAuthRepository(pool)
+	authService := service.NewAuthService(authRepository, secret, ttl)
+	authHandler := handler.NewAuthHandler(authService, authRepository)
+
 	app := fiber.New(fiber.Config{AppName: "SIAKAD Mini"})
+	route.Register(app, authHandler, []byte(secret), authRepository)
 	if err := app.Listen(":" + config.GetEnv("APP_PORT", "3000")); err != nil {
 		log.Printf("server stopped: %v", err)
 		os.Exit(1)

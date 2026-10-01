@@ -1,8 +1,11 @@
 package config
 
 import (
+	"fmt"
 	"log"
 	"os"
+	"strconv"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -22,4 +25,16 @@ func GetEnv(key, fallback string) string {
 		return value
 	}
 	return fallback
+}
+
+func JWTConfig() (string, time.Duration, error) {
+	secret := os.Getenv("JWT_SECRET")
+	if secret == "" {
+		return "", 0, fmt.Errorf("JWT_SECRET is required")
+	}
+	expiresIn, err := strconv.ParseInt(os.Getenv("JWT_EXPIRES_IN"), 10, 64)
+	if err != nil || expiresIn <= 0 {
+		return "", 0, fmt.Errorf("JWT_EXPIRES_IN must be a positive number of seconds")
+	}
+	return secret, time.Duration(expiresIn) * time.Second, nil
 }
