@@ -46,6 +46,19 @@ func RequireAuth(secret []byte, accounts AccountLookup) fiber.Handler {
 	}
 }
 
+func RequireAdmin() fiber.Handler {
+	return func(c *fiber.Ctx) error {
+		user, ok := c.Locals(AuthUserLocal).(model.CurrentUser)
+		if !ok {
+			return authFailure(c)
+		}
+		if user.Role != "admin" {
+			return c.Status(fiber.StatusForbidden).JSON(fiber.Map{"success": false, "message": "Akses hanya untuk admin"})
+		}
+		return c.Next()
+	}
+}
+
 func authFailure(c *fiber.Ctx) error {
 	return c.Status(fiber.StatusUnauthorized).JSON(fiber.Map{"success": false, "message": "Token tidak valid atau akun tidak aktif"})
 }

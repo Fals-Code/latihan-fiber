@@ -7,9 +7,12 @@ import (
 	"tugas1-go/uts-pbl-siakad-mini/middleware"
 )
 
-func Register(app *fiber.App, authHandler *handler.AuthHandler, secret []byte, accounts middleware.AccountLookup) {
+func Register(app *fiber.App, authHandler *handler.AuthHandler, studentHandler *handler.StudentHandler, secret []byte, accounts middleware.AccountLookup) {
 	api := app.Group("/api/v1")
 	auth := api.Group("/auth")
 	auth.Post("/login", middleware.LoginFailureLimiter(), authHandler.Login)
 	auth.Get("/me", middleware.RequireAuth(secret, accounts), authHandler.Me)
+	students := api.Group("/students", middleware.RequireAuth(secret, accounts), middleware.RequireAdmin())
+	students.Get("", studentHandler.List)
+	students.Post("", studentHandler.Create)
 }
