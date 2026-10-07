@@ -43,42 +43,38 @@ Pengerjaan proyek dilakukan secara bertahap. Setiap bagian utama, mulai dari set
 
 ### 2.1 Ketentuan Teknis
 
-- Bahasa pemrograman: Go 1.26.5
-- Framework: Fiber v2.52.14
-- Database: PostgreSQL
-- Driver database: pgx/v5
-- Autentikasi: JWT HS256
-- Password hashing: bcrypt
-- Konfigurasi environment: godotenv + process environment
+Implementasi SIAKAD Mini menggunakan teknologi yang sama dengan materi praktikum. Aplikasi ditulis dengan Go 1.26.5 dan Fiber v2.52.14 sebagai framework HTTP. PostgreSQL digunakan untuk menyimpan data, dengan pgx/v5 sebagai driver koneksi dari aplikasi Go. Autentikasi dilakukan menggunakan JWT dengan algoritma HS256, sedangkan password disimpan dalam bentuk hash bcrypt. Nilai konfigurasi seperti koneksi database dan JWT secret dibaca dari environment melalui godotenv sehingga tidak ditulis langsung di source code.
 
 ### 2.2 Model Data
 
-Model data terdiri dari empat tabel utama:
+Data aplikasi disimpan dalam empat tabel utama yang saling berhubungan. Tabel `users` menyimpan akun untuk proses login, terdiri dari `id`, `email`, `password`, dan `role`. Email dibuat unik, sedangkan role dibatasi menjadi admin atau mahasiswa.
 
-1. `users`: id, email, password, role. Email unik dan role dibatasi admin/mahasiswa.
-2. `students`: user_id, nim, nama, prodi, angkatan, ipk_terakhir, deleted_at. user_id dan NIM unik serta mendukung soft delete.
-3. `courses`: kode_mk, nama_mk, sks, semester, kuota. kode_mk unik dan kuota harus lebih dari 0.
-4. `enrollments`: student_id, course_id, tahun_akademik, created_at. Kombinasi student-course-tahun akademik harus unik.
+Data akademik mahasiswa disimpan pada tabel `students` melalui `user_id`, `nim`, `nama`, `prodi`, `angkatan`, `ipk_terakhir`, dan `deleted_at`. `user_id` dan NIM dibuat unik. Field `deleted_at` digunakan untuk mekanisme soft delete agar data mahasiswa tidak langsung dihapus secara permanen.
+
+Tabel `courses` menyimpan kode mata kuliah, nama mata kuliah, jumlah SKS, semester, dan kuota. `kode_mk` bersifat unik dan nilai kuota harus lebih dari nol.
+
+Relasi pengambilan mata kuliah disimpan pada tabel `enrollments` melalui `student_id`, `course_id`, `tahun_akademik`, dan `created_at`. Kombinasi mahasiswa, mata kuliah, dan tahun akademik dibuat unik untuk mencegah mata kuliah yang sama diambil dua kali pada periode yang sama.
 
 ### 2.3 Aturan Bisnis KRS
 
-1. IPK >= 3,00 maksimal 24 SKS; IPK 2,50-2,99 maksimal 21 SKS; IPK < 2,50 maksimal 18 SKS.
-2. Mahasiswa tidak dapat mengambil mata kuliah yang sama dua kali pada tahun akademik yang sama.
-3. Mata kuliah dengan kuota penuh tidak dapat diambil.
-4. Mahasiswa hanya dapat mengakses detail dirinya sendiri dan hanya dapat menghapus enrollment miliknya sendiri.
+Aturan KRS diterapkan pada proses penambahan enrollment. Batas SKS ditentukan dari IPK terakhir mahasiswa: IPK >= 3,00 dapat mengambil maksimal 24 SKS, IPK 2,50-2,99 maksimal 21 SKS, dan IPK < 2,50 maksimal 18 SKS.
+
+Sistem juga menolak pengambilan mata kuliah yang sama pada tahun akademik yang sama dan menolak mata kuliah yang kuotanya sudah penuh. Dari sisi hak akses, mahasiswa hanya dapat melihat detail akademiknya sendiri dan hanya dapat membatalkan enrollment yang memang menjadi miliknya.
 
 ### 2.4 Daftar 10 Endpoint
 
-1. `POST /api/v1/auth/login` — publik — login dan menghasilkan access token — 200.
-2. `GET /api/v1/auth/me` — semua role — profil pengguna aktif — 200.
-3. `GET /api/v1/students` — admin — daftar mahasiswa + pagination/filter/search — 200.
-4. `POST /api/v1/students` — admin — tambah mahasiswa dan akun user — 201.
-5. `GET /api/v1/students/:id` — admin / mahasiswa pemilik — detail mahasiswa + total/batas SKS — 200.
-6. `PUT /api/v1/students/:id` — admin — perbarui data mahasiswa — 200.
-7. `DELETE /api/v1/students/:id` — admin — soft delete mahasiswa — 204.
-8. `GET /api/v1/courses` — semua role terautentikasi — daftar mata kuliah + sisa kuota — 200.
-9. `POST /api/v1/enrollments` — mahasiswa — tambah mata kuliah ke KRS — 201.
-10. `DELETE /api/v1/enrollments/:id` — mahasiswa pemilik — batalkan mata kuliah dari KRS — 204.
+API yang dibangun menggunakan prefix `/api/v1` dan terdiri dari sepuluh endpoint. Endpoint login dapat diakses tanpa token, sedangkan endpoint lainnya mengikuti hak akses berdasarkan role pengguna.
+
+1. `POST /api/v1/auth/login` digunakan untuk login dan menghasilkan access token. Respons berhasil menggunakan status 200.
+2. `GET /api/v1/auth/me` digunakan untuk melihat profil pengguna yang sedang terautentikasi dan dapat diakses oleh admin maupun mahasiswa, dengan status 200.
+3. `GET /api/v1/students` digunakan admin untuk melihat daftar mahasiswa dengan pagination, filter, dan pencarian. Respons berhasil menggunakan status 200.
+4. `POST /api/v1/students` digunakan admin untuk membuat data mahasiswa beserta akun user-nya. Jika berhasil, server mengembalikan status 201.
+5. `GET /api/v1/students/:id` digunakan admin atau mahasiswa pemilik data untuk melihat detail mahasiswa beserta total dan batas SKS. Respons berhasil menggunakan status 200.
+6. `PUT /api/v1/students/:id` digunakan admin untuk memperbarui data mahasiswa dan mengembalikan status 200 ketika berhasil.
+7. `DELETE /api/v1/students/:id` digunakan admin untuk melakukan soft delete data mahasiswa. Operasi yang berhasil mengembalikan status 204.
+8. `GET /api/v1/courses` dapat diakses oleh pengguna yang sudah terautentikasi untuk melihat daftar mata kuliah beserta sisa kuotanya. Respons berhasil menggunakan status 200.
+9. `POST /api/v1/enrollments` digunakan mahasiswa untuk menambahkan mata kuliah ke KRS. Jika proses berhasil, server mengembalikan status 201.
+10. `DELETE /api/v1/enrollments/:id` digunakan mahasiswa untuk membatalkan mata kuliah dari KRS miliknya sendiri. Operasi yang berhasil mengembalikan status 204.
 
 ## BAB III Implementasi Sistem
 
