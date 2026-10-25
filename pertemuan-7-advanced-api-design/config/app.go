@@ -12,7 +12,7 @@ import (
 )
 
 // NewApp merakit aplikasi Fiber, middleware, dan route.
-func NewApp(logger *slog.Logger, deps route.Dependencies) *fiber.App {
+func NewApp(logger *slog.Logger, deps route.Dependencies, routeExtensions ...func(*fiber.App)) *fiber.App {
 	app := fiber.New(fiber.Config{
 		AppName:      GetEnv("APP_NAME", "Praktikum Backend Lanjut"),
 		BodyLimit:    1 * 1024 * 1024,
@@ -21,6 +21,10 @@ func NewApp(logger *slog.Logger, deps route.Dependencies) *fiber.App {
 
 	middleware.Register(app, logger, GetEnvList("ALLOWED_ORIGINS", "http://localhost:5173"))
 	route.Register(app, deps)
+	// Extension routes must be registered before the catch-all 404 handler.
+	for _, registerRoutes := range routeExtensions {
+		registerRoutes(app)
+	}
 
 	// Menangani endpoint yang tidak dikenal.
 	app.Use(func(c *fiber.Ctx) error {
