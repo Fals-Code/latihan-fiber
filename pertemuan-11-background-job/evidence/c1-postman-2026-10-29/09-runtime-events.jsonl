@@ -1,0 +1,4 @@
+{"time":"2026-10-29T08:11:36.7309989+07:00","level":"INFO","msg":"notification_processed","outbox_id":21,"event":"enrollment.created","retry":0,"already_sent":false}
+{"time":"2026-10-29T08:13:19.6039469+07:00","level":"INFO","msg":"notification_processed","outbox_id":23,"event":"enrollment.dropped","retry":0,"already_sent":false}
+{"time":"2026-10-29T08:13:47.0030411+07:00","level":"INFO","msg":"notification_processed","outbox_id":24,"event":"enrollment.created","retry":0,"already_sent":false}
+{"time":"2026-10-29T08:14:30.9973491+07:00","level":"INFO","msg":"notification_processed","outbox_id":25,"event":"enrollment.swapped","retry":0,"already_sent":false}

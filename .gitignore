@@ -45,3 +45,9 @@ temp/
 .DS_Store
 Thumbs.db
 coverage.out
+
+# Private local state and audit working copies
+.secrets/
+__pycache__/
+*.py[cod]
+/submission-audit/

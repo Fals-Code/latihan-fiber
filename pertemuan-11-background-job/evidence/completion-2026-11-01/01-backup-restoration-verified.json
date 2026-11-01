@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-01T17:15:48.395978+07:00",
+  "backup_sha256": "2c75ff0fa5fddfd902a6efb7a795fd19fe66b04ec6c7e4f059befc2f82fdeb9b",
+  "original_database": "pertemuan11_test",
+  "isolated_restored_database": "pbe11_restorecheck_20261101",
+  "original": {
+    "users": 63,
+    "enrollments": 6,
+    "outbox": 11,
+    "notifications": 11,
+    "outbox_digest": "a47d4743280227b3ca9aff6717952d1a",
+    "notifications_digest": "540e0999ec41611d1770683ddbd5b8cf"
+  },
+  "restored": {
+    "users": 63,
+    "enrollments": 6,
+    "outbox": 11,
+    "notifications": 11,
+    "outbox_digest": "a47d4743280227b3ca9aff6717952d1a",
+    "notifications_digest": "540e0999ec41611d1770683ddbd5b8cf"
+  },
+  "equal": true,
+  "restore_exit_code": 0,
+  "restore_output": "",
+  "baseline_modified": false
+}

@@ -1,0 +1,12 @@
+{
+  "accounts": [
+    "mhsuji",
+    "adminuji"
+  ],
+  "statuses": [
+    200,
+    200
+  ],
+  "destination": "http://127.0.0.1:3332/api/v1/auth/login",
+  "tokens": "private local file only; not included in evidence"
+}

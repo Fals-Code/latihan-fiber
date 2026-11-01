@@ -1,0 +1,8 @@
+{
+  "time": "2026-11-01T09:05:45.118025+07:00",
+  "pid": 12860,
+  "binary": "pbe11-c2-current.exe",
+  "fail_every": 0,
+  "delay_ms": 1500,
+  "console": "hidden native console"
+}

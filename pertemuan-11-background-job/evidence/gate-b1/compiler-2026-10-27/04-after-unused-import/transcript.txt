@@ -1,0 +1,14 @@
+Gate B1 - 04-after-unused-import
+Started (Asia/Jakarta): 2026-10-27T18:44:43.741722+07:00
+Working directory: C:\Users\falah\latihan-fiber\pertemuan-11-background-job
+Command: go build ./...
+Dependencies: cache only (GOPROXY=off); installed toolchain
+
+--- ORIGINAL COMBINED OUTPUT ---
+# tugas1-go/pertemuan-11-background-job/app/service
+app\service\outbox_relay.go:116:52: cannot use job (variable of struct type model.NotificationJob) as []byte value in argument to asynq.NewTask
+
+--- EXECUTION METADATA ---
+Exit code: 1
+Elapsed: 2.168 seconds
+go.mod/go.sum unchanged: True

@@ -1,0 +1,122 @@
+[
+  {
+    "original": "C7-01-Redis-Error-Relay-Delayed.png",
+    "crop": "C7-01-Redis-Error-Relay-Delayed-crop.png",
+    "box": [
+      560,
+      350,
+      1330,
+      804
+    ],
+    "original_size": [
+      1468,
+      864
+    ],
+    "crop_size": [
+      770,
+      454
+    ],
+    "sha256_original": "33da3fe952c76ae48dca1dea2d2b975fa39d3d9eb4aa4e432da21d744231e6a7",
+    "sha256_crop": "697d82f4fea2cc29a43fd2802a21832e13277b28976710cae6dea3229d9ee067"
+  },
+  {
+    "original": "C7-02-Postman-Queue-200.png",
+    "crop": "C7-02-Postman-Queue-200-crop.png",
+    "box": [
+      285,
+      75,
+      1525,
+      780
+    ],
+    "original_size": [
+      1536,
+      864
+    ],
+    "crop_size": [
+      1240,
+      705
+    ],
+    "sha256_original": "d1e157ea22f9b025a3b14f528428bcad6e7c6a0006ebbb02f98efecf22f2aa47",
+    "sha256_crop": "2945655aa966f2163d524f5f00231c7b7037608df2d6066eda5e0583218341d0"
+  },
+  {
+    "original": "C6-01-Enroll-IF308-201.png",
+    "crop": "C6-01-Enroll-IF308-201-crop.png",
+    "box": [
+      285,
+      75,
+      1525,
+      780
+    ],
+    "original_size": [
+      1536,
+      864
+    ],
+    "crop_size": [
+      1240,
+      705
+    ],
+    "sha256_original": "cd9c631b483b3a8c1a0470878cc04b99b8427c739e93e74f8fff64cebd29871b",
+    "sha256_crop": "0f6d1d6d3b7f237b774edaea71cc5859ce091bcf05027bdf5033325b59c00353"
+  },
+  {
+    "original": "C6-02-Notification-Outbox56-200.png",
+    "crop": "C6-02-Notification-Outbox56-200-crop.png",
+    "box": [
+      285,
+      75,
+      1525,
+      780
+    ],
+    "original_size": [
+      1536,
+      864
+    ],
+    "crop_size": [
+      1240,
+      705
+    ],
+    "sha256_original": "1f962878ea395dc8909a4d8e4e2724f192853a7677def25200212aec9fad327b",
+    "sha256_crop": "4b3a31246a7d3eaf247bd2f4c2c02a38e589c38246b8956905dceaa0702f17ec"
+  },
+  {
+    "original": "C7-01-Redis-Error-Relay-Delayed.png",
+    "crop": "C7-01-Redis-Error-Relay-Delayed-crop-v2.png",
+    "box": [
+      560,
+      270,
+      1330,
+      835
+    ],
+    "original_size": [
+      1468,
+      864
+    ],
+    "crop_size": [
+      770,
+      565
+    ],
+    "sha256_original": "33da3fe952c76ae48dca1dea2d2b975fa39d3d9eb4aa4e432da21d744231e6a7",
+    "sha256_crop": "13a1a5eddd193e8c8858979cf1f30ec7dafdad2cf0bfd0fdcc9fcdfa0ba967da"
+  },
+  {
+    "original": "C6-03-Worker-Shutdown-Log.png",
+    "crop": "C6-03-Worker-Shutdown-Log-crop.png",
+    "box": [
+      70,
+      70,
+      1120,
+      405
+    ],
+    "original_size": [
+      1468,
+      864
+    ],
+    "crop_size": [
+      1050,
+      335
+    ],
+    "sha256_original": "1de9a08adcce9af14265101cf641ad7232c4f8561ce9ac68f6693be2025337da",
+    "sha256_crop": "5cc3e77e5723d5271091f456e2e93e8e9f350323cbea1a29711ad02b887e1083"
+  }
+]

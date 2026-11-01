@@ -1,0 +1,8 @@
+{
+  "time": "2026-11-01T17:46:54.302621+07:00",
+  "pid": 30184,
+  "binary": "baseline-after07.exe",
+  "fail_every": 0,
+  "delay_ms": 1500,
+  "console": "hidden native console"
+}

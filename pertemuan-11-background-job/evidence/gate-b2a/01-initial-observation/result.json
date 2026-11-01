@@ -1,0 +1,106 @@
+{
+  "stage": "01-initial-observation",
+  "time": "2026-10-29T00:39:42.830647+07:00",
+  "requests": [],
+  "database": {
+    "outbox": [
+      {
+        "id": 1,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:39:07.722477+00:00"
+      },
+      {
+        "id": 2,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:39:08.723292+00:00"
+      },
+      {
+        "id": 3,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:39:08.723292+00:00"
+      },
+      {
+        "id": 4,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:39:08.723292+00:00"
+      },
+      {
+        "id": 5,
+        "event_type": "enrollment.swapped",
+        "payload": {
+          "user_id": 61,
+          "course_id": 4,
+          "course_code": "IF302",
+          "course_name": "Keamanan Informasi",
+          "from_course_code": "IF102",
+          "from_course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:39:08.723292+00:00"
+      }
+    ],
+    "notifications": []
+  },
+  "monitor": {
+    "method": "GET",
+    "path": "/admin/queue",
+    "status": 200,
+    "elapsed_ms": 37.31,
+    "body": {
+      "success": true,
+      "message": "keadaan queue berhasil diambil",
+      "data": {
+        "outbox_pending": 0,
+        "outbox_published": 5,
+        "oldest_pending_age": "0s",
+        "notifications_sent": 0,
+        "queue": {
+          "name": "notifications",
+          "pending": 5,
+          "active": 0,
+          "scheduled": 0,
+          "retry": 0,
+          "archived": 0,
+          "completed": 0,
+          "processed_today": 0,
+          "failed_today": 0
+        }
+      }
+    }
+  },
+  "notifications_response": {
+    "method": "GET",
+    "path": "/notifications/mine",
+    "status": 200,
+    "elapsed_ms": 21.05,
+    "body": {
+      "success": true,
+      "message": "notifikasi berhasil diambil",
+      "data": []
+    }
+  },
+  "mail_lines_mhsuji": 0
+}

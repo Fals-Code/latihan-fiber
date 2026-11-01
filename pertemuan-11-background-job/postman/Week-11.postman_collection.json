@@ -1,0 +1,2858 @@
+{
+  "info": {
+    "name": "Week 11 - Background Job - C1-C8 dan D",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Praktikum Modul 11 — hasil aktual dan arsip historis.\nC.1 PASS historis: tujuh Example HISTORIS 2026-10-29 B2A berasal dari arsip HTTP lengkap satu checkpoint; satu Example admin C.1 Postman historis tetap dipertahankan. C.2 PASS runtime: enam Example ACTUAL 2026-11-01 tersedia. Contoh tersimpan bukan pengujian baru. Source B2A dan pengulangan Postman memiliki ID/waktu berbeda; jangan mencampur cohort.\nC.3–C.8 serta D.2/D.3 belum mempunyai penerimaan lengkap; status diperbarui hanya setelah eksekusi dan verifikasi. Untuk screenshot buka Example tanpa Send/Try. Pengujian stateful dilakukan satu per satu, tanpa Collection Runner. Jangan menampilkan token/password; nilai rahasia hanya lokal. Bukti non-HTTP berada di evidence, bukan response HTTP buatan."
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://127.0.0.1:3332/api/v1",
+      "type": "string"
+    },
+    {
+      "key": "d2_base_url",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "comparison_base_url",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_course_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_quota",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_version",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "student_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "student_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "student_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invalid_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invalid_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "invalid_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_admin_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_admin_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_admin_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_1_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_1_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_1_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_2_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_2_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_2_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_3_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_3_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_3_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_4_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_4_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_4_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_5_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_5_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_student_5_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "comparison_student_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "comparison_student_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "comparison_student_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "comparison_admin_username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "comparison_admin_password",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "comparison_admin_access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "d2_observer_access_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "00 - Persiapan login privat",
+      "description": "Jangan Run Collection. Isi hanya akun/target tahap yang disetujui; jangan menjalankan semua login sekaligus. Semua username, password, dan token pada file ini kosong. D2/D3 URL kosong sampai target khusus disetujui. Variabel invalid_access_token berarti token valid milik akun salahalamat, bukan token rusak. Login tidak melakukan reset/seed/registrasi.",
+      "item": [
+        {
+          "name": "01 - Login privat student - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual mhsuji. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal student_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{student_username}}\",\n  \"password\": \"{{student_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Login mahasiswa 200\", function () { pm.response.to.have.status(200); });\r\nif (pm.response.code === 200) {\r\n  const token = pm.response.json().data.access_token;\r\n  if (!token) throw new Error(\"Access token tidak tersedia\");\r\n  pm.environment.set(\"student_access_token\", token);\r\n}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "02 - Login privat admin - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual admin berizin queue:monitor. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal admin_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{admin_username}}\",\n  \"password\": \"{{admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Login admin 200\", function () { pm.response.to.have.status(200); });\r\nif (pm.response.code === 200) {\r\n  const token = pm.response.json().data.access_token;\r\n  if (!token) throw new Error(\"Access token tidak tersedia\");\r\n  pm.environment.set(\"admin_access_token\", token);\r\n}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "03 - Login privat invalid - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual salahalamat dengan email salah@kampus.invalid. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal invalid_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{invalid_username}}\",\n  \"password\": \"{{invalid_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "04 - Login privat d2_admin - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{d2_base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual admin D2 berizin course:manage. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal d2_admin_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{d2_admin_username}}\",\n  \"password\": \"{{d2_admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "05 - Login privat d2_student_1 - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{d2_base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual peserta D2 berbeda #1. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal d2_student_1_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{d2_student_1_username}}\",\n  \"password\": \"{{d2_student_1_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "06 - Login privat d2_student_2 - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{d2_base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual peserta D2 berbeda #2. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal d2_student_2_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{d2_student_2_username}}\",\n  \"password\": \"{{d2_student_2_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "07 - Login privat d2_student_3 - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{d2_base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual peserta D2 berbeda #3. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal d2_student_3_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{d2_student_3_username}}\",\n  \"password\": \"{{d2_student_3_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "08 - Login privat d2_student_4 - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{d2_base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual peserta D2 berbeda #4. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal d2_student_4_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{d2_student_4_username}}\",\n  \"password\": \"{{d2_student_4_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "09 - Login privat d2_student_5 - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{d2_base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual peserta D2 berbeda #5. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal d2_student_5_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{d2_student_5_username}}\",\n  \"password\": \"{{d2_student_5_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "10 - Login privat comparison_student - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{comparison_base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual mhsuji pada salinan D3. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal comparison_student_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{comparison_student_username}}\",\n  \"password\": \"{{comparison_student_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "11 - Login privat comparison_admin - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "url": "{{comparison_base_url}}/auth/login",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Persiapan manual admin pada salinan D3. Isi username/password pada nilai lokal privat atau Vault, bukan shared value. Akun sudah harus tersedia; pembuatan akun adalah tahap tersendiri. Target 200. Salin access token hanya ke variabel lokal comparison_admin_access_token. Jangan simpan response login sebagai example atau ekspor token/refresh token. Tidak ada skrip penyimpanan token.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"{{comparison_admin_username}}\",\n  \"password\": \"{{comparison_admin_password}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "C1 - Jalur normal",
+      "description": "C.1 PASS historis. Tujuh Example HISTORIS 2026-10-29 B2A di request01–07 berasal dari gate-b2a/05-final-c1-http.json dan05-final-c1/result.json, satu cohort outbox16/18/19/20. Ini arsip aktual, bukan pengujian baru. Status201/409/204/201/200, notifikasi200, admin200. Body204 kosong. Swap2→4 sukses200 dalam27,69ms pada B2A; PNG pengulangan Postman pukul08 menampilkan22ms dan outbox21/23/24/25, sehingga kedua cohort tidak dicampur. Example admin Postman lama tetap tersedia. Buka Example tanpa Send/Try untuk screenshot. Jangan mengulang request pada state sekarang hanya untuk memperoleh gambar.",
+      "item": [
+        {
+          "name": "01 - Enroll kelas 2 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/2/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": [
+            {
+              "id": "a48a09b2-f988-f88f-fc29-aa6fdc9927e4",
+              "name": "HISTORIS 2026-10-29 B2A — C1 01 — 201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/2/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "2",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "135.59",
+              "body": "{\n  \"success\": true,\n  \"message\": \"berhasil mendaftar kelas\",\n  \"data\": {\n    \"id\": 2,\n    \"code\": \"IF102\",\n    \"name\": \"Basis Data Lanjut\",\n    \"credits\": 3,\n    \"quota\": 40,\n    \"enrolled_count\": 1,\n    \"version\": 1,\n    \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n  }\n}",
+              "createdAt": "2026-11-01T07:22:05.000Z",
+              "updatedAt": "2026-11-01T07:22:05.000Z",
+              "uid": "53203684-a48a09b2-f988-f88f-fc29-aa6fdc9927e4"
+            }
+          ]
+        },
+        {
+          "name": "02 - Enroll kelas 2 duplikat - target 409 ALREADY_ENROLLED",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/2/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Jalankan segera setelah langkah 01. Target 409 ALREADY_ENROLLED; tidak boleh ada event/notification/email tambahan."
+          },
+          "response": [
+            {
+              "id": "52dd2aa0-44d1-7ed1-c573-95e4e86615fa",
+              "name": "HISTORIS 2026-10-29 B2A — C1 02 — 409 ALREADY_ENROLLED",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/2/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "2",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "25.89",
+              "body": "{\n  \"success\": false,\n  \"code\": \"ALREADY_ENROLLED\",\n  \"message\": \"Anda sudah terdaftar di  kelas ini\",\n  \"request_id\": \"8b364ac9-69a9-46c3-91e3-bc5ff708041d\"\n}",
+              "createdAt": "2026-11-01T07:22:10.000Z",
+              "updatedAt": "2026-11-01T07:22:10.000Z",
+              "uid": "53203684-52dd2aa0-44d1-7ed1-c573-95e4e86615fa"
+            }
+          ]
+        },
+        {
+          "name": "03 - Drop kelas 2 - target 204",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/2/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 204 tanpa body; satu event enrollment.dropped."
+          },
+          "response": [
+            {
+              "id": "68beb230-04d5-c2a0-3608-364133143c28",
+              "name": "HISTORIS 2026-10-29 B2A — C1 03 — 204 No Content",
+              "originalRequest": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/2/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "2",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "_postman_previewlanguage": null,
+              "header": null,
+              "cookie": [],
+              "responseTime": "46.49",
+              "body": "",
+              "createdAt": "2026-11-01T07:22:16.000Z",
+              "updatedAt": "2026-11-01T07:22:16.000Z",
+              "uid": "53203684-68beb230-04d5-c2a0-3608-364133143c28"
+            }
+          ]
+        },
+        {
+          "name": "04 - Enroll kelas 2 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/2/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": [
+            {
+              "id": "bbe0898f-6cb5-183f-6f8d-94ea664a944c",
+              "name": "HISTORIS 2026-10-29 B2A — C1 04 — 201 Created",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/2/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "2",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "11.42",
+              "body": "{\n  \"success\": true,\n  \"message\": \"berhasil mendaftar kelas\",\n  \"data\": {\n    \"id\": 2,\n    \"code\": \"IF102\",\n    \"name\": \"Basis Data Lanjut\",\n    \"credits\": 3,\n    \"quota\": 40,\n    \"enrolled_count\": 1,\n    \"version\": 1,\n    \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n  }\n}",
+              "createdAt": "2026-11-01T07:22:20.000Z",
+              "updatedAt": "2026-11-01T07:22:20.000Z",
+              "uid": "53203684-bbe0898f-6cb5-183f-6f8d-94ea664a944c"
+            }
+          ]
+        },
+        {
+          "name": "05 - Swap kelas 2 ke 4 - target 200",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/enrollments/swap",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 200; satu event enrollment.swapped.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"from_course_id\": 2,\n  \"to_course_id\": 4\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "31675484-fec1-80ec-23a7-45de76870588",
+              "name": "HISTORIS 2026-10-29 B2A — C1 05 — 200 Swap 2 ke 4",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"from_course_id\": 2,\n  \"to_course_id\": 4\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/enrollments/swap",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "enrollments",
+                    "swap"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "27.69",
+              "body": "{\n  \"success\": true,\n  \"message\": \"berhasil pindah kelas\",\n  \"data\": {\n    \"id\": 4,\n    \"code\": \"IF302\",\n    \"name\": \"Keamanan Informasi\",\n    \"credits\": 3,\n    \"quota\": 40,\n    \"enrolled_count\": 1,\n    \"version\": 1,\n    \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n  }\n}",
+              "createdAt": "2026-11-01T07:22:31.000Z",
+              "updatedAt": "2026-11-01T07:22:31.000Z",
+              "uid": "53203684-31675484-fec1-80ec-23a7-45de76870588"
+            }
+          ]
+        },
+        {
+          "name": "06 - Notifikasi milik akun - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/notifications/mine",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Sesudah lima mutasi dan tunggu 5 detik: target 200, empat notifikasi urutan terbaru swapped,created,dropped,created. Cocokkan subject PDF hlm.32."
+          },
+          "response": [
+            {
+              "id": "a3eb6cbf-cce2-a499-71e6-c00ee860802e",
+              "name": "HISTORIS 2026-10-29 B2A — C1 06 — 200 Empat notifikasi",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/notifications/mine",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "notifications",
+                    "mine"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "3.36",
+              "body": "{\n  \"success\": true,\n  \"message\": \"notifikasi berhasil diambil\",\n  \"data\": [\n    {\n      \"id\": 18,\n      \"outbox_id\": 20,\n      \"user_id\": 61,\n      \"channel\": \"email\",\n      \"subject\": \"KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi\",\n      \"body\": \"Halo mhsuji, Anda telah pindah dari kelas IF102 Basis Data Lanjut ke kelas IF302 Keamanan Informasi.\",\n      \"sent_at\": \"2026-10-29T00:44:35.78128+07:00\"\n    },\n    {\n      \"id\": 17,\n      \"outbox_id\": 19,\n      \"user_id\": 61,\n      \"channel\": \"email\",\n      \"subject\": \"KRS: berhasil terdaftar di IF102 Basis Data Lanjut\",\n      \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.\",\n      \"sent_at\": \"2026-10-29T00:44:35.774275+07:00\"\n    },\n    {\n      \"id\": 16,\n      \"outbox_id\": 18,\n      \"user_id\": 61,\n      \"channel\": \"email\",\n      \"subject\": \"KRS: keluar dari IF102 Basis Data Lanjut\",\n      \"body\": \"Halo mhsuji, Anda sudah tidak terdaftar di kelas IF102 Basis Data Lanjut.\",\n      \"sent_at\": \"2026-10-29T00:44:35.772031+07:00\"\n    },\n    {\n      \"id\": 15,\n      \"outbox_id\": 16,\n      \"user_id\": 61,\n      \"channel\": \"email\",\n      \"subject\": \"KRS: berhasil terdaftar di IF102 Basis Data Lanjut\",\n      \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.\",\n      \"sent_at\": \"2026-10-29T00:44:35.77099+07:00\"\n    }\n  ]\n}",
+              "createdAt": "2026-11-01T07:22:25.000Z",
+              "updatedAt": "2026-11-01T07:22:25.000Z",
+              "uid": "53203684-a3eb6cbf-cce2-a499-71e6-c00ee860802e"
+            }
+          ]
+        },
+        {
+          "name": "07 - Monitoring queue admin - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/queue",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Observasi tambahan setelah lima mutasi; target 200. Statistik global dapat mencakup akun lain; SQL tersaring akun/outbox dan empat email tetap diperlukan."
+          },
+          "response": [
+            {
+              "id": "dca02610-02c7-4b09-b6f0-a293c5c54359",
+              "name": "C.1 historis — admin queue — 29 Oktober 2026 (OPEN EXAMPLE, JANGAN SEND)",
+              "originalRequest": {
+                "auth": {
+                  "type": "bearer",
+                  "bearer": [
+                    {
+                      "key": "token",
+                      "value": "{{admin_access_token}}",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/admin/queue",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "admin",
+                    "queue"
+                  ]
+                },
+                "description": "ARSIP HISTORIS C.1 — jangan klik Send. Body example disalin persis dari evidence/c1-postman-2026-10-29/admin-response.json; status 200 didukung screenshot asli screenshots/07-admin-queue-200.png (1920 × 1080) dan README evidence. Ini bukan request baru atau response yang direkonstruksi. Header request/response tidak tersimpan, sehingga array header kosong. Tidak ada waktu/latency yang dicatat."
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n    \"success\": true,\n    \"message\": \"keadaan queue berhasil diambil\",\n    \"data\": {\n        \"outbox_pending\": 0,\n        \"outbox_published\": 4,\n        \"oldest_pending_age\": \"0s\",\n        \"notifications_sent\": 4,\n        \"queue\": {\n            \"name\": \"notifications\",\n            \"pending\": 0,\n            \"active\": 0,\n            \"scheduled\": 0,\n            \"retry\": 0,\n            \"archived\": 0,\n            \"completed\": 22,\n            \"processed_today\": 4,\n            \"failed_today\": 0\n        }\n    }\n}",
+              "createdAt": "2026-10-29T14:57:49.000Z",
+              "updatedAt": "2026-10-29T14:57:49.000Z",
+              "uid": "53203684-dca02610-02c7-4b09-b6f0-a293c5c54359"
+            },
+            {
+              "id": "5ccbd4d1-0800-a28d-31c2-5669e954a301",
+              "name": "HISTORIS 2026-10-29 B2A — C1 07 — 200 Admin queue",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/admin/queue",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "queue"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "13.54",
+              "body": "{\n  \"success\": true,\n  \"message\": \"keadaan queue berhasil diambil\",\n  \"data\": {\n    \"outbox_pending\": 0,\n    \"outbox_published\": 4,\n    \"oldest_pending_age\": \"0s\",\n    \"notifications_sent\": 4,\n    \"queue\": {\n      \"name\": \"notifications\",\n      \"pending\": 0,\n      \"active\": 0,\n      \"scheduled\": 0,\n      \"retry\": 0,\n      \"archived\": 0,\n      \"completed\": 18,\n      \"processed_today\": 18,\n      \"failed_today\": 0\n    }\n  }\n}",
+              "createdAt": "2026-11-01T07:22:35.000Z",
+              "updatedAt": "2026-11-01T07:22:35.000Z",
+              "uid": "53203684-5ccbd4d1-0800-a28d-31c2-5669e954a301"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "C2 - Redis mati dan pemulihan",
+      "description": "C.2 runtime PASS — 1 November 2026, environment pbe11-baseline.\n\nTiga POST kelas 5, 6, dan 7 mendapat 201 dalam 28, 17, dan 13 ms. Saat Redis mati, admin mendapat 200 dengan pending 3 dan queue_error. Request admin dikirim 35,895 detik setelah POST terakhir: jeda minimal lima detik terpenuhi, bukan pengukuran tepat lima detik.\n\nSetelah Redis dinyalakan, SQL menunjukkan pending 0 dalam 2,375 detik. GET notifikasi dikirim pada sekitar 3,956 detik dan mendapat 200 dengan tujuh notifikasi. Ketiga mailer/job selesai sekitar 4,853 detik. Data C.1 tetap utuh.\n\nUntuk screenshot, buka enam example ACTUAL 2026-11-01 di bawah request tanpa menekan Send. Bukti asli ada di evidence/c2-resume-2026-11-01/. Example tidak menyertakan header autentikasi atau secret. Jangan Run Collection atau melakukan reset untuk screenshot. C.3–C.8 serta D.2/D.3 tetap PENDING.",
+      "item": [
+        {
+          "name": "01 - Enroll kelas 5 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/5/enroll",
+            "description": "TERBUKTI — C.2, 1 November 2026, pbe11-baseline. POST kelas 5 saat Redis baseline mati: HTTP 201, 28 ms. Buka example ACTUAL 2026-11-01 untuk screenshot tanpa Send. Bukti asli: evidence/c2-resume-2026-11-01/. Example bukan pengujian baru. Jangan tampilkan token/password."
+          },
+          "response": [
+            {
+              "id": "a469725e-e2f4-9e2e-e7c7-0a56d4c0cde1",
+              "name": "ACTUAL 2026-11-01 — C2 1 — 201 — Redis OFF",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/5/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "5",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "28",
+              "body": "{\n    \"success\": true,\n    \"message\": \"berhasil mendaftar kelas\",\n    \"data\": {\n        \"id\": 5,\n        \"code\": \"IF303\",\n        \"name\": \"Komputasi Awan\",\n        \"credits\": 3,\n        \"quota\": 40,\n        \"enrolled_count\": 1,\n        \"version\": 1,\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n    }\n}",
+              "createdAt": "2026-11-01T02:25:16.000Z",
+              "updatedAt": "2026-11-01T02:29:54.000Z",
+              "uid": "53203684-a469725e-e2f4-9e2e-e7c7-0a56d4c0cde1"
+            }
+          ]
+        },
+        {
+          "name": "02 - Enroll kelas 6 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/6/enroll",
+            "description": "TERBUKTI — C.2, 1 November 2026, pbe11-baseline. POST kelas 6 saat Redis baseline mati: HTTP 201, 17 ms. Buka example ACTUAL 2026-11-01 untuk screenshot tanpa Send. Bukti asli: evidence/c2-resume-2026-11-01/. Example bukan pengujian baru. Jangan tampilkan token/password."
+          },
+          "response": [
+            {
+              "id": "68e8a871-3ef8-f03a-d101-3477926a925b",
+              "name": "ACTUAL 2026-11-01 — C2 2 — 201 — Redis OFF",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/6/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "6",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "17",
+              "body": "{\n    \"success\": true,\n    \"message\": \"berhasil mendaftar kelas\",\n    \"data\": {\n        \"id\": 6,\n        \"code\": \"IF304\",\n        \"name\": \"Data Mining\",\n        \"credits\": 3,\n        \"quota\": 40,\n        \"enrolled_count\": 1,\n        \"version\": 1,\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n    }\n}",
+              "createdAt": "2026-11-01T02:25:23.000Z",
+              "updatedAt": "2026-11-01T02:30:00.000Z",
+              "uid": "53203684-68e8a871-3ef8-f03a-d101-3477926a925b"
+            }
+          ]
+        },
+        {
+          "name": "03 - Enroll kelas 7 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/7/enroll",
+            "description": "TERBUKTI — C.2, 1 November 2026, pbe11-baseline. POST kelas 7 saat Redis baseline mati: HTTP 201, 13 ms. Buka example ACTUAL 2026-11-01 untuk screenshot tanpa Send. Bukti asli: evidence/c2-resume-2026-11-01/. Example bukan pengujian baru. Jangan tampilkan token/password."
+          },
+          "response": [
+            {
+              "id": "cc0c7f47-cf58-d280-df35-7970d26896ff",
+              "name": "ACTUAL 2026-11-01 — C2 3 — 201 — Redis OFF",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/7/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "7",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "13",
+              "body": "{\n    \"success\": true,\n    \"message\": \"berhasil mendaftar kelas\",\n    \"data\": {\n        \"id\": 7,\n        \"code\": \"IF305\",\n        \"name\": \"Pemrograman Mobile\",\n        \"credits\": 3,\n        \"quota\": 40,\n        \"enrolled_count\": 1,\n        \"version\": 1,\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n    }\n}",
+              "createdAt": "2026-11-01T02:25:29.000Z",
+              "updatedAt": "2026-11-01T02:30:06.000Z",
+              "uid": "53203684-cc0c7f47-cf58-d280-df35-7970d26896ff"
+            }
+          ]
+        },
+        {
+          "name": "04 - Admin saat Redis mati - target pending 3 dan queue_error",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/queue",
+            "description": "TERBUKTI — C.2, 1 November 2026, pbe11-baseline. Redis mati: HTTP 200, 76 ms; pending 3, published 4, notifications_sent 4, queue_error. Dikirim 35,895 detik setelah POST terakhir (jeda minimal lima detik terpenuhi, bukan checkpoint tepat lima detik). Buka example ACTUAL 2026-11-01 untuk screenshot tanpa Send. Bukti asli: evidence/c2-resume-2026-11-01/. Example bukan pengujian baru. Jangan tampilkan token/password."
+          },
+          "response": [
+            {
+              "id": "ca35cff4-1af6-2137-d01a-97d17a48c3d5",
+              "name": "ACTUAL 2026-11-01 — C2 4 — 200 — Redis OFF",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/admin/queue",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "queue"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "76",
+              "body": "{\n    \"success\": true,\n    \"message\": \"keadaan queue berhasil diambil\",\n    \"data\": {\n        \"outbox_pending\": 3,\n        \"outbox_published\": 4,\n        \"oldest_pending_age\": \"1m25.974s\",\n        \"notifications_sent\": 4,\n        \"queue\": null,\n        \"queue_error\": \"queue tidak dapat dibaca: Redis tidak dapat dihubungi atau queue belum  pernah dipakai\"\n    }\n}",
+              "createdAt": "2026-11-01T02:25:34.000Z",
+              "updatedAt": "2026-11-01T02:30:11.000Z",
+              "uid": "53203684-ca35cff4-1af6-2137-d01a-97d17a48c3d5"
+            }
+          ]
+        },
+        {
+          "name": "05 - Admin setelah Redis pulih - target pending 0",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/queue",
+            "description": "TERBUKTI — C.2, 1 November 2026, pbe11-baseline. Redis pulih: HTTP 200, 18 ms; pending 0, published 7, notifications_sent 7, antrean idle. Checkpoint admin ini dikirim setelah pemulihan; bukti batas sepuluh detik berasal dari SQL bertiming dan request notifikasi. Buka example ACTUAL 2026-11-01 untuk screenshot tanpa Send. Bukti asli: evidence/c2-resume-2026-11-01/. Example bukan pengujian baru. Jangan tampilkan token/password."
+          },
+          "response": [
+            {
+              "id": "3f714a0c-70c0-8be4-ba48-36a4e82877f4",
+              "name": "ACTUAL 2026-11-01 — C2 5 — 200 — Redis pulih",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/admin/queue",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "admin",
+                    "queue"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "18",
+              "body": "{\n    \"success\": true,\n    \"message\": \"keadaan queue berhasil diambil\",\n    \"data\": {\n        \"outbox_pending\": 0,\n        \"outbox_published\": 7,\n        \"oldest_pending_age\": \"0s\",\n        \"notifications_sent\": 7,\n        \"queue\": {\n            \"name\": \"notifications\",\n            \"pending\": 0,\n            \"active\": 0,\n            \"scheduled\": 0,\n            \"retry\": 0,\n            \"archived\": 0,\n            \"completed\": 6,\n            \"processed_today\": 6,\n            \"failed_today\": 0\n        }\n    }\n}",
+              "createdAt": "2026-11-01T02:25:40.000Z",
+              "updatedAt": "2026-11-01T02:30:17.000Z",
+              "uid": "53203684-3f714a0c-70c0-8be4-ba48-36a4e82877f4"
+            }
+          ]
+        },
+        {
+          "name": "06 - Notifikasi milik akun - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/notifications/mine",
+            "description": "TERBUKTI — C.2, 1 November 2026, pbe11-baseline. HTTP 200, 6 ms, tujuh notifikasi (empat C.1 dan tiga C.2). Request dikirim sekitar 3,956 detik sejak perintah start Redis; mailer/handler selesai sekitar 4,853 detik. Buka example ACTUAL 2026-11-01 untuk screenshot tanpa Send. Bukti asli: evidence/c2-resume-2026-11-01/. Example bukan pengujian baru. Jangan tampilkan token/password."
+          },
+          "response": [
+            {
+              "id": "b2947bd3-4b16-ffcc-9798-ec231ff3bd11",
+              "name": "ACTUAL 2026-11-01 — C2 6 — 200 — Redis pulih",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/notifications/mine",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "notifications",
+                    "mine"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "6",
+              "body": "{\n    \"success\": true,\n    \"message\": \"notifikasi berhasil diambil\",\n    \"data\": [\n        {\n            \"id\": 28,\n            \"outbox_id\": 31,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF305 Pemrograman Mobile\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF305 Pemrograman Mobile.\",\n            \"sent_at\": \"2026-11-01T09:20:42.16591+07:00\"\n        },\n        {\n            \"id\": 27,\n            \"outbox_id\": 30,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF304 Data Mining\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF304 Data Mining.\",\n            \"sent_at\": \"2026-11-01T09:20:42.164068+07:00\"\n        },\n        {\n            \"id\": 26,\n            \"outbox_id\": 29,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF303 Komputasi Awan\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF303 Komputasi Awan.\",\n            \"sent_at\": \"2026-11-01T09:20:42.161461+07:00\"\n        },\n        {\n            \"id\": 22,\n            \"outbox_id\": 25,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi\",\n            \"body\": \"Halo mhsuji, Anda telah pindah dari kelas IF102 Basis Data Lanjut ke kelas IF302 Keamanan Informasi.\",\n            \"sent_at\": \"2026-10-29T08:14:29.476259+07:00\"\n        },\n        {\n            \"id\": 21,\n            \"outbox_id\": 24,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF102 Basis Data Lanjut\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.\",\n            \"sent_at\": \"2026-10-29T08:13:45.484727+07:00\"\n        },\n        {\n            \"id\": 20,\n            \"outbox_id\": 23,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: keluar dari IF102 Basis Data Lanjut\",\n            \"body\": \"Halo mhsuji, Anda sudah tidak terdaftar di kelas IF102 Basis Data Lanjut.\",\n            \"sent_at\": \"2026-10-29T08:13:18.094052+07:00\"\n        },\n        {\n            \"id\": 19,\n            \"outbox_id\": 21,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF102 Basis Data Lanjut\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.\",\n            \"sent_at\": \"2026-10-29T08:11:35.221323+07:00\"\n        }\n    ]\n}",
+              "createdAt": "2026-11-01T02:25:46.000Z",
+              "updatedAt": "2026-11-01T02:30:24.000Z",
+              "uid": "53203684-b2947bd3-4b16-ffcc-9798-ec231ff3bd11"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "C3 - Temporary failure dan retry",
+      "description": "PDF hlm.33. Hanya setelah izin: MAILER_FAIL_EVERY=3, restart worker, reset11.sql dan kosongkan mail.log. Jalankan enam enrollment 1-6; tunggu 20 detik. Wajib SQL notifications=6, endpoint=6, email=6 dan sedikitnya dua task_failed berpesan pengiriman gagal sementara. Tanpa failure nyata, retry belum terbukti.",
+      "item": [
+        {
+          "name": "01 - Enroll kelas 1 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/1/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": [
+            {
+              "id": "b86ad839-6ec9-1f8f-0afc-5e0ae1eca347",
+              "name": "BEFORE_FIX 2026-11-01 - C3-01 - 201 Created - P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/1/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "1",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "23",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"berhasil mendaftar kelas\",\r\n    \"data\": {\r\n        \"id\": 1,\r\n        \"code\": \"IF101\",\r\n        \"name\": \"Pemrograman Backend Lanjut\",\r\n        \"credits\": 3,\r\n        \"quota\": 40,\r\n        \"enrolled_count\": 1,\r\n        \"version\": 1,\r\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\r\n    }\r\n}",
+              "createdAt": "2026-11-01T10:20:12.000Z",
+              "updatedAt": "2026-11-01T10:20:12.000Z",
+              "uid": "53203684-b86ad839-6ec9-1f8f-0afc-5e0ae1eca347"
+            },
+            {
+              "id": "3fb5ab32-bdff-f512-6718-bbd20e646ef3",
+              "name": "ACTUAL 2026-11-01 - C3-01 - 201 Created - AFTER P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/1/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "1",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "26",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"berhasil mendaftar kelas\",\r\n    \"data\": {\r\n        \"id\": 1,\r\n        \"code\": \"IF101\",\r\n        \"name\": \"Pemrograman Backend Lanjut\",\r\n        \"credits\": 3,\r\n        \"quota\": 40,\r\n        \"enrolled_count\": 1,\r\n        \"version\": 1,\r\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\r\n    }\r\n}\r\n",
+              "createdAt": "2026-11-01T10:45:41.000Z",
+              "updatedAt": "2026-11-01T10:45:41.000Z",
+              "uid": "53203684-3fb5ab32-bdff-f512-6718-bbd20e646ef3"
+            }
+          ]
+        },
+        {
+          "name": "02 - Enroll kelas 2 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/2/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": [
+            {
+              "id": "e8f06b63-7262-d680-f0c2-f228af3edf02",
+              "name": "BEFORE_FIX 2026-11-01 - C3-02 - 201 Created - P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/2/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "2",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "29",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"berhasil mendaftar kelas\",\r\n    \"data\": {\r\n        \"id\": 2,\r\n        \"code\": \"IF102\",\r\n        \"name\": \"Basis Data Lanjut\",\r\n        \"credits\": 3,\r\n        \"quota\": 40,\r\n        \"enrolled_count\": 1,\r\n        \"version\": 1,\r\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\r\n    }\r\n}",
+              "createdAt": "2026-11-01T10:21:56.000Z",
+              "updatedAt": "2026-11-01T10:21:56.000Z",
+              "uid": "53203684-e8f06b63-7262-d680-f0c2-f228af3edf02"
+            },
+            {
+              "id": "4df05246-f5bc-443c-a9f9-053a1a5f6fd4",
+              "name": "ACTUAL 2026-11-01 - C3-02 - 201 Created - AFTER P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/2/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "2",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "42",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"berhasil mendaftar kelas\",\r\n    \"data\": {\r\n        \"id\": 2,\r\n        \"code\": \"IF102\",\r\n        \"name\": \"Basis Data Lanjut\",\r\n        \"credits\": 3,\r\n        \"quota\": 40,\r\n        \"enrolled_count\": 1,\r\n        \"version\": 1,\r\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\r\n    }\r\n}\r\n",
+              "createdAt": "2026-11-01T10:45:47.000Z",
+              "updatedAt": "2026-11-01T10:45:47.000Z",
+              "uid": "53203684-4df05246-f5bc-443c-a9f9-053a1a5f6fd4"
+            }
+          ]
+        },
+        {
+          "name": "03 - Enroll kelas 3 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/3/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": [
+            {
+              "id": "916bf0af-a110-6855-e241-fed15cb9eb35",
+              "name": "BEFORE_FIX 2026-11-01 - C3-03 - 201 Created - P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/3/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "3",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "25",
+              "body": "{\n    \"success\": true,\n    \"message\": \"berhasil mendaftar kelas\",\n    \"data\": {\n        \"id\": 3,\n        \"code\": \"IF301\",\n        \"name\": \"Kecerdasan Buatan\",\n        \"credits\": 3,\n        \"quota\": 40,\n        \"enrolled_count\": 1,\n        \"version\": 1,\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n    }\n}\n",
+              "createdAt": "2026-11-01T10:24:31.000Z",
+              "updatedAt": "2026-11-01T10:24:31.000Z",
+              "uid": "53203684-916bf0af-a110-6855-e241-fed15cb9eb35"
+            },
+            {
+              "id": "3bf69988-3f3f-1b6c-3211-73b9f73caace",
+              "name": "ACTUAL 2026-11-01 - C3-03 - 201 Created - AFTER P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/3/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "3",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "240",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"berhasil mendaftar kelas\",\r\n    \"data\": {\r\n        \"id\": 3,\r\n        \"code\": \"IF301\",\r\n        \"name\": \"Kecerdasan Buatan\",\r\n        \"credits\": 3,\r\n        \"quota\": 40,\r\n        \"enrolled_count\": 1,\r\n        \"version\": 1,\r\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\r\n    }\r\n}\r\n",
+              "createdAt": "2026-11-01T10:45:51.000Z",
+              "updatedAt": "2026-11-01T10:45:51.000Z",
+              "uid": "53203684-3bf69988-3f3f-1b6c-3211-73b9f73caace"
+            }
+          ]
+        },
+        {
+          "name": "04 - Enroll kelas 4 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/4/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": [
+            {
+              "id": "fa2a3b2d-6bb5-4847-6a9f-c028617a3566",
+              "name": "BEFORE_FIX 2026-11-01 - C3-04 - 201 Created - P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/4/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "4",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "74",
+              "body": "{\n    \"success\": true,\n    \"message\": \"berhasil mendaftar kelas\",\n    \"data\": {\n        \"id\": 4,\n        \"code\": \"IF302\",\n        \"name\": \"Keamanan Informasi\",\n        \"credits\": 3,\n        \"quota\": 40,\n        \"enrolled_count\": 1,\n        \"version\": 1,\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n    }\n}\n",
+              "createdAt": "2026-11-01T10:26:50.000Z",
+              "updatedAt": "2026-11-01T10:26:50.000Z",
+              "uid": "53203684-fa2a3b2d-6bb5-4847-6a9f-c028617a3566"
+            },
+            {
+              "id": "5e59d282-17f5-1e71-6cad-67de4a2564eb",
+              "name": "ACTUAL 2026-11-01 - C3-04 - 201 Created - AFTER P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/4/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "4",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "28",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"berhasil mendaftar kelas\",\r\n    \"data\": {\r\n        \"id\": 4,\r\n        \"code\": \"IF302\",\r\n        \"name\": \"Keamanan Informasi\",\r\n        \"credits\": 3,\r\n        \"quota\": 40,\r\n        \"enrolled_count\": 1,\r\n        \"version\": 1,\r\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\r\n    }\r\n}\r\n",
+              "createdAt": "2026-11-01T10:45:56.000Z",
+              "updatedAt": "2026-11-01T10:45:56.000Z",
+              "uid": "53203684-5e59d282-17f5-1e71-6cad-67de4a2564eb"
+            }
+          ]
+        },
+        {
+          "name": "05 - Enroll kelas 5 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/5/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": [
+            {
+              "id": "f8e89a5e-695b-3a77-3699-f334ce9be7ab",
+              "name": "BEFORE_FIX 2026-11-01 - C3-05 - 201 Created - P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/5/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "5",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "21",
+              "body": "{\n    \"success\": true,\n    \"message\": \"berhasil mendaftar kelas\",\n    \"data\": {\n        \"id\": 5,\n        \"code\": \"IF303\",\n        \"name\": \"Komputasi Awan\",\n        \"credits\": 3,\n        \"quota\": 40,\n        \"enrolled_count\": 1,\n        \"version\": 1,\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n    }\n}\n",
+              "createdAt": "2026-11-01T10:31:26.000Z",
+              "updatedAt": "2026-11-01T10:31:26.000Z",
+              "uid": "53203684-f8e89a5e-695b-3a77-3699-f334ce9be7ab"
+            },
+            {
+              "id": "fb2c86b3-68ec-5a82-5562-e28810f06c29",
+              "name": "ACTUAL 2026-11-01 - C3-05 - 201 Created - AFTER P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/5/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "5",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "13",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"berhasil mendaftar kelas\",\r\n    \"data\": {\r\n        \"id\": 5,\r\n        \"code\": \"IF303\",\r\n        \"name\": \"Komputasi Awan\",\r\n        \"credits\": 3,\r\n        \"quota\": 40,\r\n        \"enrolled_count\": 1,\r\n        \"version\": 1,\r\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\r\n    }\r\n}\r\n",
+              "createdAt": "2026-11-01T10:46:00.000Z",
+              "updatedAt": "2026-11-01T10:46:00.000Z",
+              "uid": "53203684-fb2c86b3-68ec-5a82-5562-e28810f06c29"
+            }
+          ]
+        },
+        {
+          "name": "06 - Enroll kelas 6 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/6/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": [
+            {
+              "id": "18e9ee47-43a4-3277-1ce8-ca07cffd7f3e",
+              "name": "BEFORE_FIX 2026-11-01 - C3-06 - 201 Created - P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/6/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "6",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "21",
+              "body": "{\n    \"success\": true,\n    \"message\": \"berhasil mendaftar kelas\",\n    \"data\": {\n        \"id\": 6,\n        \"code\": \"IF304\",\n        \"name\": \"Data Mining\",\n        \"credits\": 3,\n        \"quota\": 40,\n        \"enrolled_count\": 1,\n        \"version\": 1,\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\n    }\n}\n",
+              "createdAt": "2026-11-01T10:31:30.000Z",
+              "updatedAt": "2026-11-01T10:31:30.000Z",
+              "uid": "53203684-18e9ee47-43a4-3277-1ce8-ca07cffd7f3e"
+            },
+            {
+              "id": "546f2f7c-6627-97e5-70ba-f4d4fc93f659",
+              "name": "ACTUAL 2026-11-01 - C3-06 - 201 Created - AFTER P11-07",
+              "originalRequest": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/courses/6/enroll",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "courses",
+                    "6",
+                    "enroll"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "18",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"berhasil mendaftar kelas\",\r\n    \"data\": {\r\n        \"id\": 6,\r\n        \"code\": \"IF304\",\r\n        \"name\": \"Data Mining\",\r\n        \"credits\": 3,\r\n        \"quota\": 40,\r\n        \"enrolled_count\": 1,\r\n        \"version\": 1,\r\n        \"created_at\": \"2026-10-29T00:37:03.840553+07:00\"\r\n    }\r\n}\r\n",
+              "createdAt": "2026-11-01T10:46:05.000Z",
+              "updatedAt": "2026-11-01T10:46:05.000Z",
+              "uid": "53203684-546f2f7c-6627-97e5-70ba-f4d4fc93f659"
+            }
+          ]
+        },
+        {
+          "name": "07 - Notifikasi milik akun - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/notifications/mine",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Tunggu 20 detik sesudah enrollment: target 200, enam notifikasi. Cocokkan SQL dan enam email; simpan sedikitnya dua failure sementara aktual."
+          },
+          "response": [
+            {
+              "id": "992c84ae-8a1f-515f-f787-c7c1cff4c407",
+              "name": "BEFORE_FIX 2026-11-01 - C3-07 - 200 OK - P11-07",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/notifications/mine",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "notifications",
+                    "mine"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "32",
+              "body": "{\n    \"success\": true,\n    \"message\": \"notifikasi berhasil diambil\",\n    \"data\": [\n        {\n            \"id\": 39,\n            \"outbox_id\": 44,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF304 Data Mining\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF304 Data Mining.\",\n            \"sent_at\": \"2026-11-01T17:30:04.799849+07:00\"\n        },\n        {\n            \"id\": 38,\n            \"outbox_id\": 43,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF303 Komputasi Awan\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF303 Komputasi Awan.\",\n            \"sent_at\": \"2026-11-01T17:29:12.780374+07:00\"\n        },\n        {\n            \"id\": 37,\n            \"outbox_id\": 42,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF302 Keamanan Informasi\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF302 Keamanan Informasi.\",\n            \"sent_at\": \"2026-11-01T17:26:14.127123+07:00\"\n        },\n        {\n            \"id\": 35,\n            \"outbox_id\": 41,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF301 Kecerdasan Buatan\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF301 Kecerdasan Buatan.\",\n            \"sent_at\": \"2026-11-01T17:23:26.551332+07:00\"\n        },\n        {\n            \"id\": 34,\n            \"outbox_id\": 40,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF102 Basis Data Lanjut\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.\",\n            \"sent_at\": \"2026-11-01T17:20:55.55431+07:00\"\n        },\n        {\n            \"id\": 33,\n            \"outbox_id\": 39,\n            \"user_id\": 61,\n            \"channel\": \"email\",\n            \"subject\": \"KRS: berhasil terdaftar di IF101 Pemrograman Backend Lanjut\",\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF101 Pemrograman Backend Lanjut.\",\n            \"sent_at\": \"2026-11-01T17:19:14.527614+07:00\"\n        }\n    ]\n}\n",
+              "createdAt": "2026-11-01T10:31:34.000Z",
+              "updatedAt": "2026-11-01T10:31:34.000Z",
+              "uid": "53203684-992c84ae-8a1f-515f-f787-c7c1cff4c407"
+            },
+            {
+              "id": "7d406453-d439-8872-467a-46d3770e091a",
+              "name": "ACTUAL 2026-11-01 - C3-07 - 200 OK - AFTER P11-07",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://127.0.0.1:3332/api/v1/notifications/mine",
+                  "protocol": "http",
+                  "host": [
+                    "127",
+                    "0",
+                    "0",
+                    "1"
+                  ],
+                  "port": "3332",
+                  "path": [
+                    "api",
+                    "v1",
+                    "notifications",
+                    "mine"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": null,
+              "cookie": [],
+              "responseTime": "7",
+              "body": "{\r\n    \"success\": true,\r\n    \"message\": \"notifikasi berhasil diambil\",\r\n    \"data\": [\r\n        {\r\n            \"id\": 48,\r\n            \"outbox_id\": 50,\r\n            \"user_id\": 61,\r\n            \"channel\": \"email\",\r\n            \"subject\": \"KRS: berhasil terdaftar di IF304 Data Mining\",\r\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF304 Data Mining.\",\r\n            \"sent_at\": \"2026-11-01T17:44:06.518922+07:00\"\r\n        },\r\n        {\r\n            \"id\": 47,\r\n            \"outbox_id\": 49,\r\n            \"user_id\": 61,\r\n            \"channel\": \"email\",\r\n            \"subject\": \"KRS: berhasil terdaftar di IF303 Komputasi Awan\",\r\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF303 Komputasi Awan.\",\r\n            \"sent_at\": \"2026-11-01T17:43:26.234558+07:00\"\r\n        },\r\n        {\r\n            \"id\": 45,\r\n            \"outbox_id\": 48,\r\n            \"user_id\": 61,\r\n            \"channel\": \"email\",\r\n            \"subject\": \"KRS: berhasil terdaftar di IF302 Keamanan Informasi\",\r\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF302 Keamanan Informasi.\",\r\n            \"sent_at\": \"2026-11-01T17:42:38.580439+07:00\"\r\n        },\r\n        {\r\n            \"id\": 44,\r\n            \"outbox_id\": 47,\r\n            \"user_id\": 61,\r\n            \"channel\": \"email\",\r\n            \"subject\": \"KRS: berhasil terdaftar di IF301 Kecerdasan Buatan\",\r\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF301 Kecerdasan Buatan.\",\r\n            \"sent_at\": \"2026-11-01T17:42:01.195137+07:00\"\r\n        },\r\n        {\r\n            \"id\": 42,\r\n            \"outbox_id\": 46,\r\n            \"user_id\": 61,\r\n            \"channel\": \"email\",\r\n            \"subject\": \"KRS: berhasil terdaftar di IF102 Basis Data Lanjut\",\r\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.\",\r\n            \"sent_at\": \"2026-11-01T17:36:30.540862+07:00\"\r\n        },\r\n        {\r\n            \"id\": 41,\r\n            \"outbox_id\": 45,\r\n            \"user_id\": 61,\r\n            \"channel\": \"email\",\r\n            \"subject\": \"KRS: berhasil terdaftar di IF101 Pemrograman Backend Lanjut\",\r\n            \"body\": \"Halo mhsuji, Anda tercatat sebagai peserta kelas IF101 Pemrograman Backend Lanjut.\",\r\n            \"sent_at\": \"2026-11-01T17:35:43.409004+07:00\"\r\n        }\r\n    ]\r\n}\r\n",
+              "createdAt": "2026-11-01T10:46:10.000Z",
+              "updatedAt": "2026-11-01T10:46:10.000Z",
+              "uid": "53203684-7d406453-d439-8872-467a-46d3770e091a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "C4 - Permanent failure",
+      "description": "PDF hlm.33. Setelah izin, MAILER_FAIL_EVERY=0 dan restart worker; kosongkan mail.log. Catat queue.archived sebelum; login salahalamat (email .invalid) memakai invalid_access_token yang valid. Setelah enroll tunggu 15 detik. Tepat satu task_failed menyebut kampus.invalid dengan attempt 1/6; archived naik satu dan retry=0. Peringatan Retry exhausted sendiri bukan bukti attempt.",
+      "item": [
+        {
+          "name": "01 - Admin sebelum email invalid - catat archived awal",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/queue",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. SEBELUM enrollment: catat queue.archived awal; target 200."
+          },
+          "response": []
+        },
+        {
+          "name": "02 - Enroll kelas 2 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{invalid_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/2/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "03 - Admin setelah 15 detik - target archived bertambah 1",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/admin/queue",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. SESUDAH enrollment dan tunggu 15 detik: target 200, archived bertambah tepat 1, retry=0. Periksa log failure satu attempt terpisah."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "C5 - Idempotency dan redeliver CLI",
+      "description": "PDF hlm.33. Setelah izin: kosongkan mail.log, hentikan worker, enroll kelas8. Cari ID event yang benar dan pastikan published_at NULL (MAX(id) hanya aman bila tidak ada event lain). CLI di folder modul: go run ./tools/redeliver -outbox <id> -copies 5. Ini instruksi CLI, bukan endpoint HTTP. Hidupkan worker; relay menambah salinan keenam. Tunggu 8 detik; SQL notification untuk outbox itu=1, email kelas itu=1; tepat enam notification_processed (satu false, lima true). Kurang dari enam belum membuktikan skenario.",
+      "item": [
+        {
+          "name": "01 - Enroll kelas 8 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/8/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "02 - Notifikasi milik akun - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/notifications/mine",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Hanya setelah CLI redeliver, worker hidup dan tunggu 8 detik. Target 200; cari satu notifikasi kelas8. Endpoint saja tidak membuktikan enam pemrosesan atau idempotency."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "C6 - Graceful shutdown",
+      "description": "PDF hlm.33. Dengan izin: kosongkan mail.log, MAILER_DELAY_MS=5000, restart worker. Enroll kelas9; tekan Ctrl+C sekitar 2 detik setelah relay_done. Harus menunggu email aktif selesai, notification_processed lalu berhenti rapi. Kembalikan delay1500 setelah selesai pada tahap berizin. Tidak ada request palsu untuk Ctrl+C.",
+      "item": [
+        {
+          "name": "01 - Enroll kelas 9 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/courses/9/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "02 - Notifikasi milik akun - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{base_url}}/notifications/mine",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Setelah worker selesai shutdown, API masih berjalan: target 200 dan notifikasi kelas9 ada. Bukti terminal/timestamp tetap wajib."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "C7 - Audit log (tanpa HTTP)",
+      "description": "PDF hlm.33-34. EMPTY secara sengaja. Tinjau log autentik cakupan C1-C6: relay_done: published; relay_delayed: published,error (Redis bermasalah); notification_processed: outbox_id,event,retry,already_sent; task_failed: type,attempt x/6,error. request_failed pada API tidak boleh muncul selama C1-C6. Jaga secret dan logs tidak masuk repository; tidak ada perintah dijalankan oleh koleksi.",
+      "item": []
+    },
+    {
+      "name": "C8 - Build, vet, dan rekap (tanpa HTTP)",
+      "description": "PDF hlm.34. EMPTY secara sengaja. go build ./... dan go vet ./... hanya setelah izin pengujian compiler. Rekap seluruh bukti C1-C6 dan C7; PENDING sampai bukti aktual ditinjau. Compiler tidak membuktikan runtime.",
+      "item": []
+    },
+    {
+      "name": "D1 - Berita acara sembilan perbaikan (tanpa HTTP)",
+      "description": "PDF hlm.34. EMPTY secara sengaja. Sembilan baris: lokasi/fungsi, gejala aktual, uji C atau compiler, akar masalah, perbaikan. Kesalahan lolos compiler perlu bukti sebelum/sesudah. Gunakan artefak historis dengan provenance; jangan mengulang uji untuk dokumentasi tanpa izin.",
+      "item": []
+    },
+    {
+      "name": "D2 - Kuota seluruh peserta - PENDING model final",
+      "description": "PDF hlm.34-35. URL kosong sampai lingkungan terpisah disetujui. Lima akun harus berbeda, kelas yang sama, kapasitas/SKS memenuhi. Lima POST persiapan lalu PATCH; gunakan versi aktual. MAILER_FAIL_EVERY=3 dan CLI redeliver juga wajib dengan izin tahap. Migration009/idempotency per penerima dan email7 gagal tanpa kirim ulang1-6 harus dibuktikan. SOURCE SAAT INI: build-tag d2 memakai satu task per event dengan loop UserIDs, transaksi per penerima; baseline tanpa tag tidak mencatat event quota. Keputusan pengguna satu task per peserta dan partial enqueue BELUM cocok dengan model source; implementasi/evidence final PENDING. Koleksi tidak memperbaiki source atau menjalankan migration.",
+      "item": [
+        {
+          "name": "01 - Enroll kelas {{d2_course_id}} - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{d2_student_1_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{d2_base_url}}/courses/{{d2_course_id}}/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "02 - Enroll kelas {{d2_course_id}} - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{d2_student_2_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{d2_base_url}}/courses/{{d2_course_id}}/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "03 - Enroll kelas {{d2_course_id}} - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{d2_student_3_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{d2_base_url}}/courses/{{d2_course_id}}/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "04 - Enroll kelas {{d2_course_id}} - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{d2_student_4_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{d2_base_url}}/courses/{{d2_course_id}}/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "05 - Enroll kelas {{d2_course_id}} - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{d2_student_5_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{d2_base_url}}/courses/{{d2_course_id}}/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "06 - Ubah kuota kelas lima peserta - target 200",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{d2_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{d2_base_url}}/courses/{{d2_course_id}}",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Admin wajib course:manage. Isi d2_quota integer 1..500, minimal peserta terisi; isi d2_version dari versi aktual yang dibaca pada target disetujui, bukan tebakan. Target 200. Version stale dapat 409 VERSION_CONFLICT; kuota di bawah enrolled_count dapat 409 QUOTA_BELOW_ENROLLED. Harus menghasilkan satu event course.quota_changed dalam transaksi perubahan kuota.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quota\": {{d2_quota}},\n  \"version\": {{d2_version}}\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "07 - Notifikasi milik akun - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{d2_observer_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{d2_base_url}}/notifications/mine",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Isi d2_observer_access_token lokal dari salah satu lima peserta. Target 200 dengan subject KRS: kuota <kode> <nama> berubah menjadi <kuota>. Ulangi observasi secara manual bagi setiap peserta memakai token masing-masing; satu hasil mine tidak membuktikan seluruh penerima."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "D3 - Pembanding terisolasi C2",
+      "description": "PDF hlm.35. URL/token khusus kosong sampai target disetujui. Sertakan bukti C2-C5 kode benar terlebih dahulu. Rencana pembanding di sini menyalin C2; pulihkan tepat SATU kesalahan compiler-valid yang diungkap C2 hanya pada salinan terisolasi, dokumentasikan diff dan kondisi awal setara C1. Tahap laporan saja tidak mengizinkan rollback source, layanan, database atau request. Hasil pembanding gagal PENDING; bila memilih kesalahan untuk C3-C5, rencana koleksi perlu disesuaikan sebelum eksekusi.",
+      "item": [
+        {
+          "name": "01 - Enroll kelas 5 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{comparison_student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{comparison_base_url}}/courses/5/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "02 - Enroll kelas 6 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{comparison_student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{comparison_base_url}}/courses/6/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "03 - Enroll kelas 7 - target 201",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{comparison_student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{comparison_base_url}}/courses/7/enroll",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Target 201; kursi tersedia, belum terdaftar, dan batas SKS memungkinkan. Tidak membuktikan email terkirim."
+          },
+          "response": []
+        },
+        {
+          "name": "04 - Monitoring queue admin - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{comparison_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{comparison_base_url}}/admin/queue",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. D3 pembanding C2: Redis OFF, tunggu 5 detik. Kontrak benar 200,pending3,queue_error; hasil aktual pembanding harus dicatat jujur dan dapat menyimpang."
+          },
+          "response": []
+        },
+        {
+          "name": "05 - Monitoring queue admin - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{comparison_admin_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{comparison_base_url}}/admin/queue",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. D3 pembanding C2: sesudah pemulihan Redis, kontrak benar pending0 dalam10detik. Catat kegagalan aktual bila terjadi."
+          },
+          "response": []
+        },
+        {
+          "name": "06 - Notifikasi milik akun - target 200",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{comparison_student_access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "url": "{{comparison_base_url}}/notifications/mine",
+            "description": "PENDING: request belum dijalankan melalui koleksi baru ini. Kontrak benar total7 notifikasi setelah recovery; pembanding harus mulai dari kondisi setara C1. Jangan memakai baseline utama untuk mutasi eksperimen."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "D4 - Analisis singkat (tanpa HTTP)",
+      "description": "PDF hlm.35. EMPTY secara sengaja. Jawab empat pertanyaan: dua skenario retry3x dalam handler masih kehilangan notifikasi/membuat menunggu; 100 task hilang saat Redis tanpa persistence serta deteksi/recovery dari PostgreSQL tanpa email ganda; alasan WithTxOnce worker vs WithTx CourseService dan risiko ditukar; urutan email keluar/terdaftar serta solusi dan biayanya. Tidak menjalankan simulasi.",
+      "item": []
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "time": "2026-10-29T08:14:39.732206+07:00",
+  "postgres": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "server_port": 5432,
+    "users": [
+      "adminuji",
+      "mhsuji",
+      "salahalamat"
+    ],
+    "outbox_pending": 0,
+    "outbox": [
+      {
+        "id": 21,
+        "event_type": "enrollment.created",
+        "published_at": "2026-10-29T01:11:35.050935+00:00"
+      },
+      {
+        "id": 23,
+        "event_type": "enrollment.dropped",
+        "published_at": "2026-10-29T01:13:18.051829+00:00"
+      },
+      {
+        "id": 24,
+        "event_type": "enrollment.created",
+        "published_at": "2026-10-29T01:13:45.052339+00:00"
+      },
+      {
+        "id": 25,
+        "event_type": "enrollment.swapped",
+        "published_at": "2026-10-29T01:14:29.050209+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 22,
+        "outbox_id": 25,
+        "subject": "KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi"
+      },
+      {
+        "id": 21,
+        "outbox_id": 24,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+      },
+      {
+        "id": 20,
+        "outbox_id": 23,
+        "subject": "KRS: keluar dari IF102 Basis Data Lanjut"
+      },
+      {
+        "id": 19,
+        "outbox_id": 21,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+      }
+    ]
+  },
+  "redis": {
+    "notifications": {
+      "pending": 0,
+      "active": 0,
+      "scheduled": 0,
+      "retry": 0,
+      "archived": 0
+    }
+  }
+}

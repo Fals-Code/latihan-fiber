@@ -1,0 +1,12 @@
+{
+  "signal_at": "2026-11-01T18:10:51.382473+07:00",
+  "observed_at": "2026-11-01T18:10:52.197018+07:00",
+  "process": {
+    "pid": 30184,
+    "path": "C:\\Users\\falah\\latihan-fiber\\pertemuan-11-background-job\\infra\\baseline\\.secrets\\completion-2026-11-01\\baseline-after07.exe",
+    "created_filetime": 134380036122915401
+  },
+  "signal": "Windows CTRL_C_EVENT (0), own dedicated console",
+  "attached": true,
+  "process_exit_observed": true
+}

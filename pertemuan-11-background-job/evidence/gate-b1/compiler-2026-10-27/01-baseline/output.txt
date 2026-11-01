@@ -1,0 +1,3 @@
+# tugas1-go/pertemuan-11-background-job/helper
+helper\mailer.go:58:9: cannot use LogMailer{…} (value of struct type LogMailer) as Mailer value in return statement: LogMailer does not implement Mailer (method Send has pointer receiver)
+helper\portfolio_request.go:9:2: "tugas1-go/pertemuan-11-background-job/app/repository" imported and not used

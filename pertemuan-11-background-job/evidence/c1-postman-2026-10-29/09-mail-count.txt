@@ -1,0 +1,5 @@
+C.1 — hitungan aktual mailer tiruan
+Sumber: logs/mail.log, setelah arsip dan pengosongan awal yang disetujui.
+Filter: mhsuji@
+Jumlah baris email: 4
+Tidak menampilkan isi log email.

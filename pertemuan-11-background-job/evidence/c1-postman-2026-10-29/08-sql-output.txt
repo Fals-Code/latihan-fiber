@@ -1,0 +1,26 @@
+     database     |      role      
+------------------+----------------
+ pertemuan11_test | pbe11_baseline
+(1 row)
+
+ id |     event_type     | published 
+----+--------------------+-----------
+ 21 | enrollment.created | t
+ 23 | enrollment.dropped | t
+ 24 | enrollment.created | t
+ 25 | enrollment.swapped | t
+(4 rows)
+
+ outbox_id |                               subject                                
+-----------+----------------------------------------------------------------------
+        25 | KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi
+        24 | KRS: berhasil terdaftar di IF102 Basis Data Lanjut
+        23 | KRS: keluar dari IF102 Basis Data Lanjut
+        21 | KRS: berhasil terdaftar di IF102 Basis Data Lanjut
+(4 rows)
+
+ outbox_count | notification_count 
+--------------+--------------------
+            4 |                  4
+(1 row)
+

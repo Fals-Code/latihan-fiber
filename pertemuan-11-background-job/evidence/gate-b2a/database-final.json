@@ -1,0 +1,3 @@
+{"seed_loadtest_accounts" : 60, "test_accounts" : [{"username":"adminuji","email":"adminuji@student.unair.ac.id","role":"admin","is_active":true}, 
+ {"username":"mhsuji","email":"mhsuji@student.unair.ac.id","role":"user","is_active":true}, 
+ {"username":"salahalamat","email":"salah@kampus.invalid","role":"user","is_active":true}], "notification_unique_constraints" : ["UNIQUE (outbox_id)"]}

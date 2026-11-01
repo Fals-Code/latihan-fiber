@@ -1,0 +1,8 @@
+{
+  "worker_created_at": "2026-11-01T18:18:23.999438+07:00",
+  "deadline": "2026-11-01T18:18:31.999438+07:00",
+  "inspection_started_at": "2026-11-01T18:18:31.999782+07:00",
+  "inspection_delay_seconds": 0.000344,
+  "outbox_id": 53,
+  "wait_seconds": 8
+}

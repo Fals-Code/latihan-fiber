@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-01T17:32:22.267039+07:00",
+  "runtime_config": {
+    "MAILER_FAIL_EVERY": "3",
+    "MAILER_DELAY_MS": "1500"
+  },
+  "log_backups": "ignored local archive",
+  "mail_cleared_after_backup": true,
+  "application_log_not_cleared": true
+}

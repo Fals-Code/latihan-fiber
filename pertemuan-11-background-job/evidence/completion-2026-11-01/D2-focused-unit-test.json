@@ -1,0 +1,20 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-tags",
+    "d2",
+    "./app/service",
+    "-run",
+    "TestQuota",
+    "-count=1",
+    "-v"
+  ],
+  "cwd": "C:\\Users\\falah\\latihan-fiber\\pertemuan-11-background-job",
+  "started_at": "2026-11-01T17:27:19.490351+07:00",
+  "finished_at": "2026-11-01T17:27:48.147664+07:00",
+  "exit_code": 0,
+  "stdout": "=== RUN   TestQuotaRelayResumesPartialEnqueue\n--- PASS: TestQuotaRelayResumesPartialEnqueue (0.00s)\n=== RUN   TestQuotaWorkerRejectsMultipleRecipients\n--- PASS: TestQuotaWorkerRejectsMultipleRecipients (0.00s)\nPASS\nok  \ttugas1-go/pertemuan-11-background-job/app/service\t0.302s\n",
+  "stderr": "",
+  "scope": "Queue fake only; no real database, Redis or HTTP"
+}

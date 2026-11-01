@@ -1,0 +1,118 @@
+{
+  "archive_sha256": "7a573d958135d5c45d4196ee7aae918eeb847564fd3652c2442732b0066d801a",
+  "archive_matches_manifest": true,
+  "all_archive_entries_verified": 96,
+  "changed_manifest_files": [
+    "app/service/notification_worker.go",
+    "app/service/outbox_relay.go",
+    "docs/PUZZLE_CANDIDATES.md",
+    "helper/mailer.go",
+    "helper/portfolio_request.go"
+  ],
+  "stages": [
+    {
+      "stage": "01-baseline",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "exit_code": 4294967295,
+      "output_sha256_verified": true,
+      "screenshot_present": false
+    },
+    {
+      "stage": "02-baseline-compiler",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "exit_code": 1,
+      "output_sha256_verified": true,
+      "screenshot_present": true
+    },
+    {
+      "stage": "03-after-mailer",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "exit_code": 1,
+      "output_sha256_verified": true,
+      "screenshot_present": true
+    },
+    {
+      "stage": "04-after-unused-import",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "exit_code": 1,
+      "output_sha256_verified": true,
+      "screenshot_present": true
+    },
+    {
+      "stage": "05-after-task-payload",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "exit_code": 1,
+      "output_sha256_verified": true,
+      "screenshot_present": true
+    },
+    {
+      "stage": "06-final-build",
+      "command": [
+        "go",
+        "build",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_sha256_verified": true,
+      "screenshot_present": true
+    },
+    {
+      "stage": "07-final-vet",
+      "command": [
+        "go",
+        "vet",
+        "./..."
+      ],
+      "exit_code": 0,
+      "output_sha256_verified": true,
+      "screenshot_present": true
+    }
+  ],
+  "behavior_markers_preserved_static_only": {
+    "P11-04": {
+      "file": "app/service/course_service.go",
+      "marker_present": true
+    },
+    "P11-05": {
+      "file": "app/service/course_service.go",
+      "marker_present": true
+    },
+    "P11-06": {
+      "file": "app/service/outbox_relay.go",
+      "marker_present": true
+    },
+    "P11-07": {
+      "file": "app/service/notification_worker.go",
+      "marker_present": true
+    },
+    "P11-08": {
+      "file": "app/service/notification_worker.go",
+      "marker_present": true
+    },
+    "P11-09": {
+      "file": "config/queue.go",
+      "marker_present": true
+    }
+  },
+  "runtime_tested": false
+}

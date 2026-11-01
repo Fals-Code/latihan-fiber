@@ -16,7 +16,10 @@ $RunTag = [DateTime]::UtcNow.ToString('yyyyMMddHHmmssfff')
 $BaseUrl = 'http://127.0.0.1:3077'
 $TestUsername = 'p7_test'
 $TestEmail = "p7_test_$RunTag@example.test"
-$TestPassword = "P7Test!$([Guid]::NewGuid().ToString('N').Substring(0,16))9a"
+$TestPassword = $env:PBE7_TEST_PASSWORD
+if ([string]::IsNullOrWhiteSpace($TestPassword)) {
+    throw 'PBE7_TEST_PASSWORD belum diisi. Isi environment variable secara lokal sebelum menjalankan script.'
+}
 $D2Name = "P7 D2 $RunTag"
 $D3Name = "P7 D3 Insert $RunTag"
 $D2Nim = 900000000 + [int]([DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds() % 90000000)

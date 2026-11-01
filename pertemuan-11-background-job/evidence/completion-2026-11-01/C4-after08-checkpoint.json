@@ -1,0 +1,322 @@
+{
+  "started_at": "2026-11-01T18:14:14.534913+07:00",
+  "finished_at": "2026-11-01T18:14:14.670953+07:00",
+  "database": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "users": [
+      {
+        "id": 61,
+        "username": "mhsuji",
+        "role": "user"
+      },
+      {
+        "id": 62,
+        "username": "salahalamat",
+        "role": "user"
+      },
+      {
+        "id": 63,
+        "username": "adminuji",
+        "role": "admin"
+      }
+    ],
+    "outbox": [
+      {
+        "id": 45,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 1,
+          "course_code": "IF101",
+          "course_name": "Pemrograman Backend Lanjut"
+        },
+        "published_at": "2026-11-01T10:35:42.56793+00:00"
+      },
+      {
+        "id": 46,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T10:36:29.543903+00:00"
+      },
+      {
+        "id": 47,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 3,
+          "course_code": "IF301",
+          "course_name": "Kecerdasan Buatan"
+        },
+        "published_at": "2026-11-01T10:41:54.541509+00:00"
+      },
+      {
+        "id": 48,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 4,
+          "course_code": "IF302",
+          "course_name": "Keamanan Informasi"
+        },
+        "published_at": "2026-11-01T10:42:38.540495+00:00"
+      },
+      {
+        "id": 49,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 5,
+          "course_code": "IF303",
+          "course_name": "Komputasi Awan"
+        },
+        "published_at": "2026-11-01T10:43:18.541016+00:00"
+      },
+      {
+        "id": 50,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 6,
+          "course_code": "IF304",
+          "course_name": "Data Mining"
+        },
+        "published_at": "2026-11-01T10:44:05.543391+00:00"
+      },
+      {
+        "id": 52,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 62,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T11:13:59.866444+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 41,
+        "outbox_id": 45,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF101 Pemrograman Backend Lanjut",
+        "sent_at": "2026-11-01T10:35:43.409004+00:00"
+      },
+      {
+        "id": 42,
+        "outbox_id": 46,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-11-01T10:36:30.540862+00:00"
+      },
+      {
+        "id": 44,
+        "outbox_id": 47,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF301 Kecerdasan Buatan",
+        "sent_at": "2026-11-01T10:42:01.195137+00:00"
+      },
+      {
+        "id": 45,
+        "outbox_id": 48,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF302 Keamanan Informasi",
+        "sent_at": "2026-11-01T10:42:38.580439+00:00"
+      },
+      {
+        "id": 47,
+        "outbox_id": 49,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF303 Komputasi Awan",
+        "sent_at": "2026-11-01T10:43:26.234558+00:00"
+      },
+      {
+        "id": 48,
+        "outbox_id": 50,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF304 Data Mining",
+        "sent_at": "2026-11-01T10:44:06.518922+00:00"
+      }
+    ],
+    "enrollments": [
+      {
+        "user_id": 61,
+        "course_id": 1
+      },
+      {
+        "user_id": 61,
+        "course_id": 2
+      },
+      {
+        "user_id": 61,
+        "course_id": 3
+      },
+      {
+        "user_id": 61,
+        "course_id": 4
+      },
+      {
+        "user_id": 61,
+        "course_id": 5
+      },
+      {
+        "user_id": 61,
+        "course_id": 6
+      },
+      {
+        "user_id": 62,
+        "course_id": 2
+      }
+    ]
+  },
+  "queue": {
+    "notifications": {
+      "pending": 0,
+      "active": 0,
+      "scheduled": 0,
+      "retry": 0,
+      "archived": 2,
+      "completed": 22
+    }
+  },
+  "events": [
+    {
+      "time": "2026-11-01T18:12:51.8619314+07:00",
+      "level": "INFO",
+      "msg": "worker berjalan"
+    },
+    {
+      "time": "2026-11-01T18:12:51.8640756+07:00",
+      "level": "INFO",
+      "msg": "aplikasi berjalan",
+      "role": "worker"
+    },
+    {
+      "time": "2026-11-01T18:13:08.0498328+07:00",
+      "level": "INFO",
+      "msg": "http_request",
+      "request_id": "c2023c39-ee45-414b-977b-8e1ebef66da8",
+      "method": "GET",
+      "path": "/api/v1/admin/queue",
+      "status": 200,
+      "duration": 17525100,
+      "ip": "127.0.0.1",
+      "user_id": 63,
+      "role": "admin"
+    },
+    {
+      "time": "2026-11-01T18:13:59.5331125+07:00",
+      "level": "INFO",
+      "msg": "http_request",
+      "request_id": "c3023c39-ee45-414b-977b-8e1ebef66da8",
+      "method": "POST",
+      "path": "/api/v1/courses/2/enroll",
+      "status": 201,
+      "duration": 21908900,
+      "ip": "127.0.0.1",
+      "user_id": 62,
+      "role": "user"
+    },
+    {
+      "time": "2026-11-01T18:13:59.8811934+07:00",
+      "level": "INFO",
+      "msg": "relay_done",
+      "published": 1
+    },
+    {
+      "time": "2026-11-01T18:14:02.3595458+07:00",
+      "level": "WARN",
+      "msg": "task_failed",
+      "type": "notification:send",
+      "attempt": "1/6",
+      "error": "skip retry for the task: pengiriman gagal permanen: alamat salah@kampus.invalid tidak ditemukan"
+    }
+  ],
+  "new_mail_lines": [],
+  "worker_source": "package service\n\nimport (\n\t\"context\"\n\t\"encoding/json\"\n\t\"errors\"\n\t\"fmt\"\n\t\"log/slog\"\n\n\t\"github.com/hibiken/asynq\"\n\n\t\"tugas1-go/pertemuan-11-background-job/app/model\"\n\t\"tugas1-go/pertemuan-11-background-job/app/repository\"\n\t\"tugas1-go/pertemuan-11-background-job/helper\"\n)\n\n// NotificationWorker mengerjakan task \"notification:send\".\n//\n// Bagi worker, Asynq adalah framework-nya — sama seperti Fiber bagi API.\n// Karena itu method di sini menerima *asynq.Task, seperti method service\n// lain menerima *fiber.Ctx.\ntype NotificationWorker struct {\n\tusers         repository.UserRepository\n\tnotifications repository.NotificationRepository\n\ttx            *repository.TxManager\n\tmailer        helper.Mailer\n\tlogger        *slog.Logger\n}\n\nfunc NewNotificationWorker(users repository.UserRepository, notifications repository.NotificationRepository, tx *repository.TxManager, mailer helper.Mailer, logger *slog.Logger) *NotificationWorker {\n\treturn &NotificationWorker{users: users, notifications: notifications,\n\t\ttx: tx, mailer: mailer, logger: logger}\n}\n\n// HandleSend mengembalikan error untuk meminta Asynq melakukan retry nanti,\n// atau error yang membungkus asynq.SkipRetry untuk menyatakan \"jangan di-retry,\n// task ini tidak mungkin berhasil\".\n//\n// Asynq menjamin setiap task dijalankan PALING SEDIKIT satu kali, bukan\n// TEPAT satu kali. Task yang sama bisa datang dua kali, misalnya bila\n// worker mati setelah mengirim email tetapi sebelum sempat melapor ke Redis.\n// Karena itu handler ini harus idempoten: menjalankannya dua kali untuk\n// task yang sama harus berakibat sama dengan menjalankannya sekali.\nfunc (w *NotificationWorker) HandleSend(ctx context.Context, t *asynq.Task) error {\n\tvar job model.NotificationJob\n\tif err := json.Unmarshal(t.Payload(), &job); err != nil {\n\t\treturn fmt.Errorf(\"%w: payload task rusak: %v\", asynq.SkipRetry, err)\n\t}\n\tif handled, err := w.handleQuotaEvent(ctx, job); handled {\n\t\treturn err\n\t}\n\tvar event model.EnrollmentEvent\n\tif err := json.Unmarshal(job.Payload, &event); err != nil {\n\t\treturn fmt.Errorf(\"%w: payload event %d rusak: %v\", asynq.SkipRetry, job.OutboxID, err)\n\t}\n\n\tuser, err := w.users.FindByID(ctx, event.UserID)\n\tif errors.Is(err, repository.ErrNotFound) {\n\t\t// Akunnya sudah dihapus. Melakukan retry tidak akan memunculkannya.\n\t\treturn fmt.Errorf(\"%w: user %d tidak ditemukan\", asynq.SkipRetry, event.UserID)\n\n\t}\n\tif err != nil {\n\t\treturn err // database sedang bermasalah: layak di-retry\n\t}\n\n\tmsg, err := BuildMessage(job.EventType, event, user)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"%w: %v\", asynq.SkipRetry, err)\n\t}\n\n\talreadySent := false\n\terr = w.tx.WithTxOnce(ctx, func(tx repository.DBTX) error {\n\t\t// Claim dan pengiriman berada di dalam SATU transaction:\n\t\t//   - pengiriman gagal  -> claim ikut dibatalkan -> attempt\n\t\t//     berikutnya masih dapat mengirim;\n\t\t//   - pengiriman sukses -> claim di-commit -> attempt berikutnya\n\t\t//     melihat claim ini dan tidak mengirim lagi.\n\t\tclaimed, err := w.notifications.WithTx(tx).Claim(ctx, model.Notification{\n\t\t\tOutboxID: job.OutboxID, UserID: user.ID, Channel: \"email\",\n\t\t\tSubject: msg.Subject, Body: msg.Body,\n\t\t})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tif !claimed {\n\t\t\talreadySent = true\n\t\t\treturn nil\n\t\t}\n\t\treturn w.mailer.Send(ctx, msg)\n\t})\n\n\tif errors.Is(err, helper.ErrPermanentDelivery) {\n\t\treturn fmt.Errorf(\"%w: %v\", asynq.SkipRetry, err)\n\t}\n\tif err != nil {\n\t\treturn err\n\t}\n\n\tretry, _ := asynq.GetRetryCount(ctx)\n\tw.logger.Info(\"notification_processed\",\n\t\tslog.Int64(\"outbox_id\", job.OutboxID),\n\t\tslog.String(\"event\", job.EventType),\n\t\tslog.Int(\"retry\", retry),\n\t\tslog.Bool(\"already_sent\", alreadySent))\n\treturn nil\n}\n",
+  "source_sha256": {
+    "main.go": "ddc15675e0a71a0a5daebebc26d090410148ae66b63cdb7f4ddb47d8e802a8f9",
+    "worker.go": "ee066abc6cde3f4ee8061104efbcd67124ccd8c212e883da3ce24b89b1d178f8",
+    "config\\app.go": "df56757da0e8458732bc9a4e1f02eb42d7ce88a77b2b3c7a1f208d735a2d5a22",
+    "config\\env.go": "647ec29462ae43bf11deff523c3eb8a7de501c75bc6c9fc24d0be766ee38a678",
+    "config\\logger.go": "082b8b792751b551bb0e067952fa00e1ff004bed5df57812769e1f1b0a2b278f",
+    "config\\portfolio.go": "fe9b05859dd14fccfc0e0f9a794d00dde53afa8ff7a5cf0e5df6b1d7bcf9b225",
+    "config\\queue.go": "f995d7af0073756554cfd26a736083e39c16ace96f8cc42c29c12e1d3e97f86c",
+    "database\\mongo.go": "09a84749faa9b985173107850d034cf18886617af720c52d9e462703236fcd35",
+    "database\\postgres.go": "c3a88887036059ed8c3c4f4e65633ae7be8ef920941cad9e01d8156df9eff7b2",
+    "helper\\authz.go": "38cb03204f7f9c7ef7bd5471fc1b5788b25d70e244ffaa1086db4d46f690c826",
+    "helper\\context.go": "6b9a75b7d1998f4d312e0aceb054d276d67493f1d9bfdd7b235e1cae006473df",
+    "helper\\errors.go": "49c73aa7adad2dd5d66639bd96f81e45a84365df4bba6ab6ff1d0e06a1a463e4",
+    "helper\\jwt.go": "a1765fe523340612bc6f21d1059c065f567fb081baf27c01e125c40b7c9f7069",
+    "helper\\mailer.go": "68dd1001f5beb98356ea6d961db16f7193758853554e8ba54417c65232c95bc3",
+    "helper\\module_contract.go": "99397e72e96ceab2a66bed355759b1f236cac3218ad4922f2ae77d1adbe5d1d5",
+    "helper\\negotiation.go": "6c475a74479eb56a3130355620309bed572d825c6f8e74aa8bebd8fd622a307a",
+    "helper\\portfolio_request.go": "aec713e96e2b60e953eec7b776030cb5651c6dac04c4ead3225bb972d4f48c72",
+    "helper\\request.go": "63c9ec1753b9f3e9a608689268974a95622b07d69884d6ef5db88093c2502aa5",
+    "helper\\response.go": "5fabb93966417e77c0825d48d2a7f5d0f5383e6ab66038e8c21965dadde9736f",
+    "helper\\security.go": "f423fd5d7b5578476eb4ced371259393bd5699b9df8afeba3631a40aa87f6b72",
+    "helper\\validator.go": "cceb21f6b92c98f47c6694fc3c26179a84ae7ad10877c375f1372f263ebc568a",
+    "middleware\\auth.go": "e66a7037e93eeb5daa0b6675dc21d980406bdad297e232c8e3664082ec797f43",
+    "middleware\\authz.go": "35922c09d96dc037691499a186980c3922548e64f40bbed0115af6504e835db3",
+    "middleware\\middleware.go": "003e67ec61a28c57db27a487637e9d91bc38f68513e66abd626de2df3fc8de8b",
+    "route\\portfolio_routes.go": "a0e050393d3d115f7e3ef07eeabd4bf36bc1b52b8a22f48065b2a31f8ee0fdc8",
+    "route\\route.go": "1a117a7b6d2e5e368080cf979136e8f5430b0b824815aafafec39500e054ec46",
+    "app\\model\\achievement.go": "51678f362f9204736bd29cb959ee65bb31d721892729c31c45cf7c6314fae8d9",
+    "app\\model\\auth.go": "0c025dedab42d0dfc9b0fe52c218b3292ddbe42cea7fff1f1e1f14f70f178541",
+    "app\\model\\course.go": "22473ae5a34b6298e25ff6afd63e0870fcaaaf43e3f39f3edb3f592753c3b917",
+    "app\\model\\notification.go": "88c606a6a1546877a767a1e17c4d27aa8460021b76779ac9c27c6cb0baf18ae4",
+    "app\\model\\portfolio.go": "2efae79b005725723668f53c32ebe302d81cb6b75e043ada1c2653bbae403c76",
+    "app\\model\\quota_event_d2.go": "598b563ef20cc18b5da9f66619ec215bc2e1fea59469f168250a41ac7aea3337",
+    "app\\model\\review.go": "42e59b6fffbcd76a7f039c0da5e79f7e5f14bb56bddcf0a0693eec80a882335b",
+    "app\\model\\student.go": "d3d8ded64a965710744046c905a5c7e1461dd6c18425c7d574262a6e276764fc",
+    "app\\model\\user.go": "07fd6c1beeaca0786c3912fecdd70396a6c89cc29c2adcd5ac723eb5f3548805",
+    "app\\repository\\achievement_repository.go": "521a10d3948aed5b992cd9251bb71807eaf6df40bfb968e16b177027847028f8",
+    "app\\repository\\course_repository.go": "156f8464f60a1a409de3b93f6bd3c9245f9a0f767b7f5ee955311e88831c15f6",
+    "app\\repository\\dbtx.go": "213cf6d89e1df704263464bf93acb661f4dd7aa784b0afc1850fa375098ae8b0",
+    "app\\repository\\notification_claim_baseline.go": "3003a48581822d1af68a13ef6496310e7a3bee9d21c62ddd4cc23e5f3a54adb4",
+    "app\\repository\\notification_claim_d2.go": "b97a8acf708242417f7945f2abf7fd49c2a2291d075812e84e494523c6f87dd1",
+    "app\\repository\\notification_repository.go": "b1fe93612e829a5e1312dd9e75eb0e570c1f2e5feccff97b93ff2c2b946c9adf",
+    "app\\repository\\outbox_repository.go": "f03c43cd163b5ee83ed39e939ebce0ff37f9f3a9fc631ffc7e4255935d8b6494",
+    "app\\repository\\portfolio_repository.go": "5810efd04a7ac88ae219811fe2c9e4fdfbf17a96d8ea5e2b7147211564635204",
+    "app\\repository\\review_repository.go": "8f7dfada16703a6ae72c40fca86e4794a8b9ad0f1101645880a3d7a0c27d65fd",
+    "app\\repository\\role_repository.go": "bc968eff37a9c59d60a12c3a17f7fe617fca066a5cdb40c25100cf37ff05082d",
+    "app\\repository\\student_repository.go": "c7b66d5ce355140d9730038e950d11afa72788ebd6ee6e5b536e908a075bdeca",
+    "app\\repository\\token_repository.go": "2518faf3bd7f964a33688a9dcd5e3e5460b7a46991b8ea4b034f810901c1cd7d",
+    "app\\repository\\tx.go": "5f9f8e77bf3d3de924f997ce6865c7f19d9503460f5ba2ac3de3849de7949553",
+    "app\\repository\\user_repository.go": "f461de263bdd327fba96c915b9e91067bb4ec2bcdd45ddb0d6e24c39c5ba5114",
+    "app\\service\\achievement_rules.go": "1834b2706011ec7d891fc8d69eef4eeb689f8b5e01ef190fc6f99d92c0598bf8",
+    "app\\service\\achievement_service.go": "dcf17dc1d8c845b23f727b4daed8cb2f550f384edc27b0c2b8f5fd646dbb3186",
+    "app\\service\\authz_rules.go": "9754b187d64ee0f4b53b8222d6b15a35e42a1e0df589ff51a958369310cc26c7",
+    "app\\service\\auth_rules.go": "61956aee263919d0d0cd7c21eb8bb7ec024286fcbc753c06e3d1735879b3df6d",
+    "app\\service\\auth_service.go": "75956dd09e1bf26cdd8920c9f4cc996adfd7229b61010e011055af4edd607617",
+    "app\\service\\course_quota_baseline.go": "d001855dbaa9325edf4aab381d85f6833e0ea181e16d00eef14d3d8ec1902fc8",
+    "app\\service\\course_quota_d2.go": "fe686e0a43be94a6d510cf5b2d7fa34aaabface3c03965b750b1de8be67b03f3",
+    "app\\service\\course_rules.go": "6bf1c32a9644b0d9f935a3721d4d9b403e64530f13b93c380c31ab80a995b726",
+    "app\\service\\course_service.go": "70c6c372c63f4fdf7d908b42e21bcc585a3042647af25236ae122e5442a722ac",
+    "app\\service\\notification_rules.go": "b405d749940c3ea6fb755be9162162f59306ebca22d66dc66f197f0b105e258b",
+    "app\\service\\notification_service.go": "8dd551a9185fb3eaa23a3d3bc488966d1e1fec94b45a65a7a6bce45a903d237c",
+    "app\\service\\notification_worker.go": "76ce0d58945b49627417e1abb04019b449d2979298daf3d7411ce929914915c5",
+    "app\\service\\outbox_relay.go": "67bb1c1aa80647ad29ba0bfc8ceed9266120d6cb4488ecb4bd89268f32ebbacd",
+    "app\\service\\portfolio_service.go": "a1086b04afbd33434f994774c73e253898031911655663d630add1129e4e644d",
+    "app\\service\\quota_relay_baseline.go": "4e9d79e7ad16208e67c3cb44bce423ee358a2654ff8e5332dcb5e8e7644b9118",
+    "app\\service\\quota_relay_d2.go": "f44b101dc67d40936f26137de085bdf217fda448504b2edc18fbde4462b9b69e",
+    "app\\service\\quota_relay_d2_test.go": "9d8f449f1d0fab9039b8c64528d2f51baa80c2d37a4492c4a46d056d303e6cbe",
+    "app\\service\\quota_worker_baseline.go": "f3b13f6f29e7409d501d3ef59c4a205c2bc8546ea7d83d74a8e39e931a5cb9c2",
+    "app\\service\\quota_worker_d2.go": "40d7d2b6d701bc21062a50dc867de64a3600d1b45d9e13263abf8662cd00ad76",
+    "app\\service\\review_rules.go": "f20ab9ccc740251c402fe8927714b271a03876c8d610af381d3858a90440f87a",
+    "app\\service\\review_service.go": "45a02aea8cf4a88add7ef6fef05bb10cfe238ad06180718f75a7d402004596cd",
+    "app\\service\\student_authz_rules.go": "d91b44773cb585cb842b091769f17b7b48287cb2f638ac12f398f100e49eaca8",
+    "app\\service\\student_rules.go": "5eaefda5730ab0d2221bc19772a9c4b8e573fda5f304333d6c5b9a826ef175b4",
+    "app\\service\\student_service.go": "e6891fe1e324ade5d76b48c3e56913415ec682038187bd4d8df95c5437232a15",
+    "app\\service\\user_service.go": "f6bbc5bd70ce3a3173a237dcc7739eaedd5ef085cd2c66b0c28a3e0aa0d2a243",
+    "tools\\redeliver\\main.go": "dd110c047706e9b05e129688b329dcfca03a5290a386f93750f498bd1f1c0b80",
+    "tools\\redeliver\\quota_baseline.go": "e3c4c750e35ca07c9a24baad007f305c26bf9cf2ba3634b8cc93d16664c75ce9",
+    "tools\\redeliver\\quota_d2.go": "3e6caec6d459b7eab7fa864eb903f37aea66448e285fcb4a227140cc27859ba8"
+  }
+}

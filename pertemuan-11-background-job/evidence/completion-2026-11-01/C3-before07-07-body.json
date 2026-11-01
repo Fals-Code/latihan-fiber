@@ -1,0 +1,60 @@
+{
+    "success": true,
+    "message": "notifikasi berhasil diambil",
+    "data": [
+        {
+            "id": 39,
+            "outbox_id": 44,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF304 Data Mining",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF304 Data Mining.",
+            "sent_at": "2026-11-01T17:30:04.799849+07:00"
+        },
+        {
+            "id": 38,
+            "outbox_id": 43,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF303 Komputasi Awan",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF303 Komputasi Awan.",
+            "sent_at": "2026-11-01T17:29:12.780374+07:00"
+        },
+        {
+            "id": 37,
+            "outbox_id": 42,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF302 Keamanan Informasi",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF302 Keamanan Informasi.",
+            "sent_at": "2026-11-01T17:26:14.127123+07:00"
+        },
+        {
+            "id": 35,
+            "outbox_id": 41,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF301 Kecerdasan Buatan",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF301 Kecerdasan Buatan.",
+            "sent_at": "2026-11-01T17:23:26.551332+07:00"
+        },
+        {
+            "id": 34,
+            "outbox_id": 40,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.",
+            "sent_at": "2026-11-01T17:20:55.55431+07:00"
+        },
+        {
+            "id": 33,
+            "outbox_id": 39,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF101 Pemrograman Backend Lanjut",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF101 Pemrograman Backend Lanjut.",
+            "sent_at": "2026-11-01T17:19:14.527614+07:00"
+        }
+    ]
+}

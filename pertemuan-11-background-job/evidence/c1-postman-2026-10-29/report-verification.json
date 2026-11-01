@@ -1,0 +1,30 @@
+{
+  "document_id": "10vjWER8pdh9MFAlzXCRXoN-gR_pAtsTUGE04vf1V_vw",
+  "tab": "w11",
+  "new_images": 12,
+  "historical_B2A_captions_preserved": 4,
+  "image_placement_pt": [
+    440,
+    247.5
+  ],
+  "render_review_pages": [
+    176,
+    177,
+    178,
+    179,
+    180,
+    181,
+    182,
+    183,
+    184,
+    185
+  ],
+  "embedded_new_image_pixels": [
+    1920,
+    1080
+  ],
+  "crop_overlap_distortion_found": false,
+  "fine_screenshot_text_may_need_zoom": true,
+  "Word_export_reviewed": false,
+  "C2_C8_D2_D3_executed": false
+}

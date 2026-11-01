@@ -1,0 +1,15 @@
+Gate B1 - 02-baseline-compiler
+Started (Asia/Jakarta): 2026-10-27T18:42:29.257125+07:00
+Working directory: C:\Users\falah\latihan-fiber\pertemuan-11-background-job
+Command: go build ./...
+Dependencies: cache only (GOPROXY=off); installed toolchain
+
+--- ORIGINAL COMBINED OUTPUT ---
+# tugas1-go/pertemuan-11-background-job/helper
+helper\mailer.go:58:9: cannot use LogMailer{…} (value of struct type LogMailer) as Mailer value in return statement: LogMailer does not implement Mailer (method Send has pointer receiver)
+helper\portfolio_request.go:9:2: "tugas1-go/pertemuan-11-background-job/app/repository" imported and not used
+
+--- EXECUTION METADATA ---
+Exit code: 1
+Elapsed: 39.790 seconds
+go.mod/go.sum unchanged: True

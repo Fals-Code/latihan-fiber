@@ -1,0 +1,195 @@
+{
+  "verified_at": "2026-11-01T10:49:39.600Z",
+  "collection_uid": "53203684-2a8a917b-1d1e-49c0-958d-e06b3bb9dd35",
+  "comparison": "Parsed JSON/status/time verified against saved native Postman responses; CRLF/LF formatting may differ",
+  "after": [
+    {
+      "request": "01 - Enroll kelas 1 - target 201",
+      "id": "3fb5ab32-bdff-f512-6718-bbd20e646ef3",
+      "name": "ACTUAL 2026-11-01 - C3-01 - 201 Created - AFTER P11-07",
+      "code": 201,
+      "status_match": true,
+      "time_match": true,
+      "body_match": true,
+      "url": {
+        "raw": "http://127.0.0.1:3332/api/v1/courses/1/enroll",
+        "protocol": "http",
+        "host": [
+          "127",
+          "0",
+          "0",
+          "1"
+        ],
+        "port": "3332",
+        "path": [
+          "api",
+          "v1",
+          "courses",
+          "1",
+          "enroll"
+        ]
+      }
+    },
+    {
+      "request": "02 - Enroll kelas 2 - target 201",
+      "id": "4df05246-f5bc-443c-a9f9-053a1a5f6fd4",
+      "name": "ACTUAL 2026-11-01 - C3-02 - 201 Created - AFTER P11-07",
+      "code": 201,
+      "status_match": true,
+      "time_match": true,
+      "body_match": true,
+      "url": {
+        "raw": "http://127.0.0.1:3332/api/v1/courses/2/enroll",
+        "protocol": "http",
+        "host": [
+          "127",
+          "0",
+          "0",
+          "1"
+        ],
+        "port": "3332",
+        "path": [
+          "api",
+          "v1",
+          "courses",
+          "2",
+          "enroll"
+        ]
+      }
+    },
+    {
+      "request": "03 - Enroll kelas 3 - target 201",
+      "id": "3bf69988-3f3f-1b6c-3211-73b9f73caace",
+      "name": "ACTUAL 2026-11-01 - C3-03 - 201 Created - AFTER P11-07",
+      "code": 201,
+      "status_match": true,
+      "time_match": true,
+      "body_match": true,
+      "url": {
+        "raw": "http://127.0.0.1:3332/api/v1/courses/3/enroll",
+        "protocol": "http",
+        "host": [
+          "127",
+          "0",
+          "0",
+          "1"
+        ],
+        "port": "3332",
+        "path": [
+          "api",
+          "v1",
+          "courses",
+          "3",
+          "enroll"
+        ]
+      }
+    },
+    {
+      "request": "04 - Enroll kelas 4 - target 201",
+      "id": "5e59d282-17f5-1e71-6cad-67de4a2564eb",
+      "name": "ACTUAL 2026-11-01 - C3-04 - 201 Created - AFTER P11-07",
+      "code": 201,
+      "status_match": true,
+      "time_match": true,
+      "body_match": true,
+      "url": {
+        "raw": "http://127.0.0.1:3332/api/v1/courses/4/enroll",
+        "protocol": "http",
+        "host": [
+          "127",
+          "0",
+          "0",
+          "1"
+        ],
+        "port": "3332",
+        "path": [
+          "api",
+          "v1",
+          "courses",
+          "4",
+          "enroll"
+        ]
+      }
+    },
+    {
+      "request": "05 - Enroll kelas 5 - target 201",
+      "id": "fb2c86b3-68ec-5a82-5562-e28810f06c29",
+      "name": "ACTUAL 2026-11-01 - C3-05 - 201 Created - AFTER P11-07",
+      "code": 201,
+      "status_match": true,
+      "time_match": true,
+      "body_match": true,
+      "url": {
+        "raw": "http://127.0.0.1:3332/api/v1/courses/5/enroll",
+        "protocol": "http",
+        "host": [
+          "127",
+          "0",
+          "0",
+          "1"
+        ],
+        "port": "3332",
+        "path": [
+          "api",
+          "v1",
+          "courses",
+          "5",
+          "enroll"
+        ]
+      }
+    },
+    {
+      "request": "06 - Enroll kelas 6 - target 201",
+      "id": "546f2f7c-6627-97e5-70ba-f4d4fc93f659",
+      "name": "ACTUAL 2026-11-01 - C3-06 - 201 Created - AFTER P11-07",
+      "code": 201,
+      "status_match": true,
+      "time_match": true,
+      "body_match": true,
+      "url": {
+        "raw": "http://127.0.0.1:3332/api/v1/courses/6/enroll",
+        "protocol": "http",
+        "host": [
+          "127",
+          "0",
+          "0",
+          "1"
+        ],
+        "port": "3332",
+        "path": [
+          "api",
+          "v1",
+          "courses",
+          "6",
+          "enroll"
+        ]
+      }
+    },
+    {
+      "request": "07 - Notifikasi milik akun - target 200",
+      "id": "7d406453-d439-8872-467a-46d3770e091a",
+      "name": "ACTUAL 2026-11-01 - C3-07 - 200 OK - AFTER P11-07",
+      "code": 200,
+      "status_match": true,
+      "time_match": true,
+      "body_match": true,
+      "url": {
+        "raw": "http://127.0.0.1:3332/api/v1/notifications/mine",
+        "protocol": "http",
+        "host": [
+          "127",
+          "0",
+          "0",
+          "1"
+        ],
+        "port": "3332",
+        "path": [
+          "api",
+          "v1",
+          "notifications",
+          "mine"
+        ]
+      }
+    }
+  ]
+}

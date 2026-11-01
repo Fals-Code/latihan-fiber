@@ -1,0 +1,18 @@
+{
+  "command": [
+    "go",
+    "run",
+    "./tools/redeliver",
+    "-outbox",
+    "53",
+    "-copies",
+    "5"
+  ],
+  "cwd": "C:\\Users\\falah\\latihan-fiber\\pertemuan-11-background-job",
+  "started_at": "2026-11-01T18:18:19.942012+07:00",
+  "finished_at": "2026-11-01T18:18:23.481107+07:00",
+  "exit_code": 0,
+  "stdout": "enqueued outbox_id=53 copy=1 task_id=redeliver-53-38e11df4-ca16-487c-ad5d-b4952474353e\nenqueued outbox_id=53 copy=2 task_id=redeliver-53-6c660065-7ceb-43b1-b407-16fb6cdbe6a9\nenqueued outbox_id=53 copy=3 task_id=redeliver-53-cb468d73-b95b-49ea-86ce-95d6584415c0\nenqueued outbox_id=53 copy=4 task_id=redeliver-53-896c2ce6-5dab-4d15-992a-eb9ddd3d35b6\nenqueued outbox_id=53 copy=5 task_id=redeliver-53-14c7f285-b81e-4714-9a07-7cb26cad445c\n",
+  "stderr": "",
+  "outbox_id": 53
+}

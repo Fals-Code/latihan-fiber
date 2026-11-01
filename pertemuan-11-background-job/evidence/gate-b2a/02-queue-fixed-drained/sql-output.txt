@@ -1,0 +1,88 @@
+{
+  "outbox": [
+    {
+      "id": 1,
+      "event_type": "enrollment.created",
+      "payload": {
+        "user_id": 61,
+        "course_id": 2,
+        "course_code": "IF102",
+        "course_name": "Basis Data Lanjut"
+      },
+      "published_at": "2026-10-28T17:39:07.722477+00:00"
+    },
+    {
+      "id": 2,
+      "event_type": "enrollment.created",
+      "payload": {
+        "user_id": 61,
+        "course_id": 2,
+        "course_code": "IF102",
+        "course_name": "Basis Data Lanjut"
+      },
+      "published_at": "2026-10-28T17:39:08.723292+00:00"
+    },
+    {
+      "id": 3,
+      "event_type": "enrollment.created",
+      "payload": {
+        "user_id": 61,
+        "course_id": 2,
+        "course_code": "IF102",
+        "course_name": "Basis Data Lanjut"
+      },
+      "published_at": "2026-10-28T17:39:08.723292+00:00"
+    },
+    {
+      "id": 4,
+      "event_type": "enrollment.created",
+      "payload": {
+        "user_id": 61,
+        "course_id": 2,
+        "course_code": "IF102",
+        "course_name": "Basis Data Lanjut"
+      },
+      "published_at": "2026-10-28T17:39:08.723292+00:00"
+    },
+    {
+      "id": 5,
+      "event_type": "enrollment.swapped",
+      "payload": {
+        "user_id": 61,
+        "course_id": 4,
+        "course_code": "IF302",
+        "course_name": "Keamanan Informasi",
+        "from_course_code": "IF102",
+        "from_course_name": "Basis Data Lanjut"
+      },
+      "published_at": "2026-10-28T17:39:08.723292+00:00"
+    }
+  ],
+  "notifications": [
+    {
+      "id": 1,
+      "outbox_id": 1,
+      "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+    },
+    {
+      "id": 2,
+      "outbox_id": 2,
+      "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+    },
+    {
+      "id": 3,
+      "outbox_id": 3,
+      "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+    },
+    {
+      "id": 4,
+      "outbox_id": 4,
+      "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+    },
+    {
+      "id": 5,
+      "outbox_id": 5,
+      "subject": "KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi"
+    }
+  ]
+}

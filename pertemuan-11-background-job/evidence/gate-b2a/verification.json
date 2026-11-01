@@ -1,0 +1,19 @@
+{
+  "C1_statuses_match": true,
+  "outbox_after_each_request": [
+    1,
+    1,
+    2,
+    3,
+    4
+  ],
+  "event_order_match": true,
+  "subject_order_match": true,
+  "four_notifications_four_emails": true,
+  "baseline_archive_unchanged": true,
+  "remaining_behavior_source_unchanged": true,
+  "four_authentic_transcript_screenshots_present": true,
+  "secret_scan_clean": true,
+  "C2_to_C8_D2_D3_executed": false,
+  "API_worker_stopped": true
+}

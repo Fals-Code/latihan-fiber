@@ -1,0 +1,47 @@
+**********************
+PowerShell transcript start
+Start time: 20261101215522
+Username: LAPTOP-PAJ4KAS1\falah
+RunAs User: LAPTOP-PAJ4KAS1\falah
+Configuration Name: 
+Machine: LAPTOP-PAJ4KAS1 (Microsoft Windows NT 10.0.26300.0)
+Host Application: C:\Program Files\WindowsApps\Microsoft.PowerShell_7.6.4.0_x64__8wekyb3d8bbwe\pwsh.dll -noexit -command try { . "c:\Users\falah\AppData\Local\Programs\Microsoft VS Code\2c33b50b16\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Process ID: 14612
+PSVersion: 7.6.4
+PSEdition: Core
+GitCommitId: 7.6.4
+OS: Microsoft Windows 10.0.26300
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+Transcript started, output file is .\evidence\completion-2026-11-01\C6-worker-20261101-215522.txt
+C6 worker log: .\evidence\completion-2026-11-01\C6-worker-20261101-215522.txt
+MAILER_DELAY_MS=5000
+x_id":55,"event":"enrollment.created","retry":0,"already_sent":false}
+{"time":"2026-11-01T22:42:46.3066893+07:00","level":"ERROR","msg":"Failed to delete expired comp
+leted tasks from queue \"notifications\": INTERNAL_ERROR: redis eval error: i/o timeout","compon
+ent":"asynq"}
+{"time":"2026-11-01T22:42:46.3650366+07:00","level":"ERROR","msg":"Dequeue error: UNKNOWN: redis
+ eval error: i/o timeout","component":"asynq"}
+{"time":"2026-11-01T22:42:46.3650366+07:00","level":"ERROR","msg":"Failed to write server state
+data: UNKNOWN: redis command error: SADD failed: i/o timeout","component":"asynq"}
+{"time":"2026-11-01T22:42:46.3660385+07:00","level":"ERROR","msg":"Failed to forward scheduled t
+asks: INTERNAL_ERROR: INTERNAL_ERROR: redis eval error: i/o timeout","component":"asynq"}
+{"time":"2026-11-01T23:02:06.6362857+07:00","level":"INFO","msg":"relay_done","published":1}
+{"time":"2026-11-01T23:02:10.5812988+07:00","level":"WARN","msg":"relay_delayed","published":0,"
+error":"memulai transaction: context canceled"}
+{"time":"2026-11-01T23:02:12.0503051+07:00","level":"INFO","msg":"notification_processed","outbo
+x_id":56,"event":"enrollment.created","retry":0,"already_sent":false}
+{"time":"2026-11-01T23:02:12.0631209+07:00","level":"INFO","msg":"aplikasi berhenti dengan rapi"
+}
+PS>TerminatingError(): "The pipeline has been stopped."
+>> TerminatingError(): "The pipeline has been stopped."
+]633;D;1]633;A]633;P;Cwd=C:\x5cUsers\x5cfalah\x5clatihan-fiber\x5cpertemuan-11-background-jobPS C:\Users\falah\latihan-fiber\pertemuan-11-background-job> ]633;B
+PS>Stop-Transcript
+**********************
+PowerShell transcript end
+End time: 20261101230319
+**********************

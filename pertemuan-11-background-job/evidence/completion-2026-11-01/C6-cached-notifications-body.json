@@ -1,0 +1,24 @@
+{
+    "success": true,
+    "message": "notifikasi berhasil diambil",
+    "data": [
+        {
+            "id": 64,
+            "outbox_id": 56,
+            "user_id": 64,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF308 Visi Komputer",
+            "body": "Halo c6mhs544153f72c6b, Anda tercatat sebagai peserta kelas IF308 Visi Komputer.",
+            "sent_at": "2026-11-01T23:02:07.013275+07:00"
+        },
+        {
+            "id": 63,
+            "outbox_id": 55,
+            "user_id": 64,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF307 Sistem Terdistribusi",
+            "body": "Halo c6mhs544153f72c6b, Anda tercatat sebagai peserta kelas IF307 Sistem Terdistribusi.",
+            "sent_at": "2026-11-01T22:34:00.670083+07:00"
+        }
+    ]
+}

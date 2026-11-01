@@ -1,0 +1,345 @@
+{
+  "started_at": "2026-11-01T18:12:34.861595+07:00",
+  "finished_at": "2026-11-01T18:12:35.037178+07:00",
+  "target": "127.0.0.1:55411/pertemuan11_test",
+  "sql": "BEGIN;\nDELETE FROM outbox WHERE id=51 AND (payload->>'user_id')::int=62;\nDELETE FROM enrollments WHERE user_id=62 AND course_id=2;\nUPDATE courses SET enrolled_count=(SELECT count(*) FROM enrollments WHERE course_id=2) WHERE id=2;\nCOMMIT;",
+  "stdout": "BEGIN\nDELETE 1\nDELETE 1\nUPDATE 1\nCOMMIT",
+  "exit_code": 0,
+  "backup_sha256": "40ee5313085e0229dc890a0eaa12ff472248873b0b4e7acee7b1426a84b13781",
+  "before": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "users": [
+      {
+        "id": 61,
+        "username": "mhsuji",
+        "role": "user"
+      },
+      {
+        "id": 62,
+        "username": "salahalamat",
+        "role": "user"
+      },
+      {
+        "id": 63,
+        "username": "adminuji",
+        "role": "admin"
+      }
+    ],
+    "outbox": [
+      {
+        "id": 45,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 1,
+          "course_code": "IF101",
+          "course_name": "Pemrograman Backend Lanjut"
+        },
+        "published_at": "2026-11-01T10:35:42.56793+00:00"
+      },
+      {
+        "id": 46,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T10:36:29.543903+00:00"
+      },
+      {
+        "id": 47,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 3,
+          "course_code": "IF301",
+          "course_name": "Kecerdasan Buatan"
+        },
+        "published_at": "2026-11-01T10:41:54.541509+00:00"
+      },
+      {
+        "id": 48,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 4,
+          "course_code": "IF302",
+          "course_name": "Keamanan Informasi"
+        },
+        "published_at": "2026-11-01T10:42:38.540495+00:00"
+      },
+      {
+        "id": 49,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 5,
+          "course_code": "IF303",
+          "course_name": "Komputasi Awan"
+        },
+        "published_at": "2026-11-01T10:43:18.541016+00:00"
+      },
+      {
+        "id": 50,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 6,
+          "course_code": "IF304",
+          "course_name": "Data Mining"
+        },
+        "published_at": "2026-11-01T10:44:05.543391+00:00"
+      },
+      {
+        "id": 51,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 62,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T11:09:49.446171+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 41,
+        "outbox_id": 45,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF101 Pemrograman Backend Lanjut",
+        "sent_at": "2026-11-01T10:35:43.409004+00:00"
+      },
+      {
+        "id": 42,
+        "outbox_id": 46,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-11-01T10:36:30.540862+00:00"
+      },
+      {
+        "id": 44,
+        "outbox_id": 47,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF301 Kecerdasan Buatan",
+        "sent_at": "2026-11-01T10:42:01.195137+00:00"
+      },
+      {
+        "id": 45,
+        "outbox_id": 48,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF302 Keamanan Informasi",
+        "sent_at": "2026-11-01T10:42:38.580439+00:00"
+      },
+      {
+        "id": 47,
+        "outbox_id": 49,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF303 Komputasi Awan",
+        "sent_at": "2026-11-01T10:43:26.234558+00:00"
+      },
+      {
+        "id": 48,
+        "outbox_id": 50,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF304 Data Mining",
+        "sent_at": "2026-11-01T10:44:06.518922+00:00"
+      }
+    ],
+    "enrollments": [
+      {
+        "user_id": 61,
+        "course_id": 1
+      },
+      {
+        "user_id": 61,
+        "course_id": 2
+      },
+      {
+        "user_id": 61,
+        "course_id": 3
+      },
+      {
+        "user_id": 61,
+        "course_id": 4
+      },
+      {
+        "user_id": 61,
+        "course_id": 5
+      },
+      {
+        "user_id": 61,
+        "course_id": 6
+      },
+      {
+        "user_id": 62,
+        "course_id": 2
+      }
+    ]
+  },
+  "after": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "users": [
+      {
+        "id": 61,
+        "username": "mhsuji",
+        "role": "user"
+      },
+      {
+        "id": 62,
+        "username": "salahalamat",
+        "role": "user"
+      },
+      {
+        "id": 63,
+        "username": "adminuji",
+        "role": "admin"
+      }
+    ],
+    "outbox": [
+      {
+        "id": 45,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 1,
+          "course_code": "IF101",
+          "course_name": "Pemrograman Backend Lanjut"
+        },
+        "published_at": "2026-11-01T10:35:42.56793+00:00"
+      },
+      {
+        "id": 46,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T10:36:29.543903+00:00"
+      },
+      {
+        "id": 47,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 3,
+          "course_code": "IF301",
+          "course_name": "Kecerdasan Buatan"
+        },
+        "published_at": "2026-11-01T10:41:54.541509+00:00"
+      },
+      {
+        "id": 48,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 4,
+          "course_code": "IF302",
+          "course_name": "Keamanan Informasi"
+        },
+        "published_at": "2026-11-01T10:42:38.540495+00:00"
+      },
+      {
+        "id": 49,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 5,
+          "course_code": "IF303",
+          "course_name": "Komputasi Awan"
+        },
+        "published_at": "2026-11-01T10:43:18.541016+00:00"
+      },
+      {
+        "id": 50,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 6,
+          "course_code": "IF304",
+          "course_name": "Data Mining"
+        },
+        "published_at": "2026-11-01T10:44:05.543391+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 41,
+        "outbox_id": 45,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF101 Pemrograman Backend Lanjut",
+        "sent_at": "2026-11-01T10:35:43.409004+00:00"
+      },
+      {
+        "id": 42,
+        "outbox_id": 46,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-11-01T10:36:30.540862+00:00"
+      },
+      {
+        "id": 44,
+        "outbox_id": 47,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF301 Kecerdasan Buatan",
+        "sent_at": "2026-11-01T10:42:01.195137+00:00"
+      },
+      {
+        "id": 45,
+        "outbox_id": 48,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF302 Keamanan Informasi",
+        "sent_at": "2026-11-01T10:42:38.580439+00:00"
+      },
+      {
+        "id": 47,
+        "outbox_id": 49,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF303 Komputasi Awan",
+        "sent_at": "2026-11-01T10:43:26.234558+00:00"
+      },
+      {
+        "id": 48,
+        "outbox_id": 50,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF304 Data Mining",
+        "sent_at": "2026-11-01T10:44:06.518922+00:00"
+      }
+    ],
+    "enrollments": [
+      {
+        "user_id": 61,
+        "course_id": 1
+      },
+      {
+        "user_id": 61,
+        "course_id": 2
+      },
+      {
+        "user_id": 61,
+        "course_id": 3
+      },
+      {
+        "user_id": 61,
+        "course_id": 4
+      },
+      {
+        "user_id": 61,
+        "course_id": 5
+      },
+      {
+        "user_id": 61,
+        "course_id": 6
+      }
+    ]
+  },
+  "preserved_C3_rows": true,
+  "redis_changed": false,
+  "sequence_reset": false
+}

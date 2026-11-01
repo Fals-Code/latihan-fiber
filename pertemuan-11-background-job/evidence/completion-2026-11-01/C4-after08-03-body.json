@@ -1,0 +1,21 @@
+{
+    "success": true,
+    "message": "keadaan queue berhasil diambil",
+    "data": {
+        "outbox_pending": 0,
+        "outbox_published": 7,
+        "oldest_pending_age": "0s",
+        "notifications_sent": 6,
+        "queue": {
+            "name": "notifications",
+            "pending": 0,
+            "active": 0,
+            "scheduled": 0,
+            "retry": 0,
+            "archived": 2,
+            "completed": 22,
+            "processed_today": 33,
+            "failed_today": 11
+        }
+    }
+}

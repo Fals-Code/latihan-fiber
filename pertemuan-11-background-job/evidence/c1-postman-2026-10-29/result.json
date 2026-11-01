@@ -1,0 +1,94 @@
+{
+  "time": "2026-10-29T08:19:08.567347+07:00",
+  "http_statuses_observed_in_Postman": [
+    201,
+    409,
+    204,
+    201,
+    200
+  ],
+  "http_evidence": "screenshots/01 through05; observed UI statuses, not a generated HTTP transcript",
+  "outbox_after_each_request": [
+    1,
+    1,
+    2,
+    3,
+    4
+  ],
+  "postgres": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "server_port": 5432,
+    "users": [
+      "adminuji",
+      "mhsuji",
+      "salahalamat"
+    ],
+    "outbox_pending": 0,
+    "outbox": [
+      {
+        "id": 21,
+        "event_type": "enrollment.created",
+        "published_at": "2026-10-29T01:11:35.050935+00:00"
+      },
+      {
+        "id": 23,
+        "event_type": "enrollment.dropped",
+        "published_at": "2026-10-29T01:13:18.051829+00:00"
+      },
+      {
+        "id": 24,
+        "event_type": "enrollment.created",
+        "published_at": "2026-10-29T01:13:45.052339+00:00"
+      },
+      {
+        "id": 25,
+        "event_type": "enrollment.swapped",
+        "published_at": "2026-10-29T01:14:29.050209+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 22,
+        "outbox_id": 25,
+        "subject": "KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi"
+      },
+      {
+        "id": 21,
+        "outbox_id": 24,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+      },
+      {
+        "id": 20,
+        "outbox_id": 23,
+        "subject": "KRS: keluar dari IF102 Basis Data Lanjut"
+      },
+      {
+        "id": 19,
+        "outbox_id": 21,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+      }
+    ]
+  },
+  "redis": {
+    "notifications": {
+      "pending": 0,
+      "active": 0,
+      "scheduled": 0,
+      "retry": 0,
+      "archived": 0
+    }
+  },
+  "mail_lines_mhsuji": 4,
+  "notification_processed_log_lines": 4,
+  "checks": {
+    "counts": true,
+    "events": true,
+    "published": true,
+    "notifications": true,
+    "mail_count": true,
+    "queue_idle": true,
+    "source_unchanged": true,
+    "baseline_snapshot_unchanged": true
+  }
+}

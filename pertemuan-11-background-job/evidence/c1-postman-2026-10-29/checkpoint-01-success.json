@@ -1,0 +1,37 @@
+{
+  "time": "2026-10-29T08:12:08.549742+07:00",
+  "postgres": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "server_port": 5432,
+    "users": [
+      "adminuji",
+      "mhsuji",
+      "salahalamat"
+    ],
+    "outbox_pending": 0,
+    "outbox": [
+      {
+        "id": 21,
+        "event_type": "enrollment.created",
+        "published_at": "2026-10-29T01:11:35.050935+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 19,
+        "outbox_id": 21,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+      }
+    ]
+  },
+  "redis": {
+    "notifications": {
+      "pending": 0,
+      "active": 0,
+      "scheduled": 0,
+      "retry": 0,
+      "archived": 0
+    }
+  }
+}

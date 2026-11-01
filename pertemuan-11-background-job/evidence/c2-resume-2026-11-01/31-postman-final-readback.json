@@ -1,0 +1,60 @@
+{
+  "source": "Postman connector readback synchronized to local collection; URL display additionally checked in Computer Use",
+  "requests": [
+    {
+      "request": "01 - Enroll kelas 5 - target 201",
+      "example_id": "a469725e-e2f4-9e2e-e7c7-0a56d4c0cde1",
+      "url": "http://127.0.0.1:3332/api/v1/courses/5/enroll",
+      "code": 201,
+      "time_ms": "28",
+      "body_sha256": "359df744ddd80060ebf977989ef33d4352205a3bb6a04ff917151dadc55308d4",
+      "matches_original_body": true
+    },
+    {
+      "request": "02 - Enroll kelas 6 - target 201",
+      "example_id": "68e8a871-3ef8-f03a-d101-3477926a925b",
+      "url": "http://127.0.0.1:3332/api/v1/courses/6/enroll",
+      "code": 201,
+      "time_ms": "17",
+      "body_sha256": "f654cbd23b9fbb96c90cfab1584f83542d2970903cee117b2c1546026d1e12fb",
+      "matches_original_body": true
+    },
+    {
+      "request": "03 - Enroll kelas 7 - target 201",
+      "example_id": "cc0c7f47-cf58-d280-df35-7970d26896ff",
+      "url": "http://127.0.0.1:3332/api/v1/courses/7/enroll",
+      "code": 201,
+      "time_ms": "13",
+      "body_sha256": "ee9e2308461793ff5908f4791074cdacb772d008c09e6468cd602035f8d5d429",
+      "matches_original_body": true
+    },
+    {
+      "request": "04 - Admin saat Redis mati - target pending 3 dan queue_error",
+      "example_id": "ca35cff4-1af6-2137-d01a-97d17a48c3d5",
+      "url": "http://127.0.0.1:3332/api/v1/admin/queue",
+      "code": 200,
+      "time_ms": "76",
+      "body_sha256": "0ca5a1cb30854d2ac6c73e01fe2de4576280d723bdb038d709ab5157337a77da",
+      "matches_original_body": true
+    },
+    {
+      "request": "05 - Admin setelah Redis pulih - target pending 0",
+      "example_id": "3f714a0c-70c0-8be4-ba48-36a4e82877f4",
+      "url": "http://127.0.0.1:3332/api/v1/admin/queue",
+      "code": 200,
+      "time_ms": "18",
+      "body_sha256": "d638c155c118badb7026d8d4129502a34e24a828538b1e8aeb2efbca047d2aaa",
+      "matches_original_body": true
+    },
+    {
+      "request": "06 - Notifikasi milik akun - target 200",
+      "example_id": "b2947bd3-4b16-ffcc-9798-ec231ff3bd11",
+      "url": "http://127.0.0.1:3332/api/v1/notifications/mine",
+      "code": 200,
+      "time_ms": "6",
+      "body_sha256": "b5f4b9b81fd65a885a5b8cd2c46a5c91559b6b8ae60637d2d953786edb0c135a",
+      "matches_original_body": true
+    }
+  ],
+  "shared_secrets_empty": true
+}

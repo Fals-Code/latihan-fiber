@@ -1,0 +1,189 @@
+{
+  "time": "2026-11-01T17:32:23.528134+07:00",
+  "target": "127.0.0.1:55411/pertemuan11_test",
+  "before": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "users": [
+      {
+        "id": 61,
+        "username": "mhsuji",
+        "role": "user"
+      },
+      {
+        "id": 62,
+        "username": "salahalamat",
+        "role": "user"
+      },
+      {
+        "id": 63,
+        "username": "adminuji",
+        "role": "admin"
+      }
+    ],
+    "outbox": [
+      {
+        "id": 39,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 1,
+          "course_code": "IF101",
+          "course_name": "Pemrograman Backend Lanjut"
+        },
+        "published_at": "2026-11-01T10:19:13.974843+00:00"
+      },
+      {
+        "id": 40,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T10:20:54.971471+00:00"
+      },
+      {
+        "id": 41,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 3,
+          "course_code": "IF301",
+          "course_name": "Kecerdasan Buatan"
+        },
+        "published_at": "2026-11-01T10:23:25.971941+00:00"
+      },
+      {
+        "id": 42,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 4,
+          "course_code": "IF302",
+          "course_name": "Keamanan Informasi"
+        },
+        "published_at": "2026-11-01T10:26:13.971134+00:00"
+      },
+      {
+        "id": 43,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 5,
+          "course_code": "IF303",
+          "course_name": "Komputasi Awan"
+        },
+        "published_at": "2026-11-01T10:29:11.97162+00:00"
+      },
+      {
+        "id": 44,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 6,
+          "course_code": "IF304",
+          "course_name": "Data Mining"
+        },
+        "published_at": "2026-11-01T10:30:03.972284+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 33,
+        "outbox_id": 39,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF101 Pemrograman Backend Lanjut",
+        "sent_at": "2026-11-01T10:19:14.527614+00:00"
+      },
+      {
+        "id": 34,
+        "outbox_id": 40,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-11-01T10:20:55.55431+00:00"
+      },
+      {
+        "id": 35,
+        "outbox_id": 41,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF301 Kecerdasan Buatan",
+        "sent_at": "2026-11-01T10:23:26.551332+00:00"
+      },
+      {
+        "id": 37,
+        "outbox_id": 42,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF302 Keamanan Informasi",
+        "sent_at": "2026-11-01T10:26:14.127123+00:00"
+      },
+      {
+        "id": 38,
+        "outbox_id": 43,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF303 Komputasi Awan",
+        "sent_at": "2026-11-01T10:29:12.780374+00:00"
+      },
+      {
+        "id": 39,
+        "outbox_id": 44,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF304 Data Mining",
+        "sent_at": "2026-11-01T10:30:04.799849+00:00"
+      }
+    ],
+    "enrollments": [
+      {
+        "user_id": 61,
+        "course_id": 1
+      },
+      {
+        "user_id": 61,
+        "course_id": 2
+      },
+      {
+        "user_id": 61,
+        "course_id": 3
+      },
+      {
+        "user_id": 61,
+        "course_id": 4
+      },
+      {
+        "user_id": 61,
+        "course_id": 5
+      },
+      {
+        "user_id": 61,
+        "course_id": 6
+      }
+    ]
+  },
+  "output": "BEGIN\nDELETE 6\nDELETE 6\nDELETE 6\nUPDATE 13\nCOMMIT",
+  "after": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "users": [
+      {
+        "id": 61,
+        "username": "mhsuji",
+        "role": "user"
+      },
+      {
+        "id": 62,
+        "username": "salahalamat",
+        "role": "user"
+      },
+      {
+        "id": 63,
+        "username": "adminuji",
+        "role": "admin"
+      }
+    ],
+    "outbox": [],
+    "notifications": [],
+    "enrollments": []
+  },
+  "sequence_reset": false
+}

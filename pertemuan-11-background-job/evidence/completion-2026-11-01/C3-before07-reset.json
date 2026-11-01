@@ -1,0 +1,281 @@
+{
+  "time": "2026-11-01T17:16:24.333630+07:00",
+  "target": "127.0.0.1:55411/pertemuan11_test",
+  "before": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "users": [
+      {
+        "id": 61,
+        "username": "mhsuji",
+        "role": "user"
+      },
+      {
+        "id": 62,
+        "username": "salahalamat",
+        "role": "user"
+      },
+      {
+        "id": 63,
+        "username": "adminuji",
+        "role": "admin"
+      }
+    ],
+    "outbox": [
+      {
+        "id": 21,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-29T01:11:35.050935+00:00"
+      },
+      {
+        "id": 23,
+        "event_type": "enrollment.dropped",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-29T01:13:18.051829+00:00"
+      },
+      {
+        "id": 24,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-29T01:13:45.052339+00:00"
+      },
+      {
+        "id": 25,
+        "event_type": "enrollment.swapped",
+        "payload": {
+          "user_id": 61,
+          "course_id": 4,
+          "course_code": "IF302",
+          "course_name": "Keamanan Informasi",
+          "from_course_code": "IF102",
+          "from_course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-29T01:14:29.050209+00:00"
+      },
+      {
+        "id": 29,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 5,
+          "course_code": "IF303",
+          "course_name": "Komputasi Awan"
+        },
+        "published_at": "2026-11-01T02:20:41.129992+00:00"
+      },
+      {
+        "id": 30,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 6,
+          "course_code": "IF304",
+          "course_name": "Data Mining"
+        },
+        "published_at": "2026-11-01T02:20:41.129992+00:00"
+      },
+      {
+        "id": 31,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 7,
+          "course_code": "IF305",
+          "course_name": "Pemrograman Mobile"
+        },
+        "published_at": "2026-11-01T02:20:41.129992+00:00"
+      },
+      {
+        "id": 32,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T03:16:56.127934+00:00"
+      },
+      {
+        "id": 34,
+        "event_type": "enrollment.dropped",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T03:20:33.128888+00:00"
+      },
+      {
+        "id": 35,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-11-01T03:21:02.128857+00:00"
+      },
+      {
+        "id": 37,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 1,
+          "course_code": "IF101",
+          "course_name": "Pemrograman Backend Lanjut"
+        },
+        "published_at": "2026-11-01T04:11:31.129046+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 19,
+        "outbox_id": 21,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-10-29T01:11:35.221323+00:00"
+      },
+      {
+        "id": 20,
+        "outbox_id": 23,
+        "user_id": 61,
+        "subject": "KRS: keluar dari IF102 Basis Data Lanjut",
+        "sent_at": "2026-10-29T01:13:18.094052+00:00"
+      },
+      {
+        "id": 21,
+        "outbox_id": 24,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-10-29T01:13:45.484727+00:00"
+      },
+      {
+        "id": 22,
+        "outbox_id": 25,
+        "user_id": 61,
+        "subject": "KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi",
+        "sent_at": "2026-10-29T01:14:29.476259+00:00"
+      },
+      {
+        "id": 26,
+        "outbox_id": 29,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF303 Komputasi Awan",
+        "sent_at": "2026-11-01T02:20:42.161461+00:00"
+      },
+      {
+        "id": 27,
+        "outbox_id": 30,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF304 Data Mining",
+        "sent_at": "2026-11-01T02:20:42.164068+00:00"
+      },
+      {
+        "id": 28,
+        "outbox_id": 31,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF305 Pemrograman Mobile",
+        "sent_at": "2026-11-01T02:20:42.16591+00:00"
+      },
+      {
+        "id": 29,
+        "outbox_id": 32,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-11-01T03:16:56.243445+00:00"
+      },
+      {
+        "id": 30,
+        "outbox_id": 34,
+        "user_id": 61,
+        "subject": "KRS: keluar dari IF102 Basis Data Lanjut",
+        "sent_at": "2026-11-01T03:20:33.363293+00:00"
+      },
+      {
+        "id": 31,
+        "outbox_id": 35,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-11-01T03:21:02.36341+00:00"
+      },
+      {
+        "id": 32,
+        "outbox_id": 37,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF101 Pemrograman Backend Lanjut",
+        "sent_at": "2026-11-01T04:11:31.752726+00:00"
+      }
+    ],
+    "enrollments": [
+      {
+        "user_id": 61,
+        "course_id": 1
+      },
+      {
+        "user_id": 61,
+        "course_id": 2
+      },
+      {
+        "user_id": 61,
+        "course_id": 4
+      },
+      {
+        "user_id": 61,
+        "course_id": 5
+      },
+      {
+        "user_id": 61,
+        "course_id": 6
+      },
+      {
+        "user_id": 61,
+        "course_id": 7
+      }
+    ]
+  },
+  "output": "BEGIN\nDELETE 11\nDELETE 11\nDELETE 6\nUPDATE 13\nCOMMIT",
+  "after": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "users": [
+      {
+        "id": 61,
+        "username": "mhsuji",
+        "role": "user"
+      },
+      {
+        "id": 62,
+        "username": "salahalamat",
+        "role": "user"
+      },
+      {
+        "id": 63,
+        "username": "adminuji",
+        "role": "admin"
+      }
+    ],
+    "outbox": [],
+    "notifications": [],
+    "enrollments": []
+  },
+  "sequence_reset": false
+}

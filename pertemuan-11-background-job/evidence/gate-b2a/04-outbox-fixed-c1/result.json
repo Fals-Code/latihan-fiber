@@ -1,0 +1,233 @@
+{
+  "stage": "04-outbox-fixed-c1",
+  "time": "2026-10-29T00:43:13.623881+07:00",
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/courses/2/enroll",
+      "status": 201,
+      "elapsed_ms": 82.02,
+      "body": {
+        "success": true,
+        "message": "berhasil mendaftar kelas",
+        "data": {
+          "id": 2,
+          "code": "IF102",
+          "name": "Basis Data Lanjut",
+          "credits": 3,
+          "quota": 40,
+          "enrolled_count": 1,
+          "version": 1,
+          "created_at": "2026-10-29T00:37:03.840553+07:00"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/courses/2/enroll",
+      "status": 409,
+      "elapsed_ms": 8.7,
+      "body": {
+        "success": false,
+        "code": "ALREADY_ENROLLED",
+        "message": "Anda sudah terdaftar di  kelas ini",
+        "request_id": "0ff8b393-2a3d-43ec-abb9-eb741aecd987"
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/courses/2/enroll",
+      "status": 204,
+      "elapsed_ms": 30.67,
+      "body": null
+    },
+    {
+      "method": "POST",
+      "path": "/courses/2/enroll",
+      "status": 201,
+      "elapsed_ms": 9.86,
+      "body": {
+        "success": true,
+        "message": "berhasil mendaftar kelas",
+        "data": {
+          "id": 2,
+          "code": "IF102",
+          "name": "Basis Data Lanjut",
+          "credits": 3,
+          "quota": 40,
+          "enrolled_count": 1,
+          "version": 1,
+          "created_at": "2026-10-29T00:37:03.840553+07:00"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/enrollments/swap",
+      "status": 200,
+      "elapsed_ms": 16.15,
+      "body": {
+        "success": true,
+        "message": "berhasil pindah kelas",
+        "data": {
+          "id": 4,
+          "code": "IF302",
+          "name": "Keamanan Informasi",
+          "credits": 3,
+          "quota": 40,
+          "enrolled_count": 1,
+          "version": 1,
+          "created_at": "2026-10-29T00:37:03.840553+07:00"
+        }
+      }
+    }
+  ],
+  "database": {
+    "outbox": [
+      {
+        "id": 11,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:43:09.419741+00:00"
+      },
+      {
+        "id": 13,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:43:09.419741+00:00"
+      },
+      {
+        "id": 14,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:43:09.419741+00:00"
+      },
+      {
+        "id": 15,
+        "event_type": "enrollment.swapped",
+        "payload": {
+          "user_id": 61,
+          "course_id": 4,
+          "course_code": "IF302",
+          "course_name": "Keamanan Informasi",
+          "from_course_code": "IF102",
+          "from_course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-28T17:43:09.419741+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 11,
+        "outbox_id": 11,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+      },
+      {
+        "id": 13,
+        "outbox_id": 13,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+      },
+      {
+        "id": 12,
+        "outbox_id": 14,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut"
+      },
+      {
+        "id": 14,
+        "outbox_id": 15,
+        "subject": "KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi"
+      }
+    ]
+  },
+  "monitor": {
+    "method": "GET",
+    "path": "/admin/queue",
+    "status": 200,
+    "elapsed_ms": 30.1,
+    "body": {
+      "success": true,
+      "message": "keadaan queue berhasil diambil",
+      "data": {
+        "outbox_pending": 0,
+        "outbox_published": 4,
+        "oldest_pending_age": "0s",
+        "notifications_sent": 4,
+        "queue": {
+          "name": "notifications",
+          "pending": 0,
+          "active": 0,
+          "scheduled": 0,
+          "retry": 0,
+          "archived": 0,
+          "completed": 14,
+          "processed_today": 14,
+          "failed_today": 0
+        }
+      }
+    }
+  },
+  "notifications_response": {
+    "method": "GET",
+    "path": "/notifications/mine",
+    "status": 200,
+    "elapsed_ms": 4.95,
+    "body": {
+      "success": true,
+      "message": "notifikasi berhasil diambil",
+      "data": [
+        {
+          "id": 14,
+          "outbox_id": 15,
+          "user_id": 61,
+          "channel": "email",
+          "subject": "KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi",
+          "body": "Halo mhsuji, Anda telah pindah dari kelas IF102 Basis Data Lanjut ke kelas IF302 Keamanan Informasi.",
+          "sent_at": "2026-10-29T00:43:09.956546+07:00"
+        },
+        {
+          "id": 12,
+          "outbox_id": 14,
+          "user_id": 61,
+          "channel": "email",
+          "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+          "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.",
+          "sent_at": "2026-10-29T00:43:09.950878+07:00"
+        },
+        {
+          "id": 13,
+          "outbox_id": 13,
+          "user_id": 61,
+          "channel": "email",
+          "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+          "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.",
+          "sent_at": "2026-10-29T00:43:09.950875+07:00"
+        },
+        {
+          "id": 11,
+          "outbox_id": 11,
+          "user_id": 61,
+          "channel": "email",
+          "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+          "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.",
+          "sent_at": "2026-10-29T00:43:09.94291+07:00"
+        }
+      ]
+    }
+  },
+  "mail_lines_mhsuji": 4
+}

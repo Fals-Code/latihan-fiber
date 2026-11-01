@@ -1,0 +1,96 @@
+--- baseline/app/service/notification_worker.go
++++ current/app/service/notification_worker.go
+@@ -41,7 +41,7 @@
+ // worker mati setelah mengirim email tetapi sebelum sempat melapor ke Redis.
+ // Karena itu handler ini harus idempoten: menjalankannya dua kali untuk
+ // task yang sama harus berakibat sama dengan menjalankannya sekali.
+-func (w *NotificationWorker) HandleSend(ctx context.Context, t asynq.Task) error {
++func (w *NotificationWorker) HandleSend(ctx context.Context, t *asynq.Task) error {
+ 	var job model.NotificationJob
+ 	if err := json.Unmarshal(t.Payload(), &job); err != nil {
+ 		return fmt.Errorf("%w: payload task rusak: %v", asynq.SkipRetry, err)
+--- baseline/app/service/outbox_relay.go
++++ current/app/service/outbox_relay.go
+@@ -2,6 +2,7 @@
+ 
+ import (
+ 	"context"
++	"encoding/json"
+ 	"errors"
+ 	"fmt"
+ 	"log/slog"
+@@ -113,7 +114,11 @@
+ 		OutboxID: e.ID, EventType: e.EventType, Payload: e.Payload,
+ 	}
+ 
+-	task := asynq.NewTask(model.TaskSendNotification, job,
++	payload, err := json.Marshal(job)
++	if err != nil {
++		return fmt.Errorf("menyusun payload task outbox %d: %w", e.ID, err)
++	}
++	task := asynq.NewTask(model.TaskSendNotification, payload,
+ 		// TaskID yang diturunkan dari id outbox membuat enqueue ulang
+ 		// event yang sama ditolak Redis. Ini menutup celah ketika relay
+ 		// mati SETELAH melakukan enqueue tetapi SEBELUM sempat commit.
+@@ -126,7 +131,7 @@
+ 		asynq.Retention(24*time.Hour),
+ 	)
+ 
+-	_, err := r.queue.EnqueueContext(ctx, task)
++	_, err = r.queue.EnqueueContext(ctx, task)
+ 	if errors.Is(err, asynq.ErrTaskIDConflict) {
+ 		// Sudah pernah di-enqueue pada putaran sebelumnya. Bagi relay,
+ 		// itu sama dengan berhasil.
+--- baseline/docs/PUZZLE_CANDIDATES.md
++++ current/docs/PUZZLE_CANDIDATES.md
+@@ -1,7 +1,12 @@
+ # Kandidat puzzle Modul 11
+ 
+-Hanya hasil pembacaan statis, bukan berita acara hasil uji. Sembilan kandidat
+-tetap ada di source aktif. Jangan memperbaikinya sebelum bukti awal dicatat.
++Pembaruan Gate B1, 27 Oktober 2026: P11-01 sampai P11-03 telah dibuktikan
++compiler dan diperbaiki satu per satu. P11-04 sampai P11-09 tetap berada di
++source aktif dan belum diuji perilakunya. Jangan memperbaikinya sebelum bukti
++awal dicatat. Snapshot tetap menyimpan seluruh sembilan kandidat versi awal.
++
++Output asli, screenshot transcript, source sebelum/sesudah, dan hasil build/vet
++ada di [bukti Gate B1](../evidence/gate-b1/compiler-2026-10-27/README.md).
+ 
+ | ID | File/fungsi | Pertentangan dengan komentar/kontrak | Pembuktian nanti |
+ |---|---|---|---|
+@@ -15,9 +20,11 @@
+ | P11-08 | app/service/notification_worker.go / HandleSend | SkipRetry dipasang pada %v; error pengiriman yang mendapat %w | C.4 jumlah attempt dan archived |
+ | P11-09 | config/queue.go / NewWorkerServer | Queues memakai nama task, berbeda dengan nama queue relay | C.1 jalur dasar dan monitoring |
+ 
+-Belum ada pesan compiler, gejala runtime, hitungan, atau bukti perbaikan.
+-Urutan pengujian berikutnya dimulai dengan baseline dan compiler, kemudian satu
+-perubahan tercatat setiap kali. Sebagian kandidat dapat menutupi kandidat lain.
++Build dan vet akhir dari nested module selesai dengan exit code 0. Ini hanya
++verifikasi compiler dan analisis statis; belum ada gejala runtime atau hitungan
++pengujian C.1–C.8. Satu import tak terpakai dari integrasi juga dihapus setelah
++dibuktikan compiler, terpisah dari sembilan puzzle. Sebagian kandidat dapat
++menutupi kandidat lain.
+ 
+ Snapshot baseline berada di baseline/puzzle-baseline.zip dengan manifest SHA-256.
+ Ekstrak ke direktori terpisah ketika perlu membandingkan. Jangan ekstrak menimpa
+--- baseline/helper/mailer.go
++++ current/helper/mailer.go
+@@ -55,7 +55,7 @@
+ 	}
+ 	// Pointer, bukan nilai: mutex dan counter attempt harus dimiliki
+ 	// bersama oleh seluruh goroutine worker, bukan disalin per pemanggilan.
+-	return LogMailer{path: path, delay: delay, failEvery: int64(failEvery)}, nil
++	return &LogMailer{path: path, delay: delay, failEvery: int64(failEvery)}, nil
+ }
+ 
+ func (m *LogMailer) Send(ctx context.Context, msg model.Message) error {
+--- baseline/helper/portfolio_request.go
++++ current/helper/portfolio_request.go
+@@ -6,7 +6,6 @@
+ 	"io"
+ 	"reflect"
+ 	"strings"
+-	"tugas1-go/pertemuan-11-background-job/app/repository"
+ 
+ 	"github.com/go-playground/validator/v10"
+ 

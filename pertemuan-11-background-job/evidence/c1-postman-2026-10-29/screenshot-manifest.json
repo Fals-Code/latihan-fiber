@@ -1,0 +1,106 @@
+[
+  {
+    "file": "00-auth-header-missing.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": false
+  },
+  {
+    "file": "01-enroll-201.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "02-duplicate-409.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "03-drop-204.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "04-reenroll-201.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "05-swap-200.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "06a-notifications-top.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "06b-notifications-bottom.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "07-admin-queue-200.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "08a-vscode-query.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "08b-vscode-sql-output.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "09a-vscode-mail-count.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  },
+  {
+    "file": "09b-vscode-runtime-log.png",
+    "pixels": [
+      1920,
+      1080
+    ],
+    "selected_for_w11": true
+  }
+]

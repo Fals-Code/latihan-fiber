@@ -1,0 +1,25 @@
+{
+  "time": "2026-10-29T08:05:23.097183+07:00",
+  "postgres": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "server_port": 5432,
+    "users": [
+      "adminuji",
+      "mhsuji",
+      "salahalamat"
+    ],
+    "outbox_pending": 0,
+    "outbox": [],
+    "notifications": []
+  },
+  "redis": {
+    "notifications": {
+      "pending": 0,
+      "active": 0,
+      "scheduled": 0,
+      "retry": 0,
+      "archived": 0
+    }
+  }
+}

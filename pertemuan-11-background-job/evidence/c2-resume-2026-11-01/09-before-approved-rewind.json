@@ -1,0 +1,185 @@
+{
+  "at": "2026-11-01T09:12:24.592947+07:00",
+  "database": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "users": [
+      {
+        "id": 61,
+        "username": "mhsuji",
+        "role": "user"
+      },
+      {
+        "id": 62,
+        "username": "salahalamat",
+        "role": "user"
+      },
+      {
+        "id": 63,
+        "username": "adminuji",
+        "role": "admin"
+      }
+    ],
+    "outbox": [
+      {
+        "id": 21,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-29T01:11:35.050935+00:00"
+      },
+      {
+        "id": 23,
+        "event_type": "enrollment.dropped",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-29T01:13:18.051829+00:00"
+      },
+      {
+        "id": 24,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 2,
+          "course_code": "IF102",
+          "course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-29T01:13:45.052339+00:00"
+      },
+      {
+        "id": 25,
+        "event_type": "enrollment.swapped",
+        "payload": {
+          "user_id": 61,
+          "course_id": 4,
+          "course_code": "IF302",
+          "course_name": "Keamanan Informasi",
+          "from_course_code": "IF102",
+          "from_course_name": "Basis Data Lanjut"
+        },
+        "published_at": "2026-10-29T01:14:29.050209+00:00"
+      },
+      {
+        "id": 26,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 5,
+          "course_code": "IF303",
+          "course_name": "Komputasi Awan"
+        },
+        "published_at": "2026-11-01T02:06:31.128362+00:00"
+      },
+      {
+        "id": 27,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 6,
+          "course_code": "IF304",
+          "course_name": "Data Mining"
+        },
+        "published_at": "2026-11-01T02:06:31.128362+00:00"
+      },
+      {
+        "id": 28,
+        "event_type": "enrollment.created",
+        "payload": {
+          "user_id": 61,
+          "course_id": 7,
+          "course_code": "IF305",
+          "course_name": "Pemrograman Mobile"
+        },
+        "published_at": "2026-11-01T02:06:31.128362+00:00"
+      }
+    ],
+    "notifications": [
+      {
+        "id": 19,
+        "outbox_id": 21,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-10-29T01:11:35.221323+00:00"
+      },
+      {
+        "id": 20,
+        "outbox_id": 23,
+        "user_id": 61,
+        "subject": "KRS: keluar dari IF102 Basis Data Lanjut",
+        "sent_at": "2026-10-29T01:13:18.094052+00:00"
+      },
+      {
+        "id": 21,
+        "outbox_id": 24,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+        "sent_at": "2026-10-29T01:13:45.484727+00:00"
+      },
+      {
+        "id": 22,
+        "outbox_id": 25,
+        "user_id": 61,
+        "subject": "KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi",
+        "sent_at": "2026-10-29T01:14:29.476259+00:00"
+      },
+      {
+        "id": 23,
+        "outbox_id": 28,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF305 Pemrograman Mobile",
+        "sent_at": "2026-11-01T02:06:31.454008+00:00"
+      },
+      {
+        "id": 24,
+        "outbox_id": 27,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF304 Data Mining",
+        "sent_at": "2026-11-01T02:06:31.452018+00:00"
+      },
+      {
+        "id": 25,
+        "outbox_id": 26,
+        "user_id": 61,
+        "subject": "KRS: berhasil terdaftar di IF303 Komputasi Awan",
+        "sent_at": "2026-11-01T02:06:31.448664+00:00"
+      }
+    ],
+    "enrollments": [
+      {
+        "user_id": 61,
+        "course_id": 4
+      },
+      {
+        "user_id": 61,
+        "course_id": 5
+      },
+      {
+        "user_id": 61,
+        "course_id": 6
+      },
+      {
+        "user_id": 61,
+        "course_id": 7
+      }
+    ]
+  },
+  "redis": {
+    "notifications": {
+      "pending": 0,
+      "active": 0,
+      "scheduled": 0,
+      "retry": 0,
+      "archived": 0,
+      "completed": 3
+    }
+  },
+  "backup_sha256": "6918e6c0ff1ee3d2909efceb44de3f6481ea2995f5faa9795f36adc0afe40876"
+}

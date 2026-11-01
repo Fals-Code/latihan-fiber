@@ -1,0 +1,31 @@
+--- before/config/queue.go
++++ after/config/queue.go
+@@ -38,7 +38,7 @@
+ 
+ 		// Worker HANYA mengambil task dari queue yang disebut di sini.
+ 		// Nama queue harus sama persis dengan yang dipakai relay.
+-		Queues: map[string]int{model.TaskSendNotification: 1},
++		Queues: map[string]int{model.QueueNotifications: 1},
+ 
+ 		// Delay sebelum melakukan retry. n adalah jumlah retry yang
+ 		// SUDAH terjadi, dimulai dari 0, sehingga delay-nya 2, 4, 6, 8, lalu
+--- before/app/service/course_service.go
++++ after/app/service/course_service.go
+@@ -122,7 +122,7 @@
+ 		// 4. Catat pendaftarannya. Bila ternyata sudah terdaftar, error
+ 		//    di sini membatalkan juga penambahan kursi pada langkah 3.
+ 		// Catat event di transaction yang sama; rollback KRS membatalkannya.
+-		if err := s.outbox.Insert(ctx, model.EventEnrollmentCreated, model.EnrollmentEvent{
++		if err := s.outbox.WithTx(tx).Insert(ctx, model.EventEnrollmentCreated, model.EnrollmentEvent{
+ 			UserID: current.UserID, CourseID: enrolled.ID,
+ 			CourseCode: enrolled.Code, CourseName: enrolled.Name,
+ 		}); err != nil {
+@@ -164,7 +164,7 @@
+ 		if err != nil {
+ 			return err
+ 		}
+-		return s.outbox.WithTx(tx).Insert(ctx, model.EventEnrollmentCreated, model.EnrollmentEvent{
++		return s.outbox.WithTx(tx).Insert(ctx, model.EventEnrollmentDropped, model.EnrollmentEvent{
+ 			UserID: current.UserID, CourseID: course.ID,
+ 			CourseCode: course.Code, CourseName: course.Name,
+ 		})

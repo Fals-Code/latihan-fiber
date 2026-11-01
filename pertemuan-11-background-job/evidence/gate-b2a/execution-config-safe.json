@@ -1,0 +1,19 @@
+{
+  "values": {
+    "DB_HOST": "127.0.0.1",
+    "DB_PORT": "55411",
+    "DB_NAME": "pertemuan11_test",
+    "DB_USER": "pbe11_baseline",
+    "MONGO_DATABASE": "pertemuan11_mongo",
+    "REDIS_ADDR": "127.0.0.1:6379",
+    "REDIS_DB": "0",
+    "MAILER_FAIL_EVERY": "0",
+    "MAILER_DELAY_MS": "1500",
+    "WORKER_CONCURRENCY": "5",
+    "DB_MAX_CONNS": "10"
+  },
+  "source": "Local .env used by controller for all runtime subprocesses; file not changed during B2A",
+  "mongo_host_connection": "Go API startAPI calls database.NewMongoClient then EnsureIndexes using local URI; API successfully registered/login accounts through host",
+  "runtime_binary_rebuilds": "Required for API/worker revisions, not repetition of B1 proof",
+  "migration009": false
+}

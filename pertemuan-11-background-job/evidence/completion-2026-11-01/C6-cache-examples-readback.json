@@ -1,0 +1,30 @@
+{
+  "verified_at": "2026-11-01T16:49:10.909Z",
+  "source": "Respons yang masih ditampilkan Postman; disalin tanpa Send; body dibandingkan secara semantik.",
+  "examples": [
+    {
+      "name": "ACTUAL cache 2026-11-01 - monitoring setelah C6 - 200",
+      "id": "4693dca9-292e-ddc0-256b-a85ba5c79c00",
+      "request": "07 - Monitoring queue admin - target 200",
+      "status": 200,
+      "body_match": true,
+      "headers": 0
+    },
+    {
+      "name": "ACTUAL cache 2026-11-01 - C6 notifications outbox 56 - 200",
+      "id": "ca9202ca-0884-bc36-b12d-f92469889b55",
+      "request": "02 - Notifikasi milik akun - target 200",
+      "status": 200,
+      "body_match": true,
+      "headers": 0
+    },
+    {
+      "name": "ACTUAL cache 2026-11-01 - C6 enroll IF308 - 201",
+      "id": "f031f7cb-24e7-c9fa-58a8-df22d34e4fb8",
+      "request": "03 - Ulang C6 enroll kelas 10 IF308 - target 201",
+      "status": 201,
+      "body_match": true,
+      "headers": 0
+    }
+  ]
+}

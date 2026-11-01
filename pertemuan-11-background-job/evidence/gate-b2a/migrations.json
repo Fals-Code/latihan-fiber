@@ -1,0 +1,52 @@
+[
+  {
+    "file": "bootstrap/001_create_students.sql",
+    "sha256": "8acb48e4661f7915b096544188cbb6cc63ea22ba3704bf96397d4f074f783052",
+    "output": "CREATE TABLE\nCREATE INDEX\nCREATE INDEX\n"
+  },
+  {
+    "file": "bootstrap/002_create_achievements.sql",
+    "sha256": "9a81dd3d6f74530114eadf8ec105c759305b5e3fe966a4bb38315d65bc8c1271",
+    "output": "CREATE TABLE\nCREATE INDEX\nCREATE INDEX\n"
+  },
+  {
+    "file": "bootstrap/003_auth.sql",
+    "sha256": "beb834e48c75fd185beabc30d14090804af65a9203d745af2588199aad896830",
+    "output": "CREATE TABLE\nCREATE INDEX\nCREATE INDEX\nCREATE TABLE\nCREATE INDEX\n"
+  },
+  {
+    "file": "bootstrap/003_rbac.sql",
+    "sha256": "c9bab4d21c39acd031743d13f195d416bf6031d182a6b0e538505358207fe6be",
+    "output": "CREATE TABLE\nCREATE TABLE\nCREATE TABLE\nINSERT 0 3\nINSERT 0 5\nINSERT 0 7\nUPDATE 0\nDO\nCREATE INDEX\n"
+  },
+  {
+    "file": "bootstrap/004_student_permissions.sql",
+    "sha256": "3891e32318689b96a2287994abde5917df3c05bfbc9cb3cc3a923b4e1bcb9ece",
+    "output": "INSERT 0 5\nINSERT 0 8\nDO\n"
+  },
+  {
+    "file": "bootstrap/005_users_cursor_pagination.sql",
+    "sha256": "cc026299feaed08902db0f0d2cd925cc26d92930badccf50f489a124e3917595",
+    "output": "CREATE INDEX\n"
+  },
+  {
+    "file": "005_courses.sql",
+    "sha256": "df68add993280408ff6955645e08dcbcd05a2e1e266caef7b8a481aac5811c66",
+    "output": "CREATE TABLE\nCREATE TABLE\nCREATE INDEX\nINSERT 0 13\nINSERT 0 1\nINSERT 0 1\n"
+  },
+  {
+    "file": "006_seed_loadtest.sql",
+    "sha256": "e7d35146edf92163e319d06a559c3bd54ed8c4d0f6c79386f901538bc93378ab",
+    "output": "INSERT 0 60\n"
+  },
+  {
+    "file": "007_review_permissions.sql",
+    "sha256": "9ff4053439a0e3302d50472a83bdf19aa2fe35f20681ec9401ea730fffcc14ef",
+    "output": "INSERT 0 1\nINSERT 0 1\n"
+  },
+  {
+    "file": "008_outbox.sql",
+    "sha256": "9afbd3bbfad80a4b558d4bd001c8c51a002b47693cfaf0adece2256d283b90df",
+    "output": "CREATE TABLE\nCREATE INDEX\nCREATE TABLE\nCREATE INDEX\nINSERT 0 1\nINSERT 0 1\n"
+  }
+]

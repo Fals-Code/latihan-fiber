@@ -1,0 +1,12 @@
+{
+    "success": true,
+    "message": "keadaan queue berhasil diambil",
+    "data": {
+        "outbox_pending": 3,
+        "outbox_published": 4,
+        "oldest_pending_age": "1m25.974s",
+        "notifications_sent": 4,
+        "queue": null,
+        "queue_error": "queue tidak dapat dibaca: Redis tidak dapat dihubungi atau queue belum  pernah dipakai"
+    }
+}

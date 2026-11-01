@@ -1,0 +1,18 @@
+{
+  "time": "2026-10-29T08:01:16.320830+07:00",
+  "output": "BEGIN\nDELETE 4\nDELETE 4\nDELETE 1\nUPDATE 13\nCOMMIT",
+  "after": {
+    "database": "pertemuan11_test",
+    "role": "pbe11_baseline",
+    "server_port": 5432,
+    "users": [
+      "adminuji",
+      "mhsuji",
+      "salahalamat"
+    ],
+    "outbox_pending": 0,
+    "outbox": [],
+    "notifications": []
+  },
+  "mail_log_bytes": 0
+}

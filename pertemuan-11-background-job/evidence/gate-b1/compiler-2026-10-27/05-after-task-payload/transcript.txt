@@ -1,0 +1,14 @@
+Gate B1 - 05-after-task-payload
+Started (Asia/Jakarta): 2026-10-27T18:45:07.421920+07:00
+Working directory: C:\Users\falah\latihan-fiber\pertemuan-11-background-job
+Command: go build ./...
+Dependencies: cache only (GOPROXY=off); installed toolchain
+
+--- ORIGINAL COMBINED OUTPUT ---
+# tugas1-go/pertemuan-11-background-job
+.\worker.go:54:45: cannot use worker.HandleSend (value of type func(ctx "context".Context, t asynq.Task) error) as func("context".Context, *asynq.Task) error value in argument to mux.HandleFunc
+
+--- EXECUTION METADATA ---
+Exit code: 1
+Elapsed: 10.970 seconds
+go.mod/go.sum unchanged: True

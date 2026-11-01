@@ -1,0 +1,25 @@
+{
+  "C1": "PASS",
+  "http_statuses": [
+    201,
+    409,
+    204,
+    201,
+    200
+  ],
+  "outbox_counts": [
+    1,
+    1,
+    2,
+    3,
+    4
+  ],
+  "notifications": 4,
+  "mail_lines": 4,
+  "source_files_unchanged": 87,
+  "new_w11_images": 12,
+  "auth_401_preserved": true,
+  "reset_repeated_after_resume": false,
+  "runtime_cleanup": "API and worker retained running as found on resume; no C6 execution",
+  "report_section_updated": true
+}

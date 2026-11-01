@@ -1,0 +1,20 @@
+{
+  "time": "2026-11-01T09:17:37.878846+07:00",
+  "container": {
+    "name": "/pbe11-baseline-redis",
+    "id": "344c0a6cd94b5bfec693ae90173c57afad4c475da7cf9221f0e028a0774b8850",
+    "state": "running",
+    "health": "healthy",
+    "image": "sha256:6ba19c50b56777f5c11c58eff8ddb69d0d5f27ba131cffb63f180ccfd43c66af",
+    "ports": {
+      "6379/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "6379"
+        }
+      ]
+    }
+  },
+  "command": "docker stop pbe11-baseline-redis",
+  "stdout": "pbe11-baseline-redis\n"
+}

@@ -1,0 +1,17 @@
+{
+  "logs": [
+    {
+      "file": "mail.log",
+      "bytes": 484,
+      "sha256": "897d935d030aa1b0decbfb86aac0f9db97109da4446e72782b8c3499fb9c40a6"
+    },
+    {
+      "file": "app.log",
+      "bytes": 15046,
+      "sha256": "beefdac1376c994bf5a38d26541575c5f635ec5ef573fb729441094668e984a3"
+    }
+  ],
+  "database_dump": "private before.dump",
+  "old_evidence": "private previous-evidence.zip",
+  "sequences_reset": false
+}

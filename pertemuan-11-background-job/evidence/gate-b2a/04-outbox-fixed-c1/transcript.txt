@@ -1,0 +1,14 @@
+Gate B2A / C.1 — 04-outbox-fixed-c1
+Time: 2026-10-29T00:43:13.623881+07:00
+Requests: 201, 409, 204, 201, 200
+Outbox: 4; notifications: 4; emails: 4
+Events: enrollment.created, enrollment.created, enrollment.created, enrollment.swapped
+Subjects (newest first):
+KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi
+KRS: berhasil terdaftar di IF102 Basis Data Lanjut
+KRS: berhasil terdaftar di IF102 Basis Data Lanjut
+KRS: berhasil terdaftar di IF102 Basis Data Lanjut
+Queue monitor: {"success": true, "message": "keadaan queue berhasil diambil", "data": {"outbox_pending": 0, "outbox_published": 4, "oldest_pending_age": "0s", "notifications_sent": 4, "queue": {"name": "notifications", "pending": 0, "active": 0, "scheduled": 0, "retry": 0, "archived": 0, "completed": 14, "processed_today": 14, "failed_today": 0}}}
+Expected: HTTP 201,409,204,201,200; 4 events, 4 notifications, 4 emails.
+Events expected: enrollment.created, enrollment.dropped, enrollment.created, enrollment.swapped
+Evidence: original HTTP bodies, query, SQL output and logs accompany this saved transcript.

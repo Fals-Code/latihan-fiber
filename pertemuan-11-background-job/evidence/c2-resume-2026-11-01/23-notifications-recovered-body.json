@@ -1,0 +1,69 @@
+{
+    "success": true,
+    "message": "notifikasi berhasil diambil",
+    "data": [
+        {
+            "id": 28,
+            "outbox_id": 31,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF305 Pemrograman Mobile",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF305 Pemrograman Mobile.",
+            "sent_at": "2026-11-01T09:20:42.16591+07:00"
+        },
+        {
+            "id": 27,
+            "outbox_id": 30,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF304 Data Mining",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF304 Data Mining.",
+            "sent_at": "2026-11-01T09:20:42.164068+07:00"
+        },
+        {
+            "id": 26,
+            "outbox_id": 29,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF303 Komputasi Awan",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF303 Komputasi Awan.",
+            "sent_at": "2026-11-01T09:20:42.161461+07:00"
+        },
+        {
+            "id": 22,
+            "outbox_id": 25,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: pindah dari IF102 Basis Data Lanjut ke IF302 Keamanan Informasi",
+            "body": "Halo mhsuji, Anda telah pindah dari kelas IF102 Basis Data Lanjut ke kelas IF302 Keamanan Informasi.",
+            "sent_at": "2026-10-29T08:14:29.476259+07:00"
+        },
+        {
+            "id": 21,
+            "outbox_id": 24,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.",
+            "sent_at": "2026-10-29T08:13:45.484727+07:00"
+        },
+        {
+            "id": 20,
+            "outbox_id": 23,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: keluar dari IF102 Basis Data Lanjut",
+            "body": "Halo mhsuji, Anda sudah tidak terdaftar di kelas IF102 Basis Data Lanjut.",
+            "sent_at": "2026-10-29T08:13:18.094052+07:00"
+        },
+        {
+            "id": 19,
+            "outbox_id": 21,
+            "user_id": 61,
+            "channel": "email",
+            "subject": "KRS: berhasil terdaftar di IF102 Basis Data Lanjut",
+            "body": "Halo mhsuji, Anda tercatat sebagai peserta kelas IF102 Basis Data Lanjut.",
+            "sent_at": "2026-10-29T08:11:35.221323+07:00"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "C:\\Users\\falah\\latihan-fiber\\pertemuan-11-background-job\\infra\\baseline\\.secrets\\c2-resume-2026-11-01\\pbe11-c2-current.exe",
+    "."
+  ],
+  "cwd": "C:\\Users\\falah\\latihan-fiber\\pertemuan-11-background-job",
+  "started_at": "2026-11-01T09:03:52.836598+07:00",
+  "finished_at": "2026-11-01T09:05:11.958984+07:00",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "sha256": "0a49558c5f0035ba387463e36e198211519872548109b6032922f112abba8ef5"
+}

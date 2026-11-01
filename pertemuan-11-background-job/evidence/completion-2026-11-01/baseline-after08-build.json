@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "C:\\Users\\falah\\latihan-fiber\\pertemuan-11-background-job\\infra\\baseline\\.secrets\\completion-2026-11-01\\baseline-after08.exe",
+    "."
+  ],
+  "cwd": "C:\\Users\\falah\\latihan-fiber\\pertemuan-11-background-job",
+  "started_at": "2026-11-01T18:11:07.372230+07:00",
+  "finished_at": "2026-11-01T18:12:01.379845+07:00",
+  "exit_code": 0,
+  "stdout": "",
+  "stderr": "",
+  "sha256": "931e4d43ad225fb21de88587b6b4e2bd0072cb444ebe1e74c2092a84d472e401"
+}

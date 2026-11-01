@@ -1,0 +1,2 @@
+# tugas1-go/pertemuan-11-background-job/helper
+helper\portfolio_request.go:9:2: "tugas1-go/pertemuan-11-background-job/app/repository" imported and not used

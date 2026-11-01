@@ -1,0 +1,11 @@
+-- Read-only C.1; host 127.0.0.1:55411; database pertemuan11_test.
+SELECT current_database() AS database, current_user AS role;
+SELECT o.id, o.event_type, o.published_at IS NOT NULL AS published
+FROM outbox o JOIN users u ON u.id=(o.payload->>'user_id')::int
+WHERE u.username='mhsuji' ORDER BY o.id;
+SELECT n.outbox_id, n.subject FROM notifications n JOIN users u ON u.id=n.user_id
+WHERE u.username='mhsuji' ORDER BY n.outbox_id DESC;
+SELECT (SELECT count(*) FROM outbox WHERE (payload->>'user_id')::int=(SELECT id FROM users
+WHERE username='mhsuji')) AS outbox_count,
+       (SELECT count(*) FROM notifications WHERE user_id=(SELECT id FROM users WHERE
+username='mhsuji')) AS notification_count;

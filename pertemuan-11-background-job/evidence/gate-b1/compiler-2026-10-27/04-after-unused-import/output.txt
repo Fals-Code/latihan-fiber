@@ -1,0 +1,2 @@
+# tugas1-go/pertemuan-11-background-job/app/service
+app\service\outbox_relay.go:116:52: cannot use job (variable of struct type model.NotificationJob) as []byte value in argument to asynq.NewTask

@@ -1,0 +1,78 @@
+[
+  {
+    "name": "/pbe11-baseline-postgres",
+    "id": "ad64bf4f94072ce41a115fd1228ce7f0ca7edc8ac8d9fdbdd8d2e5844bde26b1",
+    "image_id": "sha256:979bccfde35445db618c65107d27d08c6c21339d8dc3ad4c830c6633947be0e4",
+    "health": "healthy",
+    "ports": {
+      "5432/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "55411"
+        }
+      ]
+    },
+    "mounts": [
+      {
+        "name": null,
+        "destination": "/run/secrets/pg_admin"
+      },
+      {
+        "name": "pbe11-baseline-postgres-data",
+        "destination": "/var/lib/postgresql"
+      }
+    ]
+  },
+  {
+    "name": "/pbe11-baseline-mongo",
+    "id": "c3ebb22853bf01e4adddd458361d3e2483859f4665e256eaba73055e06785227",
+    "image_id": "sha256:b9924c330a8bbc5800fe9c69f04a84e221eca7b28fd049a0354147d9908fa142",
+    "health": "healthy",
+    "ports": {
+      "27017/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "27111"
+        }
+      ]
+    },
+    "mounts": [
+      {
+        "name": "pbe11-baseline-mongo-data",
+        "destination": "/data/db"
+      },
+      {
+        "name": null,
+        "destination": "/run/secrets/mongo_admin"
+      },
+      {
+        "name": null,
+        "destination": "/run/secrets/mongo_app"
+      }
+    ]
+  },
+  {
+    "name": "/pbe11-baseline-redis",
+    "id": "344c0a6cd94b5bfec693ae90173c57afad4c475da7cf9221f0e028a0774b8850",
+    "image_id": "sha256:6ba19c50b56777f5c11c58eff8ddb69d0d5f27ba131cffb63f180ccfd43c66af",
+    "health": "healthy",
+    "ports": {
+      "6379/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "6379"
+        }
+      ]
+    },
+    "mounts": [
+      {
+        "name": "pbe11-baseline-redis-data",
+        "destination": "/data"
+      },
+      {
+        "name": null,
+        "destination": "/run/secrets/redis_config"
+      }
+    ]
+  }
+]

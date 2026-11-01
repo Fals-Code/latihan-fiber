@@ -1,0 +1,124 @@
+{
+  "start_command_at": "2026-11-01T09:06:29.929782+07:00",
+  "start_command_finished_at": "2026-11-01T09:06:30.501485+07:00",
+  "container": {
+    "name": "/pbe11-baseline-redis",
+    "id": "344c0a6cd94b5bfec693ae90173c57afad4c475da7cf9221f0e028a0774b8850",
+    "state": "exited",
+    "health": "unhealthy",
+    "image": "sha256:6ba19c50b56777f5c11c58eff8ddb69d0d5f27ba131cffb63f180ccfd43c66af",
+    "ports": {
+      "6379/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "6379"
+        }
+      ]
+    }
+  },
+  "stdout": "pbe11-baseline-redis\n",
+  "observations": [
+    {
+      "observed_at": "2026-11-01T09:06:30.561318+07:00",
+      "seconds_since_start_command": 0.6399999999994179,
+      "pending_ids": [
+        26,
+        27,
+        28
+      ],
+      "notification_outbox_ids": [
+        21,
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "observed_at": "2026-11-01T09:06:30.719993+07:00",
+      "seconds_since_start_command": 0.7969999999995707,
+      "pending_ids": [
+        26,
+        27,
+        28
+      ],
+      "notification_outbox_ids": [
+        21,
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "observed_at": "2026-11-01T09:06:30.878618+07:00",
+      "seconds_since_start_command": 0.9529999999995198,
+      "pending_ids": [
+        26,
+        27,
+        28
+      ],
+      "notification_outbox_ids": [
+        21,
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "observed_at": "2026-11-01T09:06:31.043823+07:00",
+      "seconds_since_start_command": 1.1089999999994689,
+      "pending_ids": [
+        26,
+        27,
+        28
+      ],
+      "notification_outbox_ids": [
+        21,
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "observed_at": "2026-11-01T09:06:31.224586+07:00",
+      "seconds_since_start_command": 1.2969999999995707,
+      "pending_ids": [
+        26,
+        27,
+        28
+      ],
+      "notification_outbox_ids": [
+        21,
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "observed_at": "2026-11-01T09:06:31.452448+07:00",
+      "seconds_since_start_command": 1.530999999999949,
+      "pending_ids": [],
+      "notification_outbox_ids": [
+        21,
+        23,
+        24,
+        25
+      ]
+    },
+    {
+      "observed_at": "2026-11-01T09:06:31.631302+07:00",
+      "seconds_since_start_command": 1.7029999999995198,
+      "pending_ids": [],
+      "notification_outbox_ids": [
+        21,
+        23,
+        24,
+        25,
+        28,
+        27,
+        26
+      ]
+    }
+  ],
+  "within_10_seconds": true,
+  "elapsed_seconds": 1.7029999999995198
+}

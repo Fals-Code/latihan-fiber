@@ -1,0 +1,24 @@
+{
+  "command": [
+    "go",
+    "build",
+    "./..."
+  ],
+  "cwd": "C:\\Users\\falah\\latihan-fiber\\pertemuan-11-background-job",
+  "started_at_asia_jakarta": "2026-10-27T18:45:07.421920+07:00",
+  "exit_code": 1,
+  "elapsed_seconds": 10.97,
+  "child_environment_overrides": {
+    "GOPROXY": "off",
+    "GOTOOLCHAIN": "local"
+  },
+  "dependency_files_before": {
+    "go.mod": "1fd6ca1ec140d8c0d4354f7d2d594839116503f4edd5d3e3490674806c03bf9f",
+    "go.sum": "17f8c47a1ab79f2551339ab9e97d8d648dc36c2e4f326a0156b1f9a19daaa991"
+  },
+  "dependency_files_after": {
+    "go.mod": "1fd6ca1ec140d8c0d4354f7d2d594839116503f4edd5d3e3490674806c03bf9f",
+    "go.sum": "17f8c47a1ab79f2551339ab9e97d8d648dc36c2e4f326a0156b1f9a19daaa991"
+  },
+  "output_sha256": "936fd5c6b101c0ede4ed87b0696fef5066b7e7ee3b560c0fc62c0f5a0be38eda"
+}
