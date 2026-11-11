@@ -1,0 +1,238 @@
+package service
+
+import (
+	"context"
+	"errors"
+	"strings"
+	"time"
+
+	"github.com/gofiber/fiber/v2"
+
+	"tugas1-go/pertemuan-12-testing-swagger-docker/app/model"
+	"tugas1-go/pertemuan-12-testing-swagger-docker/app/repository"
+	"tugas1-go/pertemuan-12-testing-swagger-docker/helper"
+)
+
+const invalidCredentialsMessage = "username atau password salah"
+
+var ErrAuthenticatedUserMissing = errors.New("authenticated user missing")
+
+type AuthService struct {
+	users      repository.UserRepository
+	tokens     repository.TokenRepository
+	jwt        *helper.JWTManager
+	perms      *helper.PermissionSet
+	refreshTTL time.Duration
+}
+
+func NewAuthService(users repository.UserRepository, tokens repository.TokenRepository, jwtManager *helper.JWTManager, perms *helper.PermissionSet, refreshTTL time.Duration) *AuthService {
+	return &AuthService{users: users, tokens: tokens, jwt: jwtManager, perms: perms, refreshTTL: refreshTTL}
+}
+
+// Register godoc
+// @Summary Register a new account
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param body body model.RegisterRequest true "Registration details"
+// @Success 201 {object} model.WebResponse{data=model.User}
+// @Failure 400 {object} model.ErrorResponse
+// @Failure 409 {object} model.ErrorResponse
+// @Failure 422 {object} model.ErrorResponse
+// @Router /auth/register [post]
+func (s *AuthService) Register(c *fiber.Ctx) error {
+	var req model.RegisterRequest
+	if err := c.BodyParser(&req); err != nil {
+		return helper.NewAppError(fiber.StatusBadRequest, "body harus berupa JSON yang valid")
+	}
+	if errs := helper.ValidateRequest(req); len(errs) > 0 {
+		return helper.NewValidationError(errs)
+	}
+	req.Username = strings.TrimSpace(req.Username)
+	req.Email = strings.TrimSpace(req.Email)
+	if errs := ValidateRegister(req); len(errs) > 0 {
+		return helper.NewValidationError(errs)
+	}
+	passwordHash, err := helper.HashPassword(req.Password)
+	if err != nil {
+		return helper.NewAppError(fiber.StatusInternalServerError, "gagal memproses password")
+	}
+	ctx, cancel := helper.RequestContext(c)
+	defer cancel()
+	user, err := s.users.Create(ctx, model.User{Username: req.Username, Email: req.Email, PasswordHash: passwordHash, Role: "user", IsActive: true})
+	if err != nil {
+		return translateAuthDatabaseError(c, err)
+	}
+	return helper.Created(c, "registrasi berhasil", user, "/api/v1/auth/me")
+}
+
+// Login godoc
+// @Summary Login and receive an access/refresh token pair
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param body body model.LoginRequest true "Credentials"
+// @Success 200 {object} model.WebResponse{data=model.TokenPair}
+// @Failure 401 {object} model.ErrorResponse
+// @Failure 429 {object} model.ErrorResponse
+// @Router /auth/login [post]
+func (s *AuthService) Login(c *fiber.Ctx) error {
+	var req model.LoginRequest
+	if err := c.BodyParser(&req); err != nil {
+		return helper.NewAppError(fiber.StatusBadRequest, "body harus berupa JSON yang valid")
+	}
+	if errs := helper.ValidateRequest(req); len(errs) > 0 {
+		return helper.NewValidationError(errs)
+	}
+	if errs := ValidateLogin(req); len(errs) > 0 {
+		return helper.NewValidationError(errs)
+	}
+	req.Username = strings.TrimSpace(req.Username)
+	ctx, cancel := helper.RequestContext(c)
+	defer cancel()
+	user, err := s.users.FindByUsername(ctx, req.Username)
+	if err != nil {
+		if errors.Is(err, repository.ErrNotFound) {
+			helper.VerifyDummyPassword(req.Password)
+			return helper.NewAppError(fiber.StatusUnauthorized, invalidCredentialsMessage)
+		}
+		return translateAuthDatabaseError(c, err)
+	}
+	if !helper.VerifyPassword(user.PasswordHash, req.Password) {
+		return helper.NewAppError(fiber.StatusUnauthorized, invalidCredentialsMessage)
+	}
+	if !user.IsActive {
+		return helper.NewAppError(fiber.StatusForbidden, "akun dinonaktifkan")
+	}
+	pair, err := s.issueTokenPair(ctx, user)
+	if err != nil {
+		return translateAuthDatabaseError(c, err)
+	}
+	return helper.Success(c, fiber.StatusOK, "login berhasil", pair)
+}
+
+func (s *AuthService) issueTokenPair(ctx context.Context, user model.User) (model.TokenPair, error) {
+	accessToken, err := s.jwt.GenerateAccessToken(user)
+	if err != nil {
+		return model.TokenPair{}, err
+	}
+	rawRefreshToken, err := helper.RandomToken(32)
+	if err != nil {
+		return model.TokenPair{}, err
+	}
+	expiresAt := time.Now().Add(s.refreshTTL)
+	if err := s.tokens.Save(ctx, model.RefreshToken{UserID: user.ID, TokenHash: helper.SHA256Hex(rawRefreshToken), ExpiresAt: expiresAt}); err != nil {
+		return model.TokenPair{}, err
+	}
+	return model.TokenPair{AccessToken: accessToken, RefreshToken: rawRefreshToken, TokenType: "Bearer", ExpiresIn: int(s.jwt.AccessTTL().Seconds())}, nil
+}
+
+// Refresh godoc
+// @Summary Rotate a refresh token
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param body body model.RefreshRequest true "Refresh token"
+// @Success 200 {object} model.WebResponse{data=model.TokenPair}
+// @Failure 401 {object} model.ErrorResponse
+// @Router /auth/refresh [post]
+func (s *AuthService) Refresh(c *fiber.Ctx) error {
+	var req model.RefreshRequest
+	if err := c.BodyParser(&req); err != nil {
+		return helper.NewAppError(fiber.StatusBadRequest, "body harus berupa JSON yang valid")
+	}
+	if errs := helper.ValidateRequest(req); len(errs) > 0 {
+		return helper.NewValidationError(errs)
+	}
+	if strings.TrimSpace(req.RefreshToken) == "" {
+		return helper.NewAppError(fiber.StatusUnauthorized, "refresh token tidak valid atau sudah kedaluwarsa")
+	}
+	ctx, cancel := helper.RequestContext(c)
+	defer cancel()
+	stored, err := s.tokens.FindActive(ctx, helper.SHA256Hex(req.RefreshToken))
+	if err != nil {
+		if errors.Is(err, repository.ErrNotFound) {
+			return helper.NewAppError(fiber.StatusUnauthorized, "refresh token tidak valid atau sudah kedaluwarsa")
+		}
+		return translateAuthDatabaseError(c, err)
+	}
+	user, err := s.users.FindByID(ctx, stored.UserID)
+	if err != nil || !user.IsActive {
+		if err != nil && !errors.Is(err, repository.ErrNotFound) {
+			return translateAuthDatabaseError(c, err)
+		}
+		return helper.NewAppError(fiber.StatusUnauthorized, "refresh token tidak valid atau sudah kedaluwarsa")
+	}
+	if err := s.tokens.Revoke(ctx, stored.TokenHash); err != nil {
+		return translateAuthDatabaseError(c, err)
+	}
+	pair, err := s.issueTokenPair(ctx, user)
+	if err != nil {
+		return translateAuthDatabaseError(c, err)
+	}
+	return helper.Success(c, fiber.StatusOK, "token berhasil diperbarui", pair)
+}
+
+// Logout godoc
+// @Summary Revoke a refresh token
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param body body model.RefreshRequest true "Refresh token"
+// @Success 200 {object} model.WebResponse
+// @Failure 400 {object} model.ErrorResponse
+// @Failure 500 {object} model.ErrorResponse
+// @Security BearerAuth
+// @Router /auth/logout [post]
+func (s *AuthService) Logout(c *fiber.Ctx) error {
+	var req model.RefreshRequest
+	if err := c.BodyParser(&req); err != nil {
+		return helper.NewAppError(fiber.StatusBadRequest, "body harus berupa JSON yang valid")
+	}
+	if errs := helper.ValidateRequest(req); len(errs) > 0 {
+		return helper.NewValidationError(errs)
+	}
+	if strings.TrimSpace(req.RefreshToken) != "" {
+		ctx, cancel := helper.RequestContext(c)
+		defer cancel()
+		if err := s.tokens.Revoke(ctx, helper.SHA256Hex(req.RefreshToken)); err != nil {
+			return translateAuthDatabaseError(c, err)
+		}
+	}
+	return helper.Success(c, fiber.StatusOK, "logout berhasil", nil)
+}
+
+// Me godoc
+// @Summary Get the authenticated user's profile and permissions
+// @Tags auth
+// @Produce json
+// @Success 200 {object} model.WebResponse{data=model.AuthProfile}
+// @Failure 401 {object} model.ErrorResponse
+// @Failure 404 {object} model.ErrorResponse
+// @Security BearerAuth
+// @Router /auth/me [get]
+func (s *AuthService) Me(c *fiber.Ctx) error {
+	identity, ok := helper.CurrentUser(c)
+	if !ok {
+		return helper.NewAppError(fiber.StatusUnauthorized, "pengguna belum terautentikasi")
+	}
+	ctx, cancel := helper.RequestContext(c)
+	defer cancel()
+	user, err := s.users.FindByID(ctx, identity.UserID)
+	if err != nil {
+		return translateAuthDatabaseError(c, err)
+	}
+	if !user.IsActive {
+		return helper.NewAppError(fiber.StatusUnauthorized, "akun dinonaktifkan")
+	}
+	return helper.Success(c, fiber.StatusOK, "profil pengguna ditemukan", model.AuthProfile{
+		User: user, Permissions: s.perms.PermissionsOf(user.Role),
+	})
+}
+
+func translateAuthDatabaseError(c *fiber.Ctx, err error) error {
+	if errors.Is(err, repository.ErrDuplicate) {
+		return helper.NewAppError(fiber.StatusConflict, "username atau email sudah digunakan")
+	}
+	return helper.NewAppError(fiber.StatusInternalServerError, "terjadi kesalahan pada database")
+}

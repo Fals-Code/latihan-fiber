@@ -1,0 +1,18 @@
+# Exclude secrets, local runtime state, and irrelevant sources from the build context.
+.env
+.env.*
+!.env.example
+.git
+logs/
+*.log
+coverage.out
+output/
+evidence/
+baseline/
+MODUL12_REFERENSI.txt
+**/__pycache__/
+
+# Previous-week audit artifacts and historical secrets must never enter images.
+infra/
+postman/
+**/.secrets/

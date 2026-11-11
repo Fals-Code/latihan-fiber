@@ -1,0 +1,17 @@
+.env
+.env.*
+!.env.example
+logs/
+.secrets/
+*.exe
+__pycache__/
+*.py[cod]
+
+# Generated/module and sensitive Week 12 local artifacts
+coverage.out
+MODUL12_REFERENSI.txt
+evidence/
+infra/baseline/.secrets/
+.p12_patch_backup/
+
+.p12_local/
